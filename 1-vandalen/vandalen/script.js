@@ -1,22 +1,16 @@
 "use strict";
 
-var names;
-var ages;
-var sumAges;
-
-var splitPerson = function(person){
-	ages.push(person.age);
-	sumAges += person.age;
-	names.push(person.name);
-};
-
 var makePerson = function(persArr){
 
-	names = [];
-	ages = [];
-	sumAges = 0;
+	var names = [];
+	var ages = [];
+	var sumAges = 0;
 
-	persArr.forEach(splitPerson);
+	persArr.forEach(function(person){
+		ages.push(person.age);
+		sumAges += person.age;
+		names.push(person.name);
+	});
 
 	ages = ages.sort();
 
