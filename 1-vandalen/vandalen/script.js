@@ -9,7 +9,7 @@ var makePerson = function(persArr){
 	persArr.forEach(function(person){
 		try {
 			if (typeof person.age != 'number' || (person.age % 1) !== 0 ) {
-				throw new TypeError("Age of " + person.name + " (" + person.age + ") is not valid");
+				throw new TypeError("Age of " + person.name + " (\"" + person.age + "\") is not valid");
 			}
 			ages.push(person.age);
 			sumAges += person.age;
