@@ -4,13 +4,29 @@ window.onload = function(){
 
 	
 	var birthday = function(date){
-		
 
+		date = new Date(date);
+		date.setHours(0,0,0,0);
+		console.log("Input date: " + date);
 
-			// Din kod här.
+		var today = new Date();
+		today.setHours(0,0,0,0);
+		console.log("Todays date: " + today);
 
+		//Set next birthday year
+		if(date.getMonth() < today.getMonth()){
+			date.setYear(today.getFullYear() + 1)
+			console.log("Setting year to: " + date.getFullYear());
+		}else{
+			date.setYear(today.getFullYear())
+			console.log("Setting year to: " + date.getFullYear());
+		}
 
+		var day = 24*60*60*1000;
+		var difference = Math.round((date - today) / day);
 
+		console.log("Difference between dates: " + difference);
+		return difference;
 
 	};
 	// ------------------------------------------------------------------------------
