@@ -6,13 +6,27 @@ window.onload = function(){
 	var convertString = function(str){
 		// Plats för förändring.		
 		// Returnera den konverterade strängen.
-		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
-	
+		// Vid fel, kasta ett undantag med ett meddelande till användaren.
+		str = str.split('');
 
+		var i = 0;
 
+		while(i < str.length){
+			if(str[i] === str[i].toLowerCase()){
+				console.log(str[i] + " : " + str[i].toUpperCase());
+				str[i] = str[i].toUpperCase();
+			}else if(str[i] === str[i].toUpperCase()){
+				console.log(str[i] + " : " + str[i].toLowerCase());
+				str[i] = str[i].toLowerCase();
+			}
+			if(str[i] == "a" || str[i] == "A"){
+				console.log(str[i] + " : #");
+				str[i] = "#";
+			}
+			i++;
+		}
 
-
-
+		return str.join('');
 
 	};
 	// ------------------------------------------------------------------------------
