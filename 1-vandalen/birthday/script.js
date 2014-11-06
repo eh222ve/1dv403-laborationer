@@ -4,6 +4,10 @@ window.onload = function(){
 
 	
 	var birthday = function(date){
+		var regex = /^\(?([0-9]{4})\)?[-]([0-9]{2})?[-]([0-9]{2})$/;
+		if(!regex.test(date)){
+			throw new SyntaxError("Date is not valid");
+		}
 
 		date = new Date(date);
 		date.setHours(0,0,0,0);
