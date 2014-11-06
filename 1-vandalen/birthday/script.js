@@ -15,7 +15,7 @@ window.onload = function(){
 
 		var today = new Date();
 		today.setHours(0,0,0,0);
-		console.log("Todays date: " + today);
+		console.log("Today's date: " + today);
 
 		//Set next birthday year
 		if(date.getMonth() < today.getMonth()){
