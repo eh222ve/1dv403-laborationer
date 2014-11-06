@@ -15,10 +15,10 @@ window.onload = function(){
 
 		//Set next birthday year
 		if(date.getMonth() < today.getMonth()){
-			date.setYear(today.getFullYear() + 1)
+			date.setYear(today.getFullYear() + 1);
 			console.log("Setting year to: " + date.getFullYear());
 		}else{
-			date.setYear(today.getFullYear())
+			date.setYear(today.getFullYear());
 			console.log("Setting year to: " + date.getFullYear());
 		}
 
