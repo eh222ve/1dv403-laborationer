@@ -7,9 +7,20 @@ var makePerson = function(persArr){
 	var sumAges = 0;
 
 	persArr.forEach(function(person){
-		ages.push(person.age);
-		sumAges += person.age;
-		names.push(person.name);
+		try {
+			if (typeof person.age != 'number' || (person.age % 1) !== 0 ) {
+				throw new TypeError("Age of " + person.name + " (" + person.age + ") is not valid");
+			}
+			ages.push(person.age);
+			sumAges += person.age;
+
+			if (typeof person.name != 'string') {
+				throw new TypeError("Name: \"" + person.name + "\" is not a valid string");
+			}
+			names.push(person.name);
+		}catch(TypeError){
+			console.log(TypeError.message);
+		}
 	});
 
 	ages = ages.sort();
