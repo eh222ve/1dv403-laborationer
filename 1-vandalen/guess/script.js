@@ -2,13 +2,14 @@
 
 window.onload = function(){
 	
-	var secret = 50; // Detta tal behöver bytas ut mot ett slumpat tal.
+	var secret = Math.floor( Math.random() * 100)+1;
 	
 	// I denna funktion ska du skriva koden för att hantera "spelet"
 	var guess = function(number){
 		console.log("Det hemliga talet: " + secret); // Du når den yttre variabeln secret innifrån funktionen.
 		console.log("Du gissade: " + number); // Detta nummer är det som användaren gissade på.
-			
+
+		return [false, "Det hemliga talet är högre!"];
 		// Plats för förändring.
 
 
@@ -33,7 +34,7 @@ window.onload = function(){
 		e.preventDefault(); // Hindra formuläret från att skickas till servern. Vi hanterar allt på klienten.
 
 		var answer = guess(input.value) // Läser in talet från textrutan och skickar till funktionen "guess"
-		p.innerHTML = answer[1];		// Skriver ut texten från arrayen som skapats i funktionen.	
+		p.innerHTML = answer[1];		// Skriver ut texten från arrayen som skapats i funktionen.
 
 		if(answer[0] === true){				// Om spelet är slut, avaktivera knappen.
 			submit.disabled = true;
