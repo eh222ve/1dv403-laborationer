@@ -1,13 +1,80 @@
-.labbymezzage{
-    width: 200px;
+section, date{
+    display: block;
 }
 
-.labbymezzage img{
+.labbymezzage{
+    width: 250px;
+}
+
+
+
+.labbymezzage .labbyMezzageArea{
+    width: 95%;
+    margin: 0 auto;
+    height: 200px;
+    overflow: auto;
+}
+
+.labbymezzage .labbyMezzageArea section{
+    font-size: small;
+
+}
+
+
+
+.labbymezzage .labbyMezzageArea section img{
     float: right;
 }
 
-.labbymezzage .labbyMezzageArea{
-    width: 80%;
-    margin: 0 auto;
+.labbymezzage .labbyMezzageArea p{
+
     clear: both;
+}
+
+.labbymezzage .labbyMezzageArea p
+{
+    position: relative;
+    width: 180px;
+    padding: 10px;
+    background: #FFFFFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: #7F7F7F solid 1px;
+}
+
+.labbymezzage .labbyMezzageArea p:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent #FFFFFF;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -10px;
+    right: -10px;
+    top: 50%;
+}
+
+.labbymezzage .labbyMezzageArea p:before
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent #7F7F7F;
+    display: block;
+    width: 0;
+    z-index: 0;
+    margin-top: -10px;
+    right: -11px;
+    top: 50%;
+}
+
+
+.labbymezzage .labbyMezzageArea date{
+    font-size: smaller;
+    text-align: right;
 }
