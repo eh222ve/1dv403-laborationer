@@ -27,6 +27,15 @@ function MessageBoard(containerId){
 
     var labbyTextArea = document.createElement("textarea");
     labbyTextArea.className = "labbyMezzageContent";
+    labbyTextArea.onkeypress = function(e){
+        if(e.keyCode == 13){
+            if(!e.shiftKey){
+                e.preventDefault();
+                that.addMessage();
+            }
+        }
+    };
+
     this.rootId.appendChild(labbyTextArea);
 
     var labbySubmit = document.createElement("button");
@@ -37,7 +46,7 @@ function MessageBoard(containerId){
     this.rootId.appendChild(labbySubmit);
 
 
-    labbySubmit.onclick = function(){
+    this.addMessage = function(){
         var textArea = that.rootId.getElementsByClassName("labbyMezzageContent")[0];
 
         that.messages.push(new Message(textArea.value, new Date()));
@@ -45,6 +54,10 @@ function MessageBoard(containerId){
         textArea.value = '';
 
         that.renderMessages();
+    };
+
+    labbySubmit.onclick = function(){
+        that.addMessage();
     };
 
     this.renderMessage = function(message, count){
@@ -60,12 +73,7 @@ function MessageBoard(containerId){
         var messageRemove = document.createElement("img");
         messageRemove.alt="Close Message";
 
-        if(message.hasOwnProperty("key")){
-            alert('success');
-        }
-
         messageRemove.onclick = function(){
-            alert("messageno: " + count);
             that.messages.splice(count, 1);
             that.renderMessages();
         };
@@ -91,10 +99,9 @@ MessageBoard.prototype.renderMessages = function(){
     var messageContent = '';
     var that = this;
     this.messages.forEach(function(message){
-        messageArea.appendChild(that.renderMessage(message, count)); //this?????
+        messageArea.appendChild(that.renderMessage(message, count));
         count++;
     });
-
 
     messageCount.innerHTML = count;
 };
