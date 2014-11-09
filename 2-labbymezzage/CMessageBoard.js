@@ -38,7 +38,7 @@ function MessageBoard(containerId){
 
 
     labbySubmit.onclick = function(){
-        var textArea = document.getElementsByClassName("labbyMezzageContent")[0];
+        var textArea = that.rootId.getElementsByClassName("labbyMezzageContent")[0];
 
         that.messages.push(new Message(textArea.value, new Date()));
 
@@ -47,8 +47,32 @@ function MessageBoard(containerId){
         that.renderMessages();
     };
 
-    this.renderMessage = function(message){
-        return "<section><article>remove</article><p>" + message.getHTMLText() + "</p><date>" + message.getDateText() + "</date></section>";
+    this.renderMessage = function(message, count){
+        var messageMain = document.createElement("section");
+        var messageText = document.createElement("p");
+        messageText.innerHTML = message.getHTMLText();
+        messageMain.appendChild(messageText);
+
+        var messageDate = document.createElement("date");
+        messageDate.innerHTML = message.getDateText();
+        messageMain.appendChild(messageDate);
+
+        var messageRemove = document.createElement("img");
+        messageRemove.alt="Close Message";
+
+        if(message.hasOwnProperty("key")){
+            alert('success');
+        }
+
+        messageRemove.onclick = function(){
+            alert("messageno: " + count);
+            that.messages.splice(count, 1);
+            that.renderMessages();
+        };
+
+        messageMain.appendChild(messageRemove);
+
+        return messageMain;
     };
 
 }
@@ -67,10 +91,10 @@ MessageBoard.prototype.renderMessages = function(){
     var messageContent = '';
     var that = this;
     this.messages.forEach(function(message){
-        messageContent += that.renderMessage(message); //this?????
+        messageArea.appendChild(that.renderMessage(message, count)); //this?????
         count++;
     });
 
-    messageArea.innerHTML = messageContent;
+
     messageCount.innerHTML = count;
 };
