@@ -118,5 +118,7 @@ MessageBoard.prototype.renderMessages = function(){
         count++;
     });
 
+    messageArea.scrollTop = messageArea.scrollHeight;
+
     messageCount.innerHTML = this.numberOfMessages();
 };
