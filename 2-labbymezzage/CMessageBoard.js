@@ -74,8 +74,10 @@ function MessageBoard(containerId){
         messageRemove.alt="Close Message";
 
         messageRemove.onclick = function(){
-            that.messages.splice(count, 1);
-            that.renderMessages();
+            if (window.confirm("Do you want to remove the message?")) {
+                that.messages.splice(count, 1);
+                that.renderMessages();
+            }
         };
 
         messageMain.appendChild(messageRemove);
