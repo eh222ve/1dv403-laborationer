@@ -62,6 +62,24 @@ function MessageBoard(containerId){
 
     this.renderMessage = function(message, count){
         var messageMain = document.createElement("section");
+
+        var messageRemove = document.createElement("img");
+        messageRemove.alt="Close Message";
+        messageRemove.onclick = function(){
+            if (window.confirm("Do you want to remove the message?")) {
+                that.messages.splice(count, 1);
+                that.renderMessages();
+            }
+        };
+        messageMain.appendChild(messageRemove);
+
+        var messageTime = document.createElement("img");
+        messageTime.alt="View time information";
+        messageTime.onclick = function(){
+            alert("Message created on: (" + message.getDate() + ")");
+        };
+        messageMain.appendChild(messageTime);
+
         var messageText = document.createElement("p");
         messageText.innerHTML = message.getHTMLText();
         messageMain.appendChild(messageText);
@@ -69,18 +87,6 @@ function MessageBoard(containerId){
         var messageDate = document.createElement("date");
         messageDate.innerHTML = message.getDateText();
         messageMain.appendChild(messageDate);
-
-        var messageRemove = document.createElement("img");
-        messageRemove.alt="Close Message";
-
-        messageRemove.onclick = function(){
-            if (window.confirm("Do you want to remove the message?")) {
-                that.messages.splice(count, 1);
-                that.renderMessages();
-            }
-        };
-
-        messageMain.appendChild(messageRemove);
 
         return messageMain;
     };
