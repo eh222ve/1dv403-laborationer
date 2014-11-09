@@ -1,0 +1,13 @@
+.labbymezzage{
+    width: 200px;
+}
+
+.labbymezzage img{
+    float: right;
+}
+
+.labbymezzage .labbyMezzageArea{
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
+}
