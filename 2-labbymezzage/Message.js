@@ -32,12 +32,15 @@ Message.prototype.getDateText = function(){
     var now = new Date();
     var milliseconds = now - this.getDate();
     var seconds = Math.round(milliseconds/1000);
-    var minutes = Math.round(seconds/60);
-    var hours = Math.round(minutes/60);
-    var days = Math.round(hours/24);
+    var minutes = Math.floor(seconds/60);
+    var hours = Math.floor(minutes/60);
+    var days = Math.floor(hours/24);
 
     if(seconds < 60){
         return "just now";
+    }
+    else if(minutes == 1){
+        return minutes + " minute ago";
     }
     else if(minutes < 60){
         return minutes + " minutes ago";

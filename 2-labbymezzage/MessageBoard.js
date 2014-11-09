@@ -1,7 +1,6 @@
 "use strict";
 
 function MessageBoard(containerId, title){
-    console.log(title);
     title = (title !== null ? title : 'LabbyMezzages');
 
     this.rootId = document.getElementById(containerId);
@@ -51,6 +50,7 @@ function MessageBoard(containerId, title){
         textArea.value = '';
 
         that.renderMessages();
+        that.scrollToBottom();
     };
 
     labbySubmit.onclick = function(){
@@ -68,6 +68,7 @@ function MessageBoard(containerId, title){
             if (window.confirm("Do you want to remove the message?")) {
                 that.messages.splice(count, 1);
                 that.renderMessages();
+                that.scrollToBottom();
             }
         };
         messageMain.appendChild(messageRemove);
@@ -90,8 +91,12 @@ function MessageBoard(containerId, title){
 
         return messageMain;
     };
+    that.renderMessages();
 
-    this.renderMessages();
+    setInterval(function () {
+        that.renderMessages();
+    }, 1000);
+    //setInterval(that.renderMessages(), 5000);
 
 }
 
@@ -112,8 +117,9 @@ MessageBoard.prototype.renderMessages = function(){
         messageArea.appendChild(that.renderMessage(message, count));
         count++;
     });
-
-    messageArea.scrollTop = messageArea.scrollHeight;
-
     messageCount.innerHTML = this.numberOfMessages();
+};
+MessageBoard.prototype.scrollToBottom = function(){
+    var messageArea = this.rootId.getElementsByClassName("labbyMezzageArea")[0];
+    messageArea.scrollTop = messageArea.scrollHeight;
 };
