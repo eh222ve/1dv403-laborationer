@@ -31,10 +31,10 @@ Message.prototype.getHTMLText = function(){
 Message.prototype.getDateText = function(){
     var now = new Date();
     var milliseconds = now - this.getDate();
-    var seconds = milliseconds/1000;
-    var minutes = seconds/60;
-    var hours = minutes/60;
-    var days = hours/24;
+    var seconds = Math.round(milliseconds/1000);
+    var minutes = Math.round(seconds/60);
+    var hours = Math.round(minutes/60);
+    var days = Math.round(hours/24);
 
     if(seconds < 60){
         return "just now";
