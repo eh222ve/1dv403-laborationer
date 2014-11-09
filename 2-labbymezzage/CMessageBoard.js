@@ -1,6 +1,8 @@
 "use strict";
 
-function MessageBoard(containerId){
+function MessageBoard(containerId, title){
+    console.log(title);
+    title = (title !== null ? title : 'LabbyMezzages');
 
     this.rootId = document.getElementById(containerId);
     var that = this;
@@ -8,7 +10,7 @@ function MessageBoard(containerId){
 
     var labbyHeader = document.createElement("header");
     var labbyHeaderText = document.createElement("h1");
-    labbyHeaderText.innerHTML = "LabbyMezzages";
+    labbyHeaderText.innerHTML = title;
     labbyHeader.appendChild(labbyHeaderText);
     this.rootId.appendChild(labbyHeader);
 
@@ -35,7 +37,7 @@ function MessageBoard(containerId){
 
     var labbySubmit = document.createElement("button");
     labbySubmit.className = "submitBtn";
-    var submitText = document.createTextNode("CLICK ME");
+    var submitText = document.createTextNode("Send");
     labbySubmit.appendChild(submitText);
 
     this.rootId.appendChild(labbySubmit);
