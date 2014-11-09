@@ -65,6 +65,7 @@ function MessageBoard(containerId){
 
         var messageRemove = document.createElement("img");
         messageRemove.alt="Close Message";
+        messageRemove.src ="images/Close.png";
         messageRemove.onclick = function(){
             if (window.confirm("Do you want to remove the message?")) {
                 that.messages.splice(count, 1);
@@ -75,6 +76,7 @@ function MessageBoard(containerId){
 
         var messageTime = document.createElement("img");
         messageTime.alt="View time information";
+        messageTime.src ="images/Clock.png";
         messageTime.onclick = function(){
             alert("Message created on: (" + message.getDate() + ")");
         };
@@ -94,7 +96,12 @@ function MessageBoard(containerId){
 }
 
 MessageBoard.prototype.numberOfMessages = function(){
-    return this.messages.length;
+    if(this.messages.length != 0) {
+        return this.messages.length + " messages";
+    }
+    else{
+        return '';
+    }
 };
 
 MessageBoard.prototype.renderMessages = function(){
@@ -111,5 +118,5 @@ MessageBoard.prototype.renderMessages = function(){
         count++;
     });
 
-    messageCount.innerHTML = count;
+    messageCount.innerHTML = this.numberOfMessages();
 };
