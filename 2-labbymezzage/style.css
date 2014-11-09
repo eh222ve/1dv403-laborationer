@@ -30,9 +30,8 @@ section, date{
     overflow: auto;
 }
 
-.labbymezzage .labbyMezzageArea section{
-    font-size: small;
-    padding: 0 20px;
+.labbymezzage .labbyMezzageArea section p{
+    max-width: 80%;
 }
 
 .labbymezzage .labbyMezzageArea section img{
@@ -47,9 +46,10 @@ section, date{
 
 }
 
-.labbymezzage .labbyMezzageArea p
+.labbymezzage .labbyMezzageArea section
 {
     clear: both;
+    font-size: small;
     position: relative;
     width: 80%;
     padding: 10px;
@@ -58,9 +58,10 @@ section, date{
     -moz-border-radius: 5px;
     border-radius: 5px;
     border: 1px solid #bcbcbc;
+    margin-bottom: 10px;
 }
 
-.labbymezzage .labbyMezzageArea p:after
+.labbymezzage .labbyMezzageArea section:after
 {
     content: '';
     position: absolute;
@@ -75,7 +76,7 @@ section, date{
     top: 50%;
 }
 
-.labbymezzage .labbyMezzageArea p:before
+.labbymezzage .labbyMezzageArea section:before
 {
     content: '';
     position: absolute;
@@ -95,7 +96,6 @@ section, date{
     font-size: smaller;
     text-align: right;
     margin-top: -12px;
-    margin-bottom: 20px;
     color: #999999;
     font-style: italic;
 }

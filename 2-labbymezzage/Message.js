@@ -16,18 +16,14 @@ function Message(message, date){
     this.setDate = function(_date){
         date = _date;
     };
-
-
 }
 
-Message.prototype.toString = function(){
-    return this.getText()+" ("+this.getDate()+")";
-};
-
+//Retrieve Message body formatted as HTML
 Message.prototype.getHTMLText = function(){
-    return this.getText().replace("\n", "</br>");
+    return this.getText().replace(/[\n\r]/g, "</br>");
 };
 
+//Retrieve Date as formatted string
 Message.prototype.getDateText = function(){
     var now = new Date();
     var milliseconds = now - this.getDate();
@@ -56,4 +52,3 @@ Message.prototype.getDateText = function(){
         return this.getDate().getUTCDate() + "/" + (this.getDate().getMonth() + 1) + " " + this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
     }
 };
-

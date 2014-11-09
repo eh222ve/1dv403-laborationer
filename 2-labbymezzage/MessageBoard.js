@@ -1,23 +1,22 @@
 "use strict";
 
 function MessageBoard(containerId, title){
-    var that = this;
     this.title = (title !== null ? title : 'LabbyMezzages');
-
     this.rootId = document.getElementById(containerId);
-
     this.messages = [];
 
+    //Run methods on creation
     this.CreateHTMLLayout();
-
     this.renderMessages();
 
+    //Update messages every second
+    var that = this;
     setInterval(function () {
         that.renderMessages();
     }, 1000);
-
 }
 
+//Create HTML structure and keypress events for application
 MessageBoard.prototype.CreateHTMLLayout = function(){
     var that = this;
 
@@ -61,10 +60,12 @@ MessageBoard.prototype.CreateHTMLLayout = function(){
     };
 };
 
+//Return number of messages in array messages[]
 MessageBoard.prototype.numberOfMessages = function(){
         return this.messages.length + " messages";
 };
 
+//Render one message and onclick-event for images
 MessageBoard.prototype.renderMessage = function(message, count){
     var that = this;
     var messageMain = document.createElement("section");
@@ -100,6 +101,7 @@ MessageBoard.prototype.renderMessage = function(message, count){
     return messageMain;
 };
 
+//Render all messages
 MessageBoard.prototype.renderMessages = function(){
     var messageArea = this.rootId.getElementsByClassName("labbyMezzageArea")[0];
     var messageCount = this.rootId.getElementsByClassName("labbyMezzageCount")[0];
@@ -115,11 +117,14 @@ MessageBoard.prototype.renderMessages = function(){
     });
     messageCount.innerHTML = this.numberOfMessages();
 };
+
+//Scroll to bottom of messages
 MessageBoard.prototype.scrollToBottom = function(){
     var messageArea = this.rootId.getElementsByClassName("labbyMezzageArea")[0];
     messageArea.scrollTop = messageArea.scrollHeight;
 };
 
+//Add message to array messages[], then scroll to bottom
 MessageBoard.prototype.addMessage = function(){
     var textArea = this.rootId.getElementsByClassName("labbyMezzageContent")[0];
     console.log(textArea.value);
