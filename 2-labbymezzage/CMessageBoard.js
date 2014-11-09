@@ -6,11 +6,6 @@ function MessageBoard(containerId){
     var that = this;
     this.messages = [];
 
-    this.setMessage = function(message){
-        alert('try to push');
-        that.messages.push(message);
-    };
-
     var labbyHeader = document.createElement("header");
     var labbyHeaderText = document.createElement("h1");
     labbyHeaderText.innerHTML = "LabbyMezzages";
@@ -58,6 +53,7 @@ function MessageBoard(containerId){
 
     labbySubmit.onclick = function(){
         that.addMessage();
+        that.rootId.getElementsByClassName("labbyMezzageContent")[0].focus();
     };
 
     this.renderMessage = function(message, count){
@@ -93,15 +89,12 @@ function MessageBoard(containerId){
         return messageMain;
     };
 
+    this.renderMessages();
+
 }
 
 MessageBoard.prototype.numberOfMessages = function(){
-    if(this.messages.length != 0) {
         return this.messages.length + " messages";
-    }
-    else{
-        return '';
-    }
 };
 
 MessageBoard.prototype.renderMessages = function(){
