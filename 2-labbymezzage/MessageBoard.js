@@ -94,7 +94,7 @@ MessageBoard.prototype.renderMessage = function(message, count){
     //Update messages every second
     setInterval(function () {
         messageDate.innerHTML = message.getDateText();
-    }, 1000*60);
+    }, 1000*15);
 
     messageMain.appendChild(messageDate);
 
