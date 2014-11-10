@@ -1,7 +1,7 @@
 "use strict";
 
 function MessageBoard(containerId, title){
-    this.title = (title !== null ? title : 'LabbyMezzages');
+    this.title = (title !== undefined ? title : 'LabbyMezzages');
     this.rootId = document.getElementById(containerId);
     this.messages = [];
 
