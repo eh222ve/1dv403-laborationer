@@ -16,6 +16,8 @@ section, date{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     overflow: auto;
     padding-bottom: 20px;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
 }
 
 .labbymezzage h1{
@@ -35,6 +37,8 @@ section, date{
 }
 
 .labbymezzage .labbyMezzageArea section img{
+    position: relative;
+    top: 0px;
     float: right;
     max-width: 7%;
     margin-right: 2px;
@@ -45,7 +49,9 @@ section, date{
     cursor: pointer;
 
 }
-
+.labbymezzage .labbyMezzageArea section p{
+    line-height: 12px;
+}
 .labbymezzage .labbyMezzageArea section
 {
     clear: both;
@@ -93,6 +99,8 @@ section, date{
 
 
 .labbymezzage .labbyMezzageArea date{
+    position: relative;
+    bottom: 5px;
     font-size: smaller;
     text-align: right;
     margin-top: -12px;
@@ -104,7 +112,7 @@ section, date{
     text-align: right;
     color: #999999;
     font-style: italic;
-    margin-right: 10px;
+    margin: 0 10px;
     border-bottom: 1px solid #D6D6D6;
     margin-bottom: 10px;
 }
