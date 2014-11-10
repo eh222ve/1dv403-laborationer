@@ -30,7 +30,8 @@ Message.prototype.getDateText = function(){
     var seconds = Math.round(milliseconds/1000);
     var minutes = Math.floor(seconds/60);
     var hours = Math.floor(minutes/60);
-    var days = Math.floor(hours/24);
+    var days = now.getUTCDate() - this.getDate().getUTCDate();
+    var months = now.getUTCMonth() - this.getDate().getUTCMonth();
 
     if(seconds < 60){
         return "just now";
@@ -41,10 +42,10 @@ Message.prototype.getDateText = function(){
     else if(minutes < 60){
         return minutes + " minutes ago";
     }
-    else if(days < 1){
+    else if(days < 1 && months === 0){
         return "Today " + this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
     }
-    else if(days < 2){
+    else if(days < 2 && months === 0){
         return "Yesterday " + this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
     }
     else

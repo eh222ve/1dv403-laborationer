@@ -13,7 +13,7 @@ function MessageBoard(containerId, title){
     var that = this;
     setInterval(function () {
         that.renderMessages();
-    }, 1000);
+    }, 5000);
 }
 
 //Create HTML structure and keypress events for application
@@ -103,19 +103,20 @@ MessageBoard.prototype.renderMessage = function(message, count){
 
 //Render all messages
 MessageBoard.prototype.renderMessages = function(){
-    var messageArea = this.rootId.getElementsByClassName("labbyMezzageArea")[0];
-    var messageCount = this.rootId.getElementsByClassName("labbyMezzageCount")[0];
 
-    messageArea.innerHTML = "";
-    var count = 0;
+        var messageArea = this.rootId.getElementsByClassName("labbyMezzageArea")[0];
+        var messageCount = this.rootId.getElementsByClassName("labbyMezzageCount")[0];
 
-    var messageContent = '';
-    var that = this;
-    this.messages.forEach(function(message){
-        messageArea.appendChild(that.renderMessage(message, count));
-        count++;
-    });
-    messageCount.innerHTML = this.numberOfMessages();
+        messageArea.innerHTML = "";
+        var count = 0;
+
+        var messageContent = '';
+        var that = this;
+        this.messages.forEach(function (message) {
+            messageArea.appendChild(that.renderMessage(message, count));
+            count++;
+        });
+        messageCount.innerHTML = this.numberOfMessages();
 };
 
 //Scroll to bottom of messages
