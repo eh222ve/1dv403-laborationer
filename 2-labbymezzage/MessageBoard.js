@@ -8,12 +8,6 @@ function MessageBoard(containerId, title){
     //Run methods on creation
     this.CreateHTMLLayout();
     this.renderMessages();
-
-    //Update messages every second
-    var that = this;
-    setInterval(function () {
-        that.renderMessages();
-    }, 5000);
 }
 
 //Create HTML structure and keypress events for application
@@ -96,6 +90,12 @@ MessageBoard.prototype.renderMessage = function(message, count){
 
     var messageDate = document.createElement("date");
     messageDate.innerHTML = message.getDateText();
+
+    //Update messages every second
+    setInterval(function () {
+        messageDate.innerHTML = message.getDateText();
+    }, 1000*60);
+
     messageMain.appendChild(messageDate);
 
     return messageMain;

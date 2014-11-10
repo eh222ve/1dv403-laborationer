@@ -22,7 +22,7 @@ section, date{
 
 .labbymezzage h1{
     text-align: center;
-    font-size: medium;
+    font-size: 22px;
 }
 
 .labbymezzage .labbyMezzageArea{
@@ -30,6 +30,23 @@ section, date{
     margin: 0 auto;
     height: 200px;
     overflow: auto;
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar
+{
+    width: 5px;  /* for vertical scrollbars */
+    height: 5px; /* for horizontal scrollbars */
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar-thumb
+{
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
 }
 
 .labbymezzage .labbyMezzageArea section p{
@@ -50,12 +67,14 @@ section, date{
 
 }
 .labbymezzage .labbyMezzageArea section p{
-    line-height: 12px;
+    line-height: 14px;
+    margin: 0;
+    margin-bottom: 5px;
 }
 .labbymezzage .labbyMezzageArea section
 {
     clear: both;
-    font-size: small;
+    font-size: medium;
     position: relative;
     width: 80%;
     padding: 10px;
@@ -99,11 +118,11 @@ section, date{
 
 
 .labbymezzage .labbyMezzageArea date{
-    position: relative;
-    bottom: 5px;
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
     font-size: smaller;
     text-align: right;
-    margin-top: -12px;
     color: #999999;
     font-style: italic;
 }
