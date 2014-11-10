@@ -33,6 +33,8 @@ Message.prototype.getDateText = function(){
     var days = now.getUTCDate() - this.getDate().getUTCDate();
     var months = now.getUTCMonth() - this.getDate().getUTCMonth();
 
+    var formattedTime = this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
+
     if(seconds < 60){
         return "just now";
     }
@@ -43,13 +45,13 @@ Message.prototype.getDateText = function(){
         return minutes + " minutes ago";
     }
     else if(days < 1 && months === 0){
-        return "Today " + this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
+        return "Today " + formattedTime;
     }
     else if(days < 2 && months === 0){
-        return "Yesterday " + this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
+        return "Yesterday " + formattedTime;
     }
     else
     {
-        return this.getDate().getUTCDate() + "/" + (this.getDate().getMonth() + 1) + " " + this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
+        return this.getDate().getUTCDate() + "/" + (this.getDate().getMonth() + 1) + " " + formattedTime;
     }
 };
