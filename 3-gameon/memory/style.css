@@ -1,0 +1,17 @@
+.GameOn-Memory .gameBoard .row{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.GameOn-Memory .row img{
+    width: 50px;
+    height: 50px;
+    margin: 5px 10px;
+    background-color: #2b81af;
+}
+
+.GameOn-Memory .gameBoard .row .col img{
+    width: 100px;
+    height: 100px;
+}
