@@ -136,7 +136,7 @@ MemoryGame.prototype.flipCards = function(that, col){
                 that.turnCounter++;
                 that.flippedCards.push(col['value']);
                 if(that.flippedCards.length >= (that.pictureArray.length/2)){
-                    that.getSettings("Grattis!", "Du klarade av spelet på 2 omgångar, vill du spela igen?");
+                    that.getSettings("Grattis!", "Du klarade av spelet på " + that.turnCounter + " omgångar, vill du spela igen?");
                 }
                 that.flippedImage = undefined;
                 that.isActive = false;
