@@ -68,7 +68,8 @@ MemoryGame.prototype.getStructuredArray = function(){
     return output;
 };
 MemoryGame.prototype.finishedGame = function() {
-    this.rootId.innerHTML = '';
+    var div = document.createElement("div");
+    div.className = "overlay";
     var h = document.createElement("h1");
     h.innerHTML = "Grattis!";
     var p = document.createElement("p");
@@ -79,11 +80,10 @@ MemoryGame.prototype.finishedGame = function() {
     button.onclick = function(){
         that.initGame();
     };
-    this.rootId.appendChild(h);
-    this.rootId.appendChild(p);
-    this.rootId.appendChild(button);
-
-
+    div.appendChild(h);
+    div.appendChild(p);
+    div.appendChild(button);
+    this.rootId.appendChild(div);
 };
 MemoryGame.prototype.flipCards = function(that, col){
     var img;
@@ -137,4 +137,4 @@ MemoryGame.prototype.flipCards = function(that, col){
 
 };
 
-var mem = new MemoryGame("test1", 2, 2);
+var mem = new MemoryGame("test1", 3, 4);
