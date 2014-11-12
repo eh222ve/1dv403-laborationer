@@ -12,9 +12,7 @@ function MemoryGame(rootId, rows, cols){
     this.flippedCards = [];
     this.turnCounter = 0;
 
-
     this.initGame();
-
 }
 MemoryGame.prototype.initGame = function(){
     this.rootId.innerHTML = '';
@@ -25,7 +23,6 @@ MemoryGame.prototype.initGame = function(){
     this.turnCounter = 0;
     this.renderBoard();
 };
-
 
 MemoryGame.prototype.renderBoard = function(){
     var div, a, img, tmpImg;
@@ -40,7 +37,6 @@ MemoryGame.prototype.renderBoard = function(){
             a.href = "#";
             img = document.createElement("img");
             img.src = "pics/0.png";
-            img.id = that.rootIdText+"-"+col['id'];
             a.appendChild(img);
             a.onclick = function(e){
                 e.preventDefault();
@@ -67,6 +63,7 @@ MemoryGame.prototype.getStructuredArray = function(){
     }
     return output;
 };
+
 MemoryGame.prototype.finishedGame = function() {
     var div = document.createElement("div");
     div.className = "overlay";
@@ -75,7 +72,7 @@ MemoryGame.prototype.finishedGame = function() {
     var p = document.createElement("p");
     p.innerHTML = "Du klarade av spelet på " + this.turnCounter + " omgångar, vill du spela igen?";
     var button = document.createElement("button");
-    button.innerHTML = "starta spel";
+    button.innerHTML = "Starta spel";
     var that = this;
     button.onclick = function(){
         that.initGame();
@@ -85,6 +82,7 @@ MemoryGame.prototype.finishedGame = function() {
     div.appendChild(button);
     this.rootId.appendChild(div);
 };
+
 MemoryGame.prototype.flipCards = function(that, col){
     var img;
 
@@ -100,33 +98,32 @@ MemoryGame.prototype.flipCards = function(that, col){
 
         if (that.flippedImage === undefined) {
             that.flippedImage = [];
-            that.flippedImage['elementId'] = img.id;
+            that.flippedImage['element'] = img;
             that.flippedImage['value'] = col['value'];
             that.isActive = false;
         } else {
             that.isActive = true;
-            that.turnCounter++;
-            if (that.flippedImage['elementId'] != img.id && that.flippedImage['value'] === col['value']) {
-
+            if (that.flippedImage['element'] != img && that.flippedImage['value'] === col['value']) {
+                that.turnCounter++;
                 that.flippedCards.push(col['value']);
                 if(that.flippedCards.length >= (that.pictureArray.length/2)){
                     that.finishedGame();
                 }
                 that.flippedImage = undefined;
                 that.isActive = false;
-            } else if (that.flippedImage['elementId'] === img.id) {
+            } else if (that.flippedImage['element'] === img) {
                 that.isActive = false;
             }
             else {
+                that.turnCounter++;
                 setTimeout(function () {
-                    var images = [img, document.getElementById(that.flippedImage['elementId'])];
+                    var images = [img, that.flippedImage['element']];
                     images.forEach(function(im){
                         im.className  = "";
                         setTimeout(function () {
                             im.src = "pics/0.png";
                         }, 125);
                     });
-
                     that.flippedImage = undefined;
                     that.isActive = false;
                 }, 500);
@@ -136,6 +133,7 @@ MemoryGame.prototype.flipCards = function(that, col){
     }, 125);
 
 };
+
 var mem2 = new MemoryGame("test1", 1, 4);
 
 var mem = new MemoryGame("test2", 3, 4);
