@@ -4,6 +4,7 @@ function MemoryGame(rootId, rows, cols){
     this.getRows = function(){return rows;};
     this.setRows = function(value){rows = value;};
     this.getCols = function(){return cols;};
+    this.setCols = function(value){cols = value;};
     this.rootIdText = rootId;
     this.flippedImage = undefined;
     this.isActive = false;
@@ -13,11 +14,15 @@ function MemoryGame(rootId, rows, cols){
     this.flippedCards = [];
     this.turnCounter = 0;
 
-    this.renderBoard();
+    this.getSettings("Memory", "Välj layout och klicka på Starta spel");
 }
-MemoryGame.prototype.initGame = function(rows){
-    if(rows !== undefined){
-        this.setRows(rows);
+MemoryGame.prototype.initGame = function(settings){
+    settings = settings.split(",");
+    if(settings[0] !== undefined){
+        this.setRows(settings[0]);
+    }
+    if(settings[1] !== undefined){
+        this.setCols(settings[1]);
     }
     this.rootId.innerHTML = '';
     this.pictureArray = RandomGenerator.getPictureArray(this.getRows(), this.getCols());
@@ -68,26 +73,30 @@ MemoryGame.prototype.getStructuredArray = function(){
     return output;
 };
 
-MemoryGame.prototype.finishedGame = function() {
+MemoryGame.prototype.getSettings = function(header, body) {
     var div = document.createElement("div");
     div.className = "overlay";
 
     var h = document.createElement("h1");
-    h.innerHTML = "Grattis!";
+    h.innerHTML = header;
     div.appendChild(h);
 
     var p = document.createElement("p");
-    p.innerHTML = "Du klarade av spelet på " + this.turnCounter + " omgångar, vill du spela igen?";
+    p.innerHTML = body;
     div.appendChild(p);
 
     var select = document.createElement("select");
     var options = "";
-    //option.innerHTML = 'test';
-    //select.appendChild(option);
-    for(var i = 0; i < 4; i++) {
-        var s = (this.getRows() == (i+1)) ? " selected " : "" ;
-        var option = "<option value=\"" + (i+1) + "\"" + s + ">4x" + (i+1) + "</option>";
-        options += option;
+
+    for(var i = 1; i <= 4; i++) {
+        for(var j = 1; j <= 4; j++) {
+
+
+            if((i*j)%2 ==0) {
+                var s = ((this.getRows() == i) && this.getCols() == j) ? " selected " : "";
+                options += "<option value=\"" + i + "," + j + "\"" + s + ">" + i + "x" + j + "</option>";
+            }
+        }
     }
     select.innerHTML = options;
     div.appendChild(select);
@@ -127,7 +136,7 @@ MemoryGame.prototype.flipCards = function(that, col){
                 that.turnCounter++;
                 that.flippedCards.push(col['value']);
                 if(that.flippedCards.length >= (that.pictureArray.length/2)){
-                    that.finishedGame();
+                    that.getSettings("Grattis!", "Du klarade av spelet på 2 omgångar, vill du spela igen?");
                 }
                 that.flippedImage = undefined;
                 that.isActive = false;
@@ -154,8 +163,8 @@ MemoryGame.prototype.flipCards = function(that, col){
 
 };
 
-var mem2 = new MemoryGame("test1", 1, 4);
 
-var mem = new MemoryGame("test2", 3, 4);
+var mem2 = new MemoryGame("test1", 2, 4);
+//var mem = new MemoryGame("test2", 1, 4);
 
 
