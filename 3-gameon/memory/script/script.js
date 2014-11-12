@@ -2,6 +2,7 @@
 
 function MemoryGame(rootId, rows, cols){
     this.getRows = function(){return rows;};
+    this.setRows = function(value){rows = value;};
     this.getCols = function(){return cols;};
     this.rootIdText = rootId;
     this.flippedImage = undefined;
@@ -12,9 +13,12 @@ function MemoryGame(rootId, rows, cols){
     this.flippedCards = [];
     this.turnCounter = 0;
 
-    this.initGame();
+    this.renderBoard();
 }
-MemoryGame.prototype.initGame = function(){
+MemoryGame.prototype.initGame = function(rows){
+    if(rows !== undefined){
+        this.setRows(rows);
+    }
     this.rootId.innerHTML = '';
     this.pictureArray = RandomGenerator.getPictureArray(this.getRows(), this.getCols());
     this.structuredArray = this.getStructuredArray();
@@ -67,19 +71,35 @@ MemoryGame.prototype.getStructuredArray = function(){
 MemoryGame.prototype.finishedGame = function() {
     var div = document.createElement("div");
     div.className = "overlay";
+
     var h = document.createElement("h1");
     h.innerHTML = "Grattis!";
+    div.appendChild(h);
+
     var p = document.createElement("p");
     p.innerHTML = "Du klarade av spelet på " + this.turnCounter + " omgångar, vill du spela igen?";
+    div.appendChild(p);
+
+    var select = document.createElement("select");
+    var options = "";
+    //option.innerHTML = 'test';
+    //select.appendChild(option);
+    for(var i = 0; i < 4; i++) {
+        var s = (this.getRows() == (i+1)) ? " selected " : "" ;
+        var option = "<option value=\"" + (i+1) + "\"" + s + ">4x" + (i+1) + "</option>";
+        options += option;
+    }
+    select.innerHTML = options;
+    div.appendChild(select);
+
     var button = document.createElement("button");
     button.innerHTML = "Starta spel";
     var that = this;
     button.onclick = function(){
-        that.initGame();
+        that.initGame(select.value);
     };
-    div.appendChild(h);
-    div.appendChild(p);
     div.appendChild(button);
+
     this.rootId.appendChild(div);
 };
 

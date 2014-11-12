@@ -2,7 +2,8 @@
     perspective: 800px;
     width: 480px;
     min-height: 180px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
+
 }
 
 .GameOn-Memory .overlay{
@@ -15,6 +16,7 @@
     color: white;
     font-weight: bold;
     text-align: center;
+    border-radius: 10px;
 
 }
 .GameOn-Memory .overlay button {
@@ -58,7 +60,7 @@
     transition: all 0.25s linear;
 }
 .GameOn-Memory .row img.flipped {
-    transform: rotateY(-180deg);
+    transform: rotateY(-180deg) scaleX(-1);
 }
 
 .GameOn-Memory .gameBoard .row .col img{
