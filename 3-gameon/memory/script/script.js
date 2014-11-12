@@ -3,11 +3,17 @@
 function MemoryGame(rootId, rows, cols){
     this.getRows = function(){return rows;};
     this.getCols = function(){return cols;};
+    this.rootIdText = rootId;
+    this.flippedImage = undefined;
+    this.isActive = false;
     this.rootId = document.getElementById(rootId);
     this.pictureArray = RandomGenerator.getPictureArray(this.getRows(), this.getCols());
     this.structuredArray = this.getStructuredArray();
+    this.flippedCards = [];
+
+
     this.renderBoard();
-    this.flippedImage;
+
 }
 
 MemoryGame.prototype.renderBoard = function(){
@@ -23,33 +29,12 @@ MemoryGame.prototype.renderBoard = function(){
             a.href = "#";
             img = document.createElement("img");
             img.src = "pics/0.png";
-            img.id = that.rootId+"-"+col['id'];
+            img.id = that.rootIdText+"-"+col['id'];
             a.appendChild(img);
             a.onclick = function(e){
                 e.preventDefault();
-                tmpImg = this.firstChild;
-                tmpImg.className = "flipped";
-
-                setTimeout(function(){
-                    tmpImg.src = "pics/" + col['value'] + ".png";
-                }, 125);
-
-                if(that.flippedImage === undefined) {
-                    that.flippedImage = [];
-                    that.flippedImage['elementId'] = tmpImg.id;
-                    that.flippedImage['value'] = col['value'];
-                }else{
-                    if(that.flippedImage['elementId'] != tmpImg.id && that.flippedImage['value'] === col['value']){
-                        alert('hooray');
-                        that.flippedImage = undefined;
-                    }else if(that.flippedImage['elementId'] === tmpImg.id){
-                        //Do nothing
-                    }
-                    else{
-                        alert('wrong');
-                        that.flippedImage = undefined;
-                    }
-
+                if(that.isActive === false && that.flippedCards.indexOf(col['value']) !== 0) {
+                    that.flipCards(this, col);
                 }
             };
             div.appendChild(a);
@@ -71,5 +56,58 @@ MemoryGame.prototype.getStructuredArray = function(){
     }
     return output;
 };
+MemoryGame.prototype.finishedGame = function() {
 
-var mem = new MemoryGame("test1", 4, 4);
+};
+MemoryGame.prototype.flipCards = function(that, col){
+    var img;
+
+    img = that.firstChild;
+
+    that = this;
+    that.isActive = true;
+
+    img.className = "flipped";
+
+    setTimeout(function () {
+        img.src = "pics/" + col['value'] + ".png";
+
+        if (that.flippedImage === undefined) {
+            that.flippedImage = [];
+            that.flippedImage['elementId'] = img.id;
+            that.flippedImage['value'] = col['value'];
+            that.isActive = false;
+        } else {
+            that.isActive = true;
+            if (that.flippedImage['elementId'] != img.id && that.flippedImage['value'] === col['value']) {
+
+                that.flippedCards.push(col['value']);
+                if(that.flippedCards.length >= (that.pictureArray.length/2)){
+                    that.finishedGame();
+                }
+                that.flippedImage = undefined;
+                that.isActive = false;
+            } else if (that.flippedImage['elementId'] === img.id) {
+                that.isActive = false;
+            }
+            else {
+                setTimeout(function () {
+                    var images = [img, document.getElementById(that.flippedImage['elementId'])];
+                    images.forEach(function(im){
+                        im.className  = "";
+                        setTimeout(function () {
+                            im.src = "pics/0.png";
+                        }, 125);
+                    });
+
+                    that.flippedImage = undefined;
+                    that.isActive = false;
+                }, 500);
+            }
+
+        }
+    }, 125);
+
+};
+
+var mem = new MemoryGame("test1", 2, 4);
