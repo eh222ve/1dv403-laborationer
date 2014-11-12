@@ -136,5 +136,8 @@ MemoryGame.prototype.flipCards = function(that, col){
     }, 125);
 
 };
+var mem2 = new MemoryGame("test1", 1, 4);
 
-var mem = new MemoryGame("test1", 3, 4);
+var mem = new MemoryGame("test2", 3, 4);
+
+
