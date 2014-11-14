@@ -27,34 +27,33 @@ Minesweeper.prototype.drawGame = function(){
     function clicked(e){
         e.preventDefault();
         if(that.gameOver === false) {
-            var offsetX = Math.floor((e.pageX - this.offsetLeft) / that.PictureWidth);
-            var offsetY = Math.floor((e.pageY - this.offsetTop) / that.PictureWidth);
-            if (that.isTurned(offsetY, offsetX) === false) {
+            var col = Math.floor((e.pageX - this.offsetLeft) / that.PictureWidth);
+            var row = Math.floor((e.pageY - this.offsetTop) / that.PictureWidth);
+            if (that.isTurned(row, col) === false) {
                 if (e.which === 3) {
-                    if(that.isMarked(offsetY, offsetX) === false) {
-                        that.setMarker(offsetY, offsetX);
-                    }else if(that.isMarked(offsetY, offsetX) === true) {
-                        that.removeMarker(offsetY, offsetX);
+                    if(that.isMarked(row, col) === false) {
+                        that.setMarker(row, col);
+                    }else if(that.isMarked(row, col) === true) {
+                        that.removeMarker(row, col);
                     }
                 } else {
-                    if (that.hasMine(offsetY, offsetX)) {
+                    if (that.hasMine(row, col)) {
                         that.mines.forEach(function (mine) {
                             that.setImage(mine[0], mine[1], "images/bomb.png");
                         });
-                        that.setImage(offsetY, offsetX, "images/bombred.png");
+                        that.setImage(row, col, "images/bombred.png");
                         clearTimeout(that.timerClock);
                         that.gameOver = true;
-                    } else if (that.hasNeighborMines(offsetY, offsetX) > 0) {
-                        that.turnImage(offsetY, offsetX);
-                        that.setImage(offsetY, offsetX, "images/" + that.hasNeighborMines(offsetY, offsetX) + ".png");
-                        that.turnedImages++;
-                    } else {
-                        that.revealZeros(offsetY, offsetX);
+                    }else {
+                        that.showEmptyTiles(row, col);
                     }
                 }
                 bombsLeft.innerHTML = that.numberOfMines - that.markedImages;
                 if (that.markedImages + that.turnedImages >= that.GameWidth * that.GameWidth && that.markedImages === that.numberOfMines) {
-                    alert('Congratz!');
+                    alert('Congratz! You won!');
+                    clearTimeout(that.timerClock);
+                    that.gameOver = true;
+
                 }
             }
         }
@@ -133,7 +132,7 @@ Minesweeper.prototype.calculateMines = function(){
     }
 };
 
-Minesweeper.prototype.revealZeros = function(row, col) {
+Minesweeper.prototype.showEmptyTiles = function(row, col) {
 
     if(row >= this.GameWidth || row < 0 || col >= this.GameWidth || col < 0 || this.isTurned(row, col) === true || this.hasMine(row,col)) {
         return;
@@ -145,14 +144,14 @@ Minesweeper.prototype.revealZeros = function(row, col) {
         return;
     }
     this.setImage(row, col, "images/empty.png");
-    this.revealZeros(row-1, col);
-    this.revealZeros(row-1, col+1);
-    this.revealZeros(row-1, col-1);
-    this.revealZeros(row+1, col);
-    this.revealZeros(row+1, col+1);
-    this.revealZeros(row+1, col-1);
-    this.revealZeros(row, col-1);
-    this.revealZeros(row, col+1);
+    this.showEmptyTiles(row-1, col);
+    this.showEmptyTiles(row-1, col+1);
+    this.showEmptyTiles(row-1, col-1);
+    this.showEmptyTiles(row+1, col);
+    this.showEmptyTiles(row+1, col+1);
+    this.showEmptyTiles(row+1, col-1);
+    this.showEmptyTiles(row, col-1);
+    this.showEmptyTiles(row, col+1);
 
 };
 
