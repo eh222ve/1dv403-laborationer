@@ -2,7 +2,7 @@
 
 function Minesweeper(id){
     this.rootId = document.getElementById(id);
-    this.GameWidth = 9;
+    this.GameWidth = 15;
     this.PictureWidth = 25;
     this.board, this.numberOfMines, this.mines, this.turnedImages, this.markedImages, this.gameOver, this.timerClock;
 
@@ -69,7 +69,7 @@ Minesweeper.prototype.drawGame = function(){
     var header = document.createElement("header");
 
     var newButton = document.createElement("button");
-    newButton.innerHTML = "Nytt spel";
+    newButton.innerHTML = "New Game";
     newButton.onclick = function(){
         that.initGame();
     };
