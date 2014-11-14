@@ -1,9 +1,24 @@
 #test1{
     border: 1px solid #000;
+    padding: 10px;
+
+
+    border: 1px solid #bcbcbc;
+
+    border-radius: 10px;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(45deg,  rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(47%,rgba(246,246,246,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* IE10+ */
+    background: linear-gradient(45deg,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 #test1 header{
     display: block;
     overflow: auto;
+    margin-bottom: 10px;
 }
 #test1 .row{
     height: 25px;
@@ -16,11 +31,56 @@
 
 #test1 .timer{
     float: right;
-
+    overflow: auto;
+    height: 25px;
 }
 
 #test1 .bombsLeft{
     float: left;
+}
+#test1 .bombsLeft:before{
+    content: url('images/bomb-transparent.png');
+    margin-left: 2px;
+    position: absolute;
+    left: 0;
+}
+
+#test1 .timer:after{
+    content: url('images/clock.png');
+    margin-right: 2px;
+    position: absolute;
+    right: 0;
+}
+
+
+
+#test1 button {
+    height: 50px;
+    display: inline-block;
+    position: relative;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+}
+
+#test1 button:hover {
+    color: #555;
 }
 
 #test1 .bombsLeft, #test1 .timer, #test1 button{
@@ -28,7 +88,11 @@
     text-align: center;
     padding: 10px 0;
 }
-
+@import url(http://fonts.googleapis.com/css?family=Exo+2:800);
 #test1 .bombsLeft, #test1 .timer{
-
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 800;
+    color: darkred;
+    position: relative;
+    top: 0;
 }
