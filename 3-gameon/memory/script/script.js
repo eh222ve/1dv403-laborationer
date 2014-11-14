@@ -5,14 +5,9 @@ function MemoryGame(rootId, rows, cols){
     this.setRows = function(value){rows = value;};
     this.getCols = function(){return cols;};
     this.setCols = function(value){cols = value;};
-    this.rootIdText = rootId;
-    this.flippedImage = undefined;
     this.isActive = false;
     this.rootId = document.getElementById(rootId);
-    this.pictureArray = RandomGenerator.getPictureArray(this.getRows(), this.getCols());
-    this.structuredArray = this.getStructuredArray();
-    this.flippedCards = [];
-    this.turnCounter = 0;
+    this.flippedImage, this.pictureArray, this.structuredArray, this.flippedCards, this.turnCounter;
 
     this.getSettings("Memory", "Välj layout och klicka på Starta spel");
 }
@@ -90,8 +85,6 @@ MemoryGame.prototype.getSettings = function(header, body) {
 
     for(var i = 1; i <= 4; i++) {
         for(var j = 1; j <= 4; j++) {
-
-
             if((i*j)%2 ==0) {
                 var s = ((this.getRows() == i) && this.getCols() == j) ? " selected " : "";
                 options += "<option value=\"" + i + "," + j + "\"" + s + ">" + i + "x" + j + "</option>";
@@ -112,12 +105,12 @@ MemoryGame.prototype.getSettings = function(header, body) {
     this.rootId.appendChild(div);
 };
 
-MemoryGame.prototype.flipCards = function(that, col){
+MemoryGame.prototype.flipCards = function(aTag, col){
     var img;
 
-    img = that.firstChild;
+    img = aTag.firstChild;
 
-    that = this;
+    var that = this;
     that.isActive = true;
 
     img.className = "flipped";
@@ -164,7 +157,7 @@ MemoryGame.prototype.flipCards = function(that, col){
 };
 
 
-var mem2 = new MemoryGame("test1", 2, 4);
+new MemoryGame("test1", 2, 4);
 //var mem = new MemoryGame("test2", 1, 4);
 
 

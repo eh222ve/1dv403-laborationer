@@ -1,0 +1,11 @@
+#test1{
+    border: 1px solid #000;
+}
+#test1 .row{
+    height: 25px;
+}
+#test1 .row img{
+    position: relative;
+    top: 0px;
+    width: 25px;
+}
