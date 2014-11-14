@@ -66,16 +66,20 @@ Minesweeper.prototype.drawGame = function(){
     gameArea.onclick = clicked;
     gameArea.addEventListener('contextmenu', clicked);
 
+    var header = document.createElement("header");
+
     var newButton = document.createElement("button");
     newButton.innerHTML = "Nytt spel";
     newButton.onclick = function(){
         that.initGame();
     };
 
-    var bombsLeft = document.createElement("p");
+    var bombsLeft = document.createElement("div");
+    bombsLeft.className = "bombsLeft";
     bombsLeft.innerHTML = this.numberOfMines;
 
-    var clock = document.createElement("p");
+    var clock = document.createElement("div");
+    clock.className = "timer";
     clock.innerHTML = 0;
     var time = 1;
     this.timerClock = setInterval(function(){
@@ -83,9 +87,10 @@ Minesweeper.prototype.drawGame = function(){
         time++;
     }, 1000);
 
-    this.rootId.appendChild(bombsLeft);
-    this.rootId.appendChild(newButton);
-    this.rootId.appendChild(clock);
+    header.appendChild(bombsLeft);
+    header.appendChild(newButton);
+    header.appendChild(clock);
+    this.rootId.appendChild(header);
     this.rootId.appendChild(gameArea);
 
     for(i = 0; i < this.GameWidth; i++){

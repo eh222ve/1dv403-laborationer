@@ -1,6 +1,10 @@
 #test1{
     border: 1px solid #000;
 }
+#test1 header{
+    display: block;
+    overflow: auto;
+}
 #test1 .row{
     height: 25px;
 }
@@ -8,4 +12,23 @@
     position: relative;
     top: 0px;
     width: 25px;
+}
+
+#test1 .timer{
+    float: right;
+
+}
+
+#test1 .bombsLeft{
+    float: left;
+}
+
+#test1 .bombsLeft, #test1 .timer, #test1 button{
+    width: 33%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#test1 .bombsLeft, #test1 .timer{
+
 }
