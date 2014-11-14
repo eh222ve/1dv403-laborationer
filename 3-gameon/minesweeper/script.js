@@ -163,7 +163,7 @@ Minesweeper.prototype.setMarker = function(row, col) {
     this.board[row].rowArray[col].marked = true;
     if(this.markedImages < this.numberOfMines) {
         this.markedImages++;
-        this.setImage(row, col, "images/img2.png");
+        this.setImage(row, col, "images/marked.png");
     }
 };
 
