@@ -30,26 +30,26 @@ Minesweeper.prototype.drawGame = function(){
             var col = Math.floor((e.pageX - this.offsetLeft) / that.PictureWidth);
             var row = Math.floor((e.pageY - this.offsetTop) / that.PictureWidth);
             if (that.isTurned(row, col) === false) {
-                if (e.which === 3) {
-                    if(that.isMarked(row, col) === false) {
+                if (e.which === 3) {                                //Right-click
+                    if(that.isMarked(row, col) === false) {             //Set marker
                         that.setMarker(row, col);
-                    }else if(that.isMarked(row, col) === true) {
+                    }else if(that.isMarked(row, col) === true) {        //Remove marker
                         that.removeMarker(row, col);
                     }
-                } else {
-                    if (that.hasMine(row, col)) {
+                } else {                                            //Left-click
+                    if (that.hasMine(row, col)) {                       //MINE! Game over :(
                         that.mines.forEach(function (mine) {
                             that.setImage(mine[0], mine[1], "images/bomb.png");
                         });
                         that.setImage(row, col, "images/bombred.png");
                         clearTimeout(that.timerClock);
                         that.gameOver = true;
-                    }else {
+                    }else {                                             //Show tiles
                         that.showEmptyTiles(row, col);
                     }
                 }
-                bombsLeft.innerHTML = that.numberOfMines - that.markedImages;
-                if (that.markedImages + that.turnedImages >= that.GameWidth * that.GameWidth && that.markedImages === that.numberOfMines) {
+                bombsLeft.innerHTML = that.numberOfMines - that.markedImages;   //Update marker counter
+                if (that.markedImages + that.turnedImages >= that.GameWidth * that.GameWidth && that.markedImages === that.numberOfMines) { //Are we there yet?
                     alert('Congratz! You won!');
                     clearTimeout(that.timerClock);
                     that.gameOver = true;
@@ -59,29 +59,29 @@ Minesweeper.prototype.drawGame = function(){
         }
     }
 
-    var gameArea = document.createElement("div");
+    var gameArea = document.createElement("div");                           //Game area
     this.rootId.style.width = this.GameWidth * this.PictureWidth + "px";
-    gameArea.style.width = this.GameWidth * this.PictureWidth + "px";
-    gameArea.onclick = clicked;
-    gameArea.addEventListener('contextmenu', clicked);
+    gameArea.style.width = this.GameWidth * this.PictureWidth + "px";           //Set size according to #tiles and size of tiles
+    gameArea.onclick = clicked;                                                 //Left-click
+gameArea.addEventListener('contextmenu', clicked);                              //Right-click
 
-    var header = document.createElement("header");
+    var header = document.createElement("header");                          //Header
 
-    var newButton = document.createElement("button");
+    var newButton = document.createElement("button");                           //New game button
     newButton.innerHTML = "New Game";
     newButton.onclick = function(){
         that.initGame();
     };
 
-    var bombsLeft = document.createElement("div");
+    var bombsLeft = document.createElement("div");                              //Remaining bomb counter
     bombsLeft.className = "bombsLeft";
     bombsLeft.innerHTML = this.numberOfMines;
 
-    var clock = document.createElement("div");
+    var clock = document.createElement("div");                                  //Timer
     clock.className = "timer";
     clock.innerHTML = 0;
     var time = 1;
-    this.timerClock = setInterval(function(){
+    this.timerClock = setInterval(function(){                                       //Interval
         clock.innerHTML = time;
         time++;
     }, 1000);
@@ -92,8 +92,8 @@ Minesweeper.prototype.drawGame = function(){
     this.rootId.appendChild(header);
     this.rootId.appendChild(gameArea);
 
-    for(i = 0; i < this.GameWidth; i++){
-        var row = document.createElement("div");
+    for(i = 0; i < this.GameWidth; i++){                                        //Render HTML and create array
+        var row = document.createElement("div");                                // with elements
         row.className = "row";
 
         var imageArray = [];
@@ -118,7 +118,7 @@ Minesweeper.prototype.drawGame = function(){
 
 };
 
-Minesweeper.prototype.calculateMines = function(){
+Minesweeper.prototype.calculateMines = function(){                              //Calculate position of mines
     for(var i = 0; i < this.numberOfMines; i++){
         var mineRow = Math.floor((Math.random() * this.GameWidth));
         var mineCol = Math.floor((Math.random() * this.GameWidth));
@@ -132,7 +132,7 @@ Minesweeper.prototype.calculateMines = function(){
     }
 };
 
-Minesweeper.prototype.showEmptyTiles = function(row, col) {
+Minesweeper.prototype.showEmptyTiles = function(row, col) {                 //Recursive function to show empty tiles
 
     if(row >= this.GameWidth || row < 0 || col >= this.GameWidth || col < 0 || this.isTurned(row, col) === true || this.hasMine(row,col)) {
         return;
