@@ -5,7 +5,7 @@ function Minesweeper(id){
     this.imagePrefix = "images/";
     this.GameWidth = 9;
     this.PictureWidth = 20;
-    this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20]];
+    this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20], ["Extreme", 70]];
     this.gameOver, this.board = [], this.numberOfMines, this.mines, this.turnedImages, this.markedImages, this.timer, this.clock, this.bombsCounter;
     this.startGame();
 }
