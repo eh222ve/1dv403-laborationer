@@ -21,22 +21,24 @@
     margin-bottom: 10px;
 }
 .GameOn-Minesweeper .row{
-    height: 25px;
+    height: 20px;
 }
 .GameOn-Minesweeper .row img{
     position: relative;
     top: 0;
-    width: 25px;
+    width: 20px;
 }
 
 .GameOn-Minesweeper .timer{
     float: right;
     overflow: auto;
     height: 25px;
+    text-align: left;
 }
 
 .GameOn-Minesweeper .bombsLeft{
     float: left;
+    text-align: right;
 }
 .GameOn-Minesweeper .bombsLeft:before{
     content: url('images/bomb-transparent.png');
@@ -52,7 +54,10 @@
     right: 0;
 }
 
-
+.GameOn-Minesweeper select{
+    display: block;
+    clear: both;
+}
 
 .GameOn-Minesweeper button {
     height: 50px;
@@ -84,8 +89,9 @@
 }
 
 .GameOn-Minesweeper .bombsLeft, .GameOn-Minesweeper .timer, .GameOn-Minesweeper button{
-    width: 33%;
-    text-align: center;
+    width: 30%;
+    margin: 0 1.5%;
+
     padding: 10px 0;
 }
 @import url(http://fonts.googleapis.com/css?family=Exo+2:800);
