@@ -2,95 +2,142 @@
 
 function Questioner(id){
     this.rootId = document.getElementById(id);
-    this.activeQuestion;
     this.nextURL;
     this.moreQuestions = true;
-    this.questionsArr = ["Vad är 1?", "Vad är 2?", "Vad är 3?", "Vad är 4?"];
-    this.answersArr = [["Vet ej", "Wrong answer! :("], ["2", "Correct answer!"], ["Vet ej", "Wrong answer! :("],["Vet ej", "Wrong answer! :("],];
-    this.addAnswer = function(answer, message){
-        this.answersArr.push([answer, message]) ;
-        this.rootId.getElementsByClass("answerBox")[0].value = "";
-        this.updateSidebar();
-    };
+    this.questionsArr;
 
-    this.createHTML();
-    this.updateSidebar();
-    //this.getQuestion("url here from Johan"); //Insert URI
+    this.init();
+
 }
-Questioner.prototype.updateSidebar = function(){
-    var sidebar = this.rootId.querySelector(".previousQuestions");
-    sidebar.innerHTML = '';
-
-    console.log(sidebar);
-
+Questioner.prototype.getScore = function(){
+    var that = this;
+    var scoreBoard = this.rootId.querySelector(".workArea");
+    scoreBoard.innerHTML = '';
+    var score = 0;
     for(var i = 0; i < this.questionsArr.length; i++){
         var container = document.createElement("section");
         container.className = "result";
-        if(this.answersArr[i][1] === "Correct answer!"){
+        if(this.questionsArr[i].response === "Correct answer!"){
+            score++;
             container.classList.add("correct");
-        }else if(this.answersArr[i][1] === "Wrong answer! :("){
+        }else if(this.questionsArr[i].response === "Wrong answer! :("){
             container.classList.add("incorrect");
         }
 
         var question = document.createElement("header");
-        question.innerHTML = this.questionsArr[i];
+        question.innerHTML = this.questionsArr[i].question;
         var aTag = document.createElement("a");
         aTag.href = "#";
         aTag.appendChild(question);
         aTag.onclick = function(e){
             e.preventDefault();
             var sibling = this.parentNode.querySelector(".answer");
+
             sibling.classList.toggle("hidden");
         };
         container.appendChild(aTag);
 
         var answer = document.createElement("section");
         answer.classList.add("answer");
-        answer.classList.add("hidden");
-        answer.innerHTML = "Du svarade: " + this.answersArr[i][0];
+        if(!container.classList.contains("incorrect")) {
+            answer.classList.add("hidden");
+        }
+        answer.innerHTML = "Du svarade: " + this.questionsArr[i].answer;
         container.appendChild(answer);
 
-        sidebar.appendChild(container);
+        scoreBoard.appendChild(container);
     }
 
-};
-Questioner.prototype.getQuestion = function(url){
-    var handleMessage = function(jsonObj){
-        var obj = JSON.parse(jsonObj);
+    var total = document.createElement("div");
+    total.innerHTML = "Du fick " + score + " av " + this.questionsArr.length + " rätt!";
+    total.className = "totalScore";
+    scoreBoard.appendChild(total);
 
-        //Lägg in obj.message i HTML-tagg
+    var newGame = document.createElement("button");
+    newGame.innerHTML = "Ny omgång";
+    newGame.className = "btn newGame";
+    newGame.onclick = function(){
+        that.init();
     };
+    scoreBoard.appendChild(newGame);
 
-    new AjaxCon(url, handleMessage);
 };
 
-Questioner.prototype.sendAnswer = function(answer){
+Questioner.prototype.disableInput = function(){
+    var button = this.rootId.querySelector(".sendAnswer");
+    var text = this.rootId.querySelector(".answerBox");
+
+    text.readOnly = true;
+    button.disabled = true;
+};
+
+Questioner.prototype.enableInput = function(){
+    var button = this.rootId.querySelector(".sendAnswer");
+    var text = this.rootId.querySelector(".answerBox");
+
+    text.readOnly = false;
+    button.disabled = false;
+};
+
+Questioner.prototype.getQuestion = function(url){
     var that = this;
 
     var handleMessage = function(jsonObj){
         var obj = JSON.parse(jsonObj);
+        that.nextURL = obj.nextURL;
+        that.rootId.querySelector(".questionField").innerHTML = obj.question;
+        that.addQuestion(obj.question);
+        that.enableInput();
+        //Lägg in obj.message i HTML-tagg
+    };
 
-        that.addAnswer(answer, obj.message);
+    new AjaxCon(url, handleMessage, "GET");
+};
 
-        if(obj.message === "Correct answer!"){
-            this.nextURL = obj.nextURL;
+Questioner.prototype.sendAnswer = function(answerInput){
+    var that = this;
 
-            this.activeQuestion = obj.question;
+    that.addAnswer(answerInput);
+
+    var handleMessage = function(jsonObj){
+
+        var obj = JSON.parse(jsonObj);
+
+        that.addResponse(obj.message);
+
+        if(obj.nextURL != undefined){
+            that.getQuestion(obj.nextURL);
+        }else if(obj.message !== "Wrong answer! :(" || obj.message !== "Correct answer!"){
+            that.gameOver();
         }else{
-            this.moreQuestions = false;
+            that.error(obj.message);
         }
     };
-    var url = "url/question/question-id/answer/" + answer;
-    new AjaxCon(url, handleMessage);
+    var url = this.nextURL;
+
+    new AjaxCon(url, handleMessage, "POST", JSON.stringify({answer: answerInput}));
+
+};
+
+Questioner.prototype.init = function(){
+    this.questionsArr = [];
+    this.createHTML();
+    this.getQuestion("http://vhost3.lnu.se:20080/question/1");
+};
+
+Questioner.prototype.gameOver = function(){
+    this.getScore();
+    //this.init();
 };
 
 Questioner.prototype.createHTML = function(){
+    var that = this;
+    this.rootId.innerHTML = '';
     var questionDiv = document.createElement("div");
     questionDiv.className = "workArea";
 
     var questionField = document.createElement("div");
     questionField.className = "questionField";
-    questionField.innerHTML = "Här kommer frågorna att visas"
     questionDiv.appendChild(questionField);
 
     var input = document.createElement("input");
@@ -101,36 +148,59 @@ Questioner.prototype.createHTML = function(){
     var button = document.createElement("button");
     button.className = "sendAnswer";
     button.innerHTML = "Skicka svar";
-    button.onclick = function(){
+    var submitForm = function(e){
+        that.disableInput();
         if(input.value != ""){
-            // that.getQuestion(input.value)
+            that.sendAnswer(input.value);
             input.value = "";
-        }else{
-            alert('empty');
+
+        }
+    };
+    button.onclick = submitForm;
+    input.onkeypress = function(e){
+        if(e.keyCode == 13) {
+            submitForm();
         }
     };
     questionDiv.appendChild(button);
 
     this.rootId.appendChild(questionDiv);
-
-    var sidebar = document.createElement("div");
-    sidebar.innerHTML = "Här kommer tidigare frågor att visas";
-    sidebar.className = "previousQuestions";
-    this.rootId.appendChild(sidebar);
 };
 
+Questioner.prototype.addAnswer = function(message){
+    this.questionsArr[this.questionsArr.length - 1].answer = message;
+};
 
+Questioner.prototype.addResponse = function(message){
+      this.questionsArr[this.questionsArr.length - 1].response = message;
+};
+
+Questioner.prototype.addQuestion = function(message){
+
+    this.questionsArr.push({
+        question: message,
+        answer: undefined,
+        response: undefined
+    });
+
+};
+
+Questioner.prototype.error = function(message){
+    this.rootId.innerHTML = "<p>Någonting gick fel!</p><p>Testa att starta om applikationen</p>";
+    console.log(message);
+};
 
 /*
- url/question/"question-id"/answer/"answer"
 
  status 200
  {"message" : "Correct answer!", "nextURL" : nextUrl}
 
  status 400
  {"message" : "Wrong answer! :("}
+
  status 400
  {"message" : "Not a valid JSON with a property named 'answer'"}
+
  status 400
  {"message" : "Bad URL - no question found on that URI"}
  */

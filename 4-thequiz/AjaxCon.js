@@ -1,6 +1,6 @@
 "use strict";
 
-function AjaxCon(url, callback){
+function AjaxCon(url, callback, posttype, params){
     var READY_STATE_UNINITIALIZED = 0;
     var READY_STATE_OPENED      = 1;
     var READY_STATE_SENT        = 2;
@@ -11,7 +11,7 @@ function AjaxCon(url, callback){
 
     xhr.onreadystatechange = function(){
         if(xhr.readyState === READY_STATE_COMPLETE){
-            if(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304){
+            if(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 || xhr.status === 400){
                 callback(xhr.responseText);
             }else{
                 console.log('Läsfel, status: ' + xhr.status);
@@ -19,11 +19,17 @@ function AjaxCon(url, callback){
         }
     };
 
-    xhr.open("get", url, true);
+    if(posttype === "get" || posttype === "GET"){
+        xhr.open("get", url, true);
 
     //xhr.setRequestHeader("If-Modified-Since", "Mon, 01 Sep 2004 00:00:00 GMT");
-
     xhr.send(null)
+
+    }else{
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send(params);
+    }
 }
 
 AjaxCon.prototype.getXHR = function(){

@@ -1,24 +1,40 @@
 #questioner{
-    width: 400px;
-    height: 400px;
+    position: relative;
+    overflow: auto;
+    display: inline-block;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
 }
 
 #questioner .workArea{
-    background-color: white;
-    width: 70%;
+    background-color: #005188;
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background-image: url('images/background.jpg');
     float: left;
     margin: 0;
     padding: 0;
 }
 #questioner .workArea .questionField{
     padding: 20px;
-    font-size: 20px;
+    font-size: 50px;
+    color: white;
 }
-
+#questioner .workArea .answerBox {
+    width: 175px;
+    padding: 5px;
+    min-height: 10px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
 #questioner .workArea button {
-    height: 50px;
+    width: 100px;
+    height: 30px;
     display: inline-block;
-    position: relative;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
     color: #888;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
     text-decoration: none;
@@ -44,9 +60,17 @@
     color: #555;
 }
 
+#questioner .workArea button.newGame {
+    margin-bottom: 10px;
+    width: 80%;
+    right: 10%;
+}
+
 #questioner .previousQuestions{
+    background-color: #005188;
     width: 30%;
     float: left;
+    height: 400px;
     margin: 0;
     padding: 0;
 }
@@ -55,12 +79,13 @@
     display: none;
 }
 
-.previousQuestions section a{
+.workArea section a{
     text-decoration: none;
 }
 
-.previousQuestions section header{
-    margin-bottom: 4px;
+.workArea section header{
+    margin: 10px;
+    margin-bottom: 0;
     display: block;
     position: relative;
     color: #fff;
@@ -70,7 +95,12 @@
     font-size: 12px;
     font-weight: 700;
     font-family: helvetica, arial, sans-serif;
-    border-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+        -webkit-border-top-right-radius: 4px;
+        -moz-border-radius-topleft: 4px;
+        -moz-border-radius-topright: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
     border: 1px solid #bcbcbc;
     opacity: 1;
 
@@ -78,11 +108,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
-.previousQuestions section header:hover{
-    opacity: .8;
-}
-
-.previousQuestions section.correct header{
+.workArea section.correct header{
     background: #a4b357; /* Old browsers */
     background: -moz-linear-gradient(top,  #a4b357 0%, #75890c 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a4b357), color-stop(100%,#75890c)); /* Chrome,Safari4+ */
@@ -93,8 +119,18 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a4b357', endColorstr='#75890c',GradientType=0 ); /* IE6-9 */
     border: 1px solid #a4b357;
 }
+.workArea section.correct header:hover {
+    background: #c4ce92; /* Old browsers */
+    background: -moz-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c4ce92), color-stop(100%, #cbec26)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #c4ce92 0%, #cbec26 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4ce92', endColorstr='#cbec26', GradientType=0); /* IE6-9 */
+}
 
-.previousQuestions section.incorrect header{
+.workArea section.incorrect header{
     background: #ff3019; /* Old browsers */
     background: -moz-linear-gradient(top,  #ff3019 0%, #cf0404 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); /* Chrome,Safari4+ */
@@ -103,4 +139,42 @@
     background: -ms-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #ff3019 0%,#cf0404 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', endColorstr='#cf0404',GradientType=0 ); /* IE6-9 */
+}
+
+.workArea section.incorrect header:hover {
+    background: #ff7869; /* Old browsers */
+    background: -moz-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff7869), color-stop(100%, #fb4141)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ff7869 0%, #fb4141 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7869', endColorstr='#fb4141', GradientType=0); /* IE6-9 */
+}
+
+.workArea section.answer{
+    background-color: #FFF;
+    margin: 10px;
+    margin-top: 0;
+    padding: 8px 8px;
+    text-align: center;
+    -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 4px;
+        -moz-border-radius-bottomright: 4px;
+        -moz-border-radius-bottomleft: 4px;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+}
+
+.workArea .totalScore{
+    position: absolute;
+    bottom: 50px;
+    width: 80%;
+    left: 10%;
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
 }
