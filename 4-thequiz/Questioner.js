@@ -157,11 +157,10 @@ Questioner.prototype.createHTML = function(){
     button.className = "sendAnswer";
     button.innerHTML = "Skicka svar";
     var submitForm = function(e){
-        that.disableInput();
         if(input.value != ""){
+            that.disableInput();
             that.sendAnswer(input.value);
             input.value = "";
-
         }
     };
     button.onclick = submitForm;
