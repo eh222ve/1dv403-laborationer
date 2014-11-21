@@ -11,12 +11,17 @@ function Questioner(id){
 }
 Questioner.prototype.getScore = function(){
     var that = this;
-    var scoreBoard = this.rootId.querySelector(".workArea");
-    scoreBoard.innerHTML = '';
+
+    var game = this.rootId.querySelector(".workArea");
+        game.innerHTML = '';
+    var scoreBoard = document.createElement("div");
+        scoreBoard.className = "questionList";
+        game.appendChild(scoreBoard);
+
     var score = 0;
     for(var i = 0; i < this.questionsArr.length; i++){
         var container = document.createElement("section");
-        container.className = "result";
+            container.className = "result";
         if(this.questionsArr[i].response === "Correct answer!"){
             score++;
             container.classList.add("correct");
@@ -25,33 +30,33 @@ Questioner.prototype.getScore = function(){
         }
 
         var question = document.createElement("header");
-        question.innerHTML = this.questionsArr[i].question;
+            question.innerHTML = this.questionsArr[i].question;
         var aTag = document.createElement("a");
-        aTag.href = "#";
-        aTag.appendChild(question);
-        aTag.onclick = function(e){
-            e.preventDefault();
-            var sibling = this.parentNode.querySelector(".answer");
+            aTag.href = "#";
+            aTag.appendChild(question);
+            aTag.onclick = function(e){
+                e.preventDefault();
+                var sibling = this.parentNode.querySelector(".answer");
 
-            sibling.classList.toggle("hidden");
-        };
-        container.appendChild(aTag);
+                sibling.classList.toggle("hidden");
+            };
+            container.appendChild(aTag);
 
         var answer = document.createElement("section");
-        answer.classList.add("answer");
-        if(!container.classList.contains("incorrect")) {
-            answer.classList.add("hidden");
-        }
-        answer.innerHTML = "Du svarade: " + this.questionsArr[i].answer;
-        container.appendChild(answer);
+            answer.classList.add("answer");
+            if(!container.classList.contains("incorrect")) {
+                answer.classList.add("hidden");
+            }
+            answer.innerHTML = "Du svarade: " + this.questionsArr[i].answer;
+            container.appendChild(answer);
 
-        scoreBoard.appendChild(container);
+            scoreBoard.appendChild(container);
     }
 
     var total = document.createElement("div");
     total.innerHTML = "Du fick " + score + " av " + this.questionsArr.length + " rätt!";
     total.className = "totalScore";
-    scoreBoard.appendChild(total);
+    game.appendChild(total);
 
     var newGame = document.createElement("button");
     newGame.innerHTML = "Ny omgång";
@@ -59,7 +64,7 @@ Questioner.prototype.getScore = function(){
     newGame.onclick = function(){
         that.init();
     };
-    scoreBoard.appendChild(newGame);
+    game.appendChild(newGame);
 
 };
 
@@ -88,7 +93,9 @@ Questioner.prototype.getQuestion = function(url){
         that.rootId.querySelector(".questionField").innerHTML = obj.question;
         that.addQuestion(obj.question);
         that.enableInput();
-        //Lägg in obj.message i HTML-tagg
+
+        console.log("Message received: " + obj.message);
+        console.log("Question received: " + obj.question);
     };
 
     new AjaxCon(url, handleMessage, "GET");
@@ -102,7 +109,7 @@ Questioner.prototype.sendAnswer = function(answerInput){
     var handleMessage = function(jsonObj){
 
         var obj = JSON.parse(jsonObj);
-
+        console.log("Message received: " + obj.message);
         that.addResponse(obj.message);
 
         if(obj.nextURL != undefined){
@@ -133,6 +140,7 @@ Questioner.prototype.gameOver = function(){
 Questioner.prototype.createHTML = function(){
     var that = this;
     this.rootId.innerHTML = '';
+    this.rootId.classList.add("thequiz");
     var questionDiv = document.createElement("div");
     questionDiv.className = "workArea";
 
