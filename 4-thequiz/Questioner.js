@@ -30,7 +30,17 @@ Questioner.prototype.getScore = function(){
         }
 
         var question = document.createElement("header");
-            question.innerHTML = this.questionsArr[i].question;
+        var span = document.createElement("span");
+            span.innerHTML = this.questionsArr[i].question;
+            question.appendChild(span);
+
+        var arrow = document.createElement("img");
+            arrow.src = "images/arrow.svg";
+            arrow.alt = "Arrow";
+            if(container.classList.contains("incorrect")) {
+                arrow.className = "up";
+            }
+            question.appendChild(arrow);
         var aTag = document.createElement("a");
             aTag.href = "#";
             aTag.appendChild(question);
@@ -39,6 +49,7 @@ Questioner.prototype.getScore = function(){
                 var sibling = this.parentNode.querySelector(".answer");
 
                 sibling.classList.toggle("hidden");
+                this.parentNode.querySelector("img").classList.toggle("up");
             };
             container.appendChild(aTag);
 
@@ -46,6 +57,7 @@ Questioner.prototype.getScore = function(){
             answer.classList.add("answer");
             if(!container.classList.contains("incorrect")) {
                 answer.classList.add("hidden");
+
             }
             answer.innerHTML = "Du svarade: " + this.questionsArr[i].answer;
             container.appendChild(answer);
@@ -90,7 +102,14 @@ Questioner.prototype.getQuestion = function(url){
     var handleMessage = function(jsonObj){
         var obj = JSON.parse(jsonObj);
         that.nextURL = obj.nextURL;
-        that.rootId.querySelector(".questionField").innerHTML = obj.question;
+        var questionField = that.rootId.querySelector(".questionField");
+        questionField.classList.toggle("opacity-0");
+        setTimeout(function(){
+            questionField.innerHTML = obj.question;
+
+            questionField.classList.toggle("opacity-0");
+        }, 250);
+
         that.addQuestion(obj.question);
         that.enableInput();
 

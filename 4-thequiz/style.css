@@ -32,6 +32,11 @@
 .thequiz .workArea .questionField{
     padding: 20px;
     font-size: 50px;
+    opacity: 1;
+
+    -webkit-transition: opacity 0.25s ease-in-out;
+    -moz-transition: opacity 0.25s ease-in-out;
+    transition: opacity 0.25s ease-in-out;
 }
 .thequiz .workArea .answerBox {
     width: 175px;
@@ -104,6 +109,9 @@
 
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.thequiz .workArea .opacity-0{
+    opacity: 0;
 }
 .thequiz .workArea section header img {
     width: 20px;
