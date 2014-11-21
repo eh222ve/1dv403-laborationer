@@ -1,11 +1,12 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Condensed);
+
 .thequiz{
     position: relative;
     overflow: auto;
     display: inline-block;
     font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
-}
+    width: 300px;
 
-.thequiz .workArea{
     background: rgb(255,255,255); /* Old browsers */
     background: -moz-linear-gradient(45deg,  rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(47%,rgba(246,246,246,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
@@ -14,24 +15,27 @@
     background: -ms-linear-gradient(45deg,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* IE10+ */
     background: linear-gradient(45deg,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-    position: relative;
-    width: 300px;
-    height: 400px;
-    float: left;
-    margin: 0;
-    padding: 0;
-
     border: 1px solid #bcbcbc;
     border-radius: 5px;
+}
+
+.thequiz .workArea{
+    height: 400px;
+    position: relative;
+    overflow: auto;
 }
 .thequiz .workArea .questionList{
     max-height: 320px;
     overflow: auto;
 }
+
+
 .thequiz .workArea .questionField{
-    padding: 20px;
-    font-size: 50px;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20%;
+    font-size: 40px;
     opacity: 1;
 
     -webkit-transition: opacity 0.25s ease-in-out;
