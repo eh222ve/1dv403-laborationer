@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+	 id="svg2" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:version="0.48.3.1 r9886" sodipodi:docname="circle_arrow_down_font_awesome.svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="170.08px"
+	 height="170.08px" viewBox="0 0 170.08 170.08" enable-background="new 0 0 170.08 170.08" xml:space="preserve">
+<sodipodi:namedview  id="namedview8" borderopacity="1" pagecolor="#ffffff" bordercolor="#666666" objecttolerance="10" gridtolerance="10" guidetolerance="10" showgrid="false" inkscape:zoom="0.13169643" inkscape:cx="896" inkscape:cy="896" inkscape:pageopacity="0" inkscape:window-width="640" inkscape:window-maximized="0" inkscape:current-layer="svg2" inkscape:pageshadow="2" inkscape:window-height="480" inkscape:window-x="0" inkscape:window-y="25">
+	</sodipodi:namedview>
+<g id="g4" transform="matrix(1,0,0,-1,121.49153,1293.017)">
+	<path id="path6" inkscape:connector-curvature="0" fill="#FFFFFF" d="M11.905,1207.881c0,1.708-0.569,3.132-1.708,4.271
+		l-8.639,8.637c-1.139,1.139-2.563,1.708-4.271,1.708c-1.709,0-3.133-0.569-4.271-1.708l-17.938-17.938v47.646
+		c0,1.645-0.602,3.069-1.804,4.271s-2.626,1.803-4.271,1.803h-12.148c-1.645,0-3.069-0.601-4.271-1.803
+		c-1.202-1.202-1.803-2.626-1.803-4.271v-47.646l-17.938,17.938c-1.202,1.202-2.625,1.803-4.271,1.803
+		c-1.645,0-3.069-0.601-4.271-1.803l-8.637-8.637c-1.139-1.139-1.708-2.563-1.708-4.271s0.57-3.132,1.708-4.271l34.358-34.357
+		l8.637-8.637c1.139-1.139,2.563-1.709,4.271-1.709c1.708,0,3.131,0.57,4.271,1.709l8.637,8.637l34.358,34.357
+		C11.336,1204.75,11.905,1206.173,11.905,1207.881z M35.822,1207.977c0-13.224-3.258-25.42-9.775-36.588
+		c-6.518-11.166-15.358-20.01-26.526-26.527c-11.168-6.516-23.364-9.775-36.588-9.775c-13.224,0-25.42,3.26-36.588,9.775
+		c-11.167,6.518-20.01,15.361-26.527,26.527c-6.517,11.168-9.776,23.364-9.776,36.588c0,13.224,3.259,25.42,9.776,36.588
+		s15.36,20.01,26.527,26.528c11.168,6.517,23.364,9.775,36.588,9.775c13.224,0,25.42-3.258,36.588-9.775
+		c11.168-6.518,20.01-15.36,26.526-26.528C32.564,1233.397,35.822,1221.201,35.822,1207.977z"/>
+</g>
+</svg>

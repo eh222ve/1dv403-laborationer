@@ -105,6 +105,23 @@
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
+.thequiz .workArea section header img {
+    width: 20px;
+    position: absolute;
+    right: 5px;
+    -webkit-transition-duration: 0.4s;
+    -moz-transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.thequiz .workArea section header img.up {
+
+
+    -webkit-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -o-transform:rotate(180deg);
+}
 .thequiz .workArea section.result {
     margin: 10px;
     border-radius: 4px;
