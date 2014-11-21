@@ -1,0 +1,89 @@
+.GameOn-Memory{
+    perspective: 800px;
+    width: 280px;
+    height: 280px;
+    min-height: 180px;
+    border-radius: 10px;
+}
+
+.GameOn-Memory .overlay{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(242,205,103,0.9);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+
+}
+.GameOn-Memory .overlay button {
+    height: 50px;
+    margin-left: 5%;
+    display: inline-block;
+    position: relative;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+}
+
+.GameOn-Memory .overlay select {
+    -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    background-image: url(images/selectarrow.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background-position: 90% center;
+    background-repeat: no-repeat;
+    border: 1px solid #AAA;
+    color: #555;
+    font-size: inherit;
+    overflow: hidden;
+    padding: 3px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100px;
+}
+
+.GameOn-Memory .overlay button:hover {
+    color: #555;
+}
+
+.GameOn-Memory .row img{
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    width: 20%;
+    margin: 2.5%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.12);
+    transform-style: preserve-3d;
+    transition: all 0.25s linear;
+}
+.GameOn-Memory .row img.flipped {
+    transform: rotateY(-180deg) scaleX(-1);
+}
+
+.GameOn-Memory .gameBoard .row .col img{
+    width: 100px;
+    height: 100px;
+}

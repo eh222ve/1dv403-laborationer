@@ -1,0 +1,168 @@
+section, date{
+    display: block;
+}
+
+.labbymezzage{
+    width: 250px;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+    position: relative;
+    overflow: auto;
+}
+
+.labbymezzage h1{
+    text-align: center;
+    font-size: 22px;
+}
+
+.labbymezzage .labbyMezzageArea{
+    width: 95%;
+    margin: 0 auto;
+    height: 200px;
+    overflow: auto;
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar
+{
+    width: 5px;  /* for vertical scrollbars */
+    height: 5px; /* for horizontal scrollbars */
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar-thumb
+{
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+.labbymezzage .labbyMezzageArea section p{
+    max-width: 80%;
+}
+
+.labbymezzage .labbyMezzageArea section img{
+    position: relative;
+    top: 0;
+    float: right;
+    max-width: 7%;
+    margin-right: 2px;
+    margin-bottom: 5px;
+}
+
+.labbymezzage .labbyMezzageArea section img:hover, .labbymezzage .submitBtn:hover{
+    cursor: pointer;
+
+}
+.labbymezzage .labbyMezzageArea section p{
+    line-height: 14px;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.labbymezzage .labbyMezzageArea section
+{
+    clear: both;
+    font-size: medium;
+    position: relative;
+    width: 80%;
+    padding: 10px;
+    background: #FFFFFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #bcbcbc;
+    margin-bottom: 10px;
+}
+
+.labbymezzage .labbyMezzageArea section:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent #FFFFFF;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -10px;
+    right: -10px;
+    top: 50%;
+}
+
+.labbymezzage .labbyMezzageArea section:before
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent #bcbcbc;
+    display: block;
+    width: 0;
+    z-index: 0;
+    margin-top: -10px;
+    right: -11px;
+    top: 50%;
+}
+
+
+.labbymezzage .labbyMezzageArea date{
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    font-size: smaller;
+    text-align: right;
+    color: #999999;
+    font-style: italic;
+}
+
+.labbymezzage .labbyMezzageCount{
+    text-align: right;
+    color: #999999;
+    font-style: italic;
+    margin: 0 10px;
+    border-bottom: 1px solid #D6D6D6;
+    margin-bottom: 10px;
+}
+
+.labbymezzage .labbyMezzageContent{
+    float: left;
+    width: 55%;
+    margin-left: 5%;
+    resize: none;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+    font-size: small;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+
+.labbymezzage .submitBtn {
+    float: left;
+    height: 50px;
+    margin-left: 5%;
+    display: inline-block;
+    position: relative;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255,255,255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+}
+
+.labbymezzage .submitBtn:hover {
+    color: #555;
+}
