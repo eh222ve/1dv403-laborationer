@@ -1,12 +1,12 @@
 "use strict";
 
 function Minesweeper(id){
-    this.rootId = document.getElementById(id);
+    this.rootId = id;
     this.rootId.classList.add("GameOn-Minesweeper");
     this.imagePrefix = "js/minesweeper/images/";
     this.GameWidth = 9;
     this.PictureWidth = 20;
-    this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20], ["Extreme", 70]];
+    this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20]];
     this.gameOver, this.board = [], this.numberOfMines, this.mines, this.turnedImages, this.markedImages, this.timer, this.clock, this.bombsCounter;
     this.startGame();
 }
@@ -38,8 +38,8 @@ Minesweeper.prototype.drawGame = function(){
     function clicked(e){
         e.preventDefault();
         if(that.gameOver === false) {
-            var col = Math.floor((e.pageX - this.offsetLeft) / that.PictureWidth);
-            var row = Math.floor((e.pageY - this.offsetTop) / that.PictureWidth);
+            var col = Math.floor((e.pageX -this.getBoundingClientRect().left) / that.PictureWidth);
+            var row = Math.floor((e.pageY -this.getBoundingClientRect().top) / that.PictureWidth);
             if (that.isTurned(row, col) === false) {
                 if (e.which === 3) {                                //Right-click
                     if(that.isMarked(row, col) === false) {             //Set marker
