@@ -1,7 +1,7 @@
 "use strict";
 
 function Questioner(id){
-    this.rootId = document.getElementById(id);
+    this.rootId = id;
     this.nextURL;
     this.moreQuestions = true;
     this.questionsArr;
@@ -35,7 +35,7 @@ Questioner.prototype.getScore = function(){
             question.appendChild(span);
 
         var arrow = document.createElement("img");
-            arrow.src = "images/arrow.svg";
+            arrow.src = "js/quiz/images/arrow.svg";
             arrow.alt = "Arrow";
             if(container.classList.contains("incorrect")) {
                 arrow.className = "up";
