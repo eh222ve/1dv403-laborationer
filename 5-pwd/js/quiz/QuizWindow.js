@@ -1,18 +1,20 @@
 "use strict";
+QuizWindow.prototype = new Window();
+QuizWindow.prototype.constructor = QuizWindow;
 
-function Questioner(id){
-    this.rootId = id;
+function QuizWindow(self, xPos, yPos) {
+    this.WindowConstruct("Quiz", false, self, xPos, yPos);
+    this.app = this.app;
     this.nextURL;
     this.moreQuestions = true;
     this.questionsArr;
 
     this.init();
-
 }
-Questioner.prototype.getScore = function(){
+QuizWindow.prototype.getScore = function(){
     var that = this;
 
-    var game = this.rootId.querySelector(".workArea");
+    var game = this.app.querySelector(".workArea");
         game.innerHTML = '';
     var scoreBoard = document.createElement("div");
         scoreBoard.className = "questionList";
@@ -22,10 +24,10 @@ Questioner.prototype.getScore = function(){
     for(var i = 0; i < this.questionsArr.length; i++){
         var container = document.createElement("section");
             container.className = "result";
-        if(this.questionsArr[i].response === "Correct answer!"){
+        if(this.questionsArr[i].response === "Correct answer!" && this.questionsArr[i].tries === 1){
             score++;
             container.classList.add("correct");
-        }else if(this.questionsArr[i].response === "Wrong answer! :("){
+        }else if(this.questionsArr[i].response === "Wrong answer! :(" || this.questionsArr[i].tries > 1){
             container.classList.add("incorrect");
         }
 
@@ -37,7 +39,7 @@ Questioner.prototype.getScore = function(){
         var arrow = document.createElement("img");
             arrow.src = "js/quiz/images/arrow.svg";
             arrow.alt = "Arrow";
-            if(container.classList.contains("incorrect")) {
+            if(container.classList.contains("incorrect")  || this.questionsArr[i].tries > 1) {
                 arrow.className = "up";
             }
             question.appendChild(arrow);
@@ -55,11 +57,14 @@ Questioner.prototype.getScore = function(){
 
         var answer = document.createElement("section");
             answer.classList.add("answer");
-            if(!container.classList.contains("incorrect")) {
+            if(!container.classList.contains("incorrect") && this.questionsArr[i].tries == 1) {
                 answer.classList.add("hidden");
 
             }
             answer.innerHTML = "Du svarade: " + this.questionsArr[i].answer;
+            if(this.questionsArr[i].tries > 1){
+                answer.innerHTML += " efter " + this.questionsArr[i].tries + " försök"
+            }
             container.appendChild(answer);
 
             scoreBoard.appendChild(container);
@@ -80,29 +85,29 @@ Questioner.prototype.getScore = function(){
 
 };
 
-Questioner.prototype.disableInput = function(){
-    var button = this.rootId.querySelector(".sendAnswer");
-    var text = this.rootId.querySelector(".answerBox");
+QuizWindow.prototype.disableInput = function(){
+    var button = this.app.querySelector(".sendAnswer");
+    var text = this.app.querySelector(".answerBox");
 
     text.readOnly = true;
     button.disabled = true;
 };
 
-Questioner.prototype.enableInput = function(){
-    var button = this.rootId.querySelector(".sendAnswer");
-    var text = this.rootId.querySelector(".answerBox");
+QuizWindow.prototype.enableInput = function(){
+    var button = this.app.querySelector(".sendAnswer");
+    var text = this.app.querySelector(".answerBox");
 
     text.readOnly = false;
     button.disabled = false;
 };
 
-Questioner.prototype.getQuestion = function(url){
+QuizWindow.prototype.getQuestion = function(url){
     var that = this;
 
     var handleMessage = function(jsonObj){
         var obj = JSON.parse(jsonObj);
         that.nextURL = obj.nextURL;
-        var questionField = that.rootId.querySelector(".questionField");
+        var questionField = that.app.querySelector(".questionField");
         questionField.classList.toggle("opacity-0");
         setTimeout(function(){
             questionField.innerHTML = obj.question;
@@ -112,15 +117,15 @@ Questioner.prototype.getQuestion = function(url){
 
         that.addQuestion(obj.question);
         that.enableInput();
-
+        that.setStatus("Waiting on input...");
         console.log("Message received: " + obj.message);
         console.log("Question received: " + obj.question);
     };
-
+    that.setStatus("Waiting on question from server");
     new AjaxCon(url, handleMessage, "GET");
 };
 
-Questioner.prototype.sendAnswer = function(answerInput){
+QuizWindow.prototype.sendAnswer = function(answerInput){
     var that = this;
 
     that.addAnswer(answerInput);
@@ -128,38 +133,42 @@ Questioner.prototype.sendAnswer = function(answerInput){
     var handleMessage = function(jsonObj){
 
         var obj = JSON.parse(jsonObj);
-        console.log("Message received: " + obj.message);
+        console.log(obj);
         that.addResponse(obj.message);
 
         if(obj.nextURL != undefined){
             that.getQuestion(obj.nextURL);
-        }else if(obj.message !== "Wrong answer! :(" || obj.message !== "Correct answer!"){
+        }else if(obj.message === "Wrong answer! :("){
+            that.enableInput();
+            that.addFailure();
+            that.setStatus("Waiting on input...");
+        }
+        else{
             that.gameOver();
-        }else{
-            that.error(obj.message);
+            that.setStatus("No more questions!");
         }
     };
     var url = this.nextURL;
 
+    this.setStatus("Sending answer to server");
     new AjaxCon(url, handleMessage, "POST", JSON.stringify({answer: answerInput}));
 
 };
 
-Questioner.prototype.init = function(){
+QuizWindow.prototype.init = function(){
     this.questionsArr = [];
-    this.createHTML();
+    this.render();
     this.getQuestion("http://vhost3.lnu.se:20080/question/1");
 };
 
-Questioner.prototype.gameOver = function(){
+QuizWindow.prototype.gameOver = function(){
     this.getScore();
-    //this.init();
 };
 
-Questioner.prototype.createHTML = function(){
+QuizWindow.prototype.render = function(){
     var that = this;
-    this.rootId.innerHTML = '';
-    this.rootId.classList.add("thequiz");
+    this.app.innerHTML = '';
+    this.app.classList.add("thequiz");
     var questionDiv = document.createElement("div");
     questionDiv.className = "workArea";
 
@@ -190,43 +199,36 @@ Questioner.prototype.createHTML = function(){
     };
     questionDiv.appendChild(button);
 
-    this.rootId.appendChild(questionDiv);
+    this.app.appendChild(questionDiv);
 };
 
-Questioner.prototype.addAnswer = function(message){
+QuizWindow.prototype.addAnswer = function(message){
     this.questionsArr[this.questionsArr.length - 1].answer = message;
 };
 
-Questioner.prototype.addResponse = function(message){
+QuizWindow.prototype.addResponse = function(message){
       this.questionsArr[this.questionsArr.length - 1].response = message;
 };
 
-Questioner.prototype.addQuestion = function(message){
+QuizWindow.prototype.addQuestion = function(message){
 
     this.questionsArr.push({
         question: message,
         answer: undefined,
-        response: undefined
+        response: undefined,
+        tries: 1
     });
 
 };
 
-Questioner.prototype.error = function(message){
-    this.rootId.innerHTML = "<p>Någonting gick fel!</p><p>Testa att starta om applikationen</p>";
+QuizWindow.prototype.error = function(message){
+    this.app.innerHTML = "<p>Någonting gick fel!</p><p>Testa att starta om applikationen</p>";
     console.log(message);
 };
 
-/*
-
- status 200
- {"message" : "Correct answer!", "nextURL" : nextUrl}
-
- status 400
- {"message" : "Wrong answer! :("}
-
- status 400
- {"message" : "Not a valid JSON with a property named 'answer'"}
-
- status 400
- {"message" : "Bad URL - no question found on that URI"}
- */
+QuizWindow.prototype.addFailure = function(){
+    this.questionsArr[this.questionsArr.length - 1].tries++;
+    var pTag = document.createElement("p");
+    pTag.innerHTML = "Fel svar, försök igen!";
+    this.app.querySelector(".questionField").appendChild(pTag);
+};

@@ -32,6 +32,14 @@
     -moz-transition: opacity 0.25s ease-in-out;
     transition: opacity 0.25s ease-in-out;
 }
+
+.thequiz .workArea .questionField p{
+    font-family: 'Ubuntu Condensed', sans-serif;
+    text-align: center;
+    font-size: 14px;
+    color: red;
+}
+
 .thequiz .workArea .answerBox {
     width: 175px;
     padding: 5px;

@@ -1,15 +1,22 @@
 "use strict";
+Minesweeper.prototype = new Window();
+Minesweeper.prototype.constructor = Minesweeper;
+function Minesweeper(self, xPos, yPos) {
+    this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20]];
 
-function Minesweeper(id){
-    this.rootId = id;
-    this.rootId.classList.add("GameOn-Minesweeper");
+    this.WindowConstruct("Minesweeper", false, self, xPos, yPos);
+
+    this.app.classList.add("GameOn-Minesweeper");
     this.imagePrefix = "js/minesweeper/images/";
     this.GameWidth = 9;
     this.PictureWidth = 20;
-    this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20]];
+
     this.gameOver, this.board = [], this.numberOfMines, this.mines, this.turnedImages, this.markedImages, this.timer, this.clock, this.bombsCounter;
     this.startGame();
 }
+Minesweeper.prototype.ClearTimers = function(){
+    clearInterval(this.timer);
+};
 //Setting up game
 Minesweeper.prototype.startGame = function(){
     this.setDefaultValues();
@@ -33,7 +40,7 @@ Minesweeper.prototype.setDefaultValues = function() {
 Minesweeper.prototype.drawGame = function(){
     var that = this;
     var i;
-    that.rootId.innerHTML = '';
+    that.app.innerHTML = '';
 
     function clicked(e){
         e.preventDefault();
@@ -71,26 +78,10 @@ Minesweeper.prototype.drawGame = function(){
     }
 
     var gameArea = document.createElement("div");                           //Game area
-    this.rootId.style.width = this.GameWidth * this.PictureWidth + "px";
+    this.app.style.width = this.GameWidth * this.PictureWidth + "px";
     gameArea.style.width = this.GameWidth * this.PictureWidth + "px";           //Set size according to #tiles and size of tiles
     gameArea.onclick = clicked;                                                 //Left-click
     gameArea.addEventListener('contextmenu', clicked);                              //Right-click
-
-    var changeDifficulty = document.createElement("select");
-    changeDifficulty.addEventListener('change', function(){
-        that.GameWidth = this.value;
-        that.startGame();
-    });
-
-    this.difficulties.forEach(function(difficulty){
-        var option = document.createElement("option");
-        option.innerHTML = difficulty[0];
-        option.value = difficulty[1];
-        if(that.GameWidth == difficulty[1]){
-            option.selected = true;
-        }
-        changeDifficulty.appendChild(option);
-    });
 
     var header = document.createElement("header");                          //Header
 
@@ -109,12 +100,11 @@ Minesweeper.prototype.drawGame = function(){
 
     this.startTimer();
 
-    header.appendChild(changeDifficulty);
     header.appendChild(this.bombsCounter);
     header.appendChild(newButton);
     header.appendChild(this.clock);
-    this.rootId.appendChild(header);
-    this.rootId.appendChild(gameArea);
+    this.app.appendChild(header);
+    this.app.appendChild(gameArea);
 
     this.board = [];
 
@@ -180,10 +170,29 @@ Minesweeper.prototype.startTimer = function(){
     var time = 1;
     this.timer = setInterval(function(){                                       //Interval
         that.clock.innerHTML = time;
+        console.log("timer");
         time++;
     }, 1000);
 };
 
+Minesweeper.prototype.contextMenu = function(){
+    var that = this;
+    var ul = document.createElement("ul");
+    ul.dataset.name = "Difficulties";
+    that.difficulties.forEach(function(difficulty){
+        var level = document.createElement("li");
+        var aTag = document.createElement("a");
+        aTag.href = "#";
+        aTag.innerHTML = difficulty[0];
+        aTag.onclick = function(){
+            that.GameWidth = difficulty[1];
+            that.startGame();
+        };
+        level.appendChild(aTag);
+        ul.appendChild(level);
+    });
+    return [ul];
+};
 //Event functions
 Minesweeper.prototype.showEmptyTiles = function(row, col) {                 //Recursive function to show empty tiles
     if(row >= this.GameWidth || row < 0 || col >= this.GameWidth || col < 0 || this.isTurned(row, col) === true || this.hasMine(row,col)) {

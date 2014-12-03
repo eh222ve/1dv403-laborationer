@@ -1,6 +1,6 @@
 "use strict";
 
-function Message(message, date){
+function Message(message, date, author){
     this.getText = function(){
         return message;
     };
@@ -16,11 +16,19 @@ function Message(message, date){
     this.setDate = function(_date){
         date = _date;
     };
+
+    this.getAuthor = function(){
+        return author;
+    };
+
+    this.setAuthor = function(_author){
+        author = _author;
+    };
 }
 
 //Retrieve Message body formatted as HTML
 Message.prototype.getHTMLText = function(){
-    return this.getText().replace(/[\n\r]/g, "</br>");
+    return this.getText();//.replace(/[\n\r]/g, "</br>");
 };
 
 //Retrieve Date as formatted string
@@ -35,13 +43,13 @@ Message.prototype.getDateText = function(){
 
     var formattedTime = this.getDate().getHours() + ":" + (this.getDate().getMinutes() < 10 ? '0' : '') + this.getDate().getMinutes() + ":" + (this.getDate().getSeconds() < 10 ? '0' : '') + this.getDate().getSeconds();
 
-    if(seconds < 60){
+    if(seconds < 60 && months < 1){
         return "just now";
     }
-    else if(minutes == 1){
+    else if(minutes == 1 && months === 0){
         return minutes + " minute ago";
     }
-    else if(minutes < 60){
+    else if(minutes < 60 && months === 0){
         return minutes + " minutes ago";
     }
     else if(days < 1 && months === 0){
@@ -52,6 +60,6 @@ Message.prototype.getDateText = function(){
     }
     else
     {
-        return this.getDate().getUTCDate() + "/" + (this.getDate().getMonth() + 1) + " " + formattedTime;
+        return this.getDate().getUTCDate() + "/" + (this.getDate().getMonth() + 1) + "-" + this.getDate().getFullYear();
     }
 };

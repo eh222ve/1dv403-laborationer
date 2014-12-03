@@ -1,28 +1,34 @@
 "use strict";
+MemoryGame.prototype = new Window();
+MemoryGame.prototype.constructor = MemoryGame;
+function MemoryGame(self, xPos, yPos) {
+    var rows = 2, cols = 4;
 
-function MemoryGame(rootId, rows, cols){
-    this.rootId = document.getElementById(rootId);
-    this.rootId.classList.add("GameOn-Memory");
+    this.WindowConstruct("Memory", false, self, xPos, yPos);
+
+    this.app.classList.add("GameOn-Memory");
     this.imageLocation = "js/memory/images/";
+
     this.getRows = function(){return rows;};
     this.setRows = function(value){rows = value;};
+
     this.getCols = function(){return cols;};
     this.setCols = function(value){cols = value;};
+
     this.isActive = false;
 
     this.flippedImage, this.pictureArray, this.structuredArray, this.flippedCards, this.turnCounter;
-
-    this.getSettings("Memory", "Välj layout och klicka på Starta spel");
+    this.resetGame([this.getRows(), this.getCols()]);
 }
 MemoryGame.prototype.resetGame = function(settings){
-    settings = settings.split(",");
+   // settings = settings.split(",");
     if(settings[0] !== undefined){
         this.setRows(settings[0]);
     }
     if(settings[1] !== undefined){
         this.setCols(settings[1]);
     }
-    this.rootId.innerHTML = '';
+    this.app.innerHTML = '';
     this.pictureArray = RandomGenerator.getPictureArray(this.getRows(), this.getCols());
     this.structuredArray = this.getStructuredArray();
     this.flippedImage = undefined;
@@ -53,7 +59,7 @@ MemoryGame.prototype.renderBoard = function(){
             };
             div.appendChild(a);
         });
-        that.rootId.appendChild(div);
+        that.app.appendChild(div);
     });
 };
 
@@ -83,29 +89,15 @@ MemoryGame.prototype.getSettings = function(header, body) {
     p.innerHTML = body;
     div.appendChild(p);
 
-    var select = document.createElement("select");
-    var options = "";
-
-    for(var i = 1; i <= 4; i++) {
-        for(var j = 1; j <= 4; j++) {
-            if((i*j)%2 ==0) {
-                var s = ((this.getRows() == i) && this.getCols() == j) ? " selected " : "";
-                options += "<option value=\"" + i + "," + j + "\"" + s + ">" + i + "x" + j + "</option>";
-            }
-        }
-    }
-    select.innerHTML = options;
-    div.appendChild(select);
-
     var button = document.createElement("button");
     button.innerHTML = "Starta spel";
     var that = this;
     button.onclick = function(){
-        that.resetGame(select.value);
+        that.resetGame([that.getRows(), that.getCols()]);
     };
     div.appendChild(button);
 
-    this.rootId.appendChild(div);
+    this.app.appendChild(div);
 };
 
 MemoryGame.prototype.flipCards = function(aTag, col){
@@ -157,6 +149,43 @@ MemoryGame.prototype.flipCards = function(aTag, col){
         }
     }, 125);
 
+};
+
+MemoryGame.prototype.contextMenu = function(){
+    var that = this;
+
+    var option1 = document.createElement("ul");
+    option1.dataset.name = "Options";
+
+    var level = document.createElement("li");
+    var aTag = document.createElement("a");
+    aTag.href = "#";
+    aTag.innerHTML = "Reset";
+    aTag.onclick = function(e){
+        e.preventDefault();
+        that.resetGame([that.getRows(), that.getCols()]);
+    };
+    level.appendChild(aTag);
+    option1.appendChild(level);
+
+
+    var option2 = document.createElement("ul");
+    var difficulties = [[1,4],[2,4],[3,4],[4,4]];
+
+    option2.dataset.name = "Difficulties";
+    difficulties.forEach(function(difficulty){
+        level = document.createElement("li");
+        aTag = document.createElement("a");
+        aTag.href = "#";
+        aTag.innerHTML = difficulty[0] + "x" + difficulty[1];
+        aTag.onclick = function(e){
+            e.preventDefault();
+            that.resetGame(difficulty);
+        };
+        level.appendChild(aTag);
+        option2.appendChild(level);
+    });
+    return [option1, option2];
 };
 
 

@@ -30,6 +30,10 @@ function AjaxCon(url, callback, posttype, params){
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         xhr.send(params);
     }
+
+    this.abort = function(){
+      xhr.abort();
+    };
 }
 
 AjaxCon.prototype.getXHR = function(){

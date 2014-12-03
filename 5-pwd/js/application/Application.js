@@ -127,6 +127,9 @@ Application.prototype.createHTML = function(){
         case "Quiz":
             this.app = new Questioner(application);
             break;
+        case "Quote":
+            this.app = new Quote(application);
+            break;
     }
 
     main.appendChild(application);
@@ -156,8 +159,6 @@ Application.prototype.createHTML = function(){
         resize.className = "resize noselect";
         resize.ondragstart = function() { return false; };
         resize.addEventListener('mousedown', initDrag, false);
-
-
 
         divApp.appendChild(resize);
     }
