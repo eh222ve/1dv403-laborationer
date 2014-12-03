@@ -2,11 +2,10 @@
 function Window(){
     this.dragY = 0;
     this.dragX = 0;
-    this.resize = false;
     this.dragging = false;
     this.imageFolder = "js/application/images/";
 }
-Window.prototype.focusWindow = function(e){
+Window.prototype.focusWindow = function(){
     var allApps = document.querySelectorAll(".application");
     for(var i = 0; i < allApps.length; i++){
         allApps[i].style.zIndex = "1";
@@ -130,6 +129,9 @@ Window.prototype.createHTML = function(){
         this.contextMenu().forEach(function(menu){
             var contextMenu = menu;
             contextMenu.classList.add("hide");
+            contextMenu.addEventListener('mouseleave', function(){
+                contextMenu.classList.add("hide");
+            }, false);
             var Options = document.createElement("ul");
             Options.classList.add("contextMenu");
             var menuOptions = document.createElement("a");
@@ -141,6 +143,7 @@ Window.prototype.createHTML = function(){
             };
             menuOptions.onclick = toggleHide;
             contextMenu.onclick = toggleHide;
+
             Menu.appendChild(Options);
             Options.appendChild(menuOptions);
             Options.appendChild(contextMenu);
@@ -167,10 +170,14 @@ Window.prototype.createHTML = function(){
             document.documentElement.addEventListener('mouseup', stopDrag, false);
         };
         var doDrag = function(e) {
-            divApp.style.minWidth = (startWidth + e.clientX - startX) + 'px';
-            divApp.style.minHeight = (startHeight + e.clientY - startY) + 'px';
+            if((startWidth + e.clientX - startX) < window.innerWidth - 300) {
+                divApp.style.minWidth = (startWidth + e.clientX - startX) + 'px';
+            }
+            if((startHeight + e.clientY - startY) < window.innerHeight - 200 ){
+                divApp.style.minHeight = (startHeight + e.clientY - startY) + 'px';
+            }
         };
-        var stopDrag = function(e) {
+        var stopDrag = function() {
             document.documentElement.removeEventListener('mousemove', doDrag, false);
             document.documentElement.removeEventListener('mouseup', stopDrag, false);
         };

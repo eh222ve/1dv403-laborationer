@@ -57,7 +57,7 @@ RSSWindow.prototype.contextMenu = function(){
     var level = document.createElement("li");
     var aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Timer interval";
+    aTag.innerHTML = "<img src='js/application/images/interval.png'> Timer interval";
     aTag.onclick = function(e){
         e.preventDefault();
         that.getIntervalSetting();
@@ -68,7 +68,7 @@ RSSWindow.prototype.contextMenu = function(){
     level = document.createElement("li");
     aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Select RSS-feed";
+    aTag.innerHTML = "<img src='js/application/images/setting.png'> Select RSS-feed";
     aTag.onclick = function(e){
         e.preventDefault();
         that.getRSSFeed();
@@ -79,7 +79,7 @@ RSSWindow.prototype.contextMenu = function(){
     level = document.createElement("li");
     aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Refresh";
+    aTag.innerHTML = "<img src='js/application/images/refresh.png'> Refresh";
     aTag.onclick = function(e){
         e.preventDefault();
         that.ClearTimers();
@@ -210,8 +210,8 @@ RSSWindow.prototype.getRSSFeed = function(){
     submit.onclick = function(){
         var value = popup.querySelector('input[name="rssRadio"]:checked').value;
         if(value === "other"){
-            self.feedUrl = input.value;
-            console.log(input.value);
+            self.feedUrl = textinput.value;
+            console.log(textinput.value);
         }else{
             self.feedUrl = value;
             console.log(value);

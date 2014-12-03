@@ -26,62 +26,32 @@ function Desktop(id){
 
     this.element.appendChild(this.navbar);
 
+    var applications = [
+        [MemoryGame, "js/application/images/appIcons/Memory_Large.png"],
+        [Minesweeper, "js/application/images/appIcons/Minesweeper_Large.png"],
+        [QuizWindow, "js/application/images/appIcons/Quiz_Large.png"],
+        [QuoteWindow, "js/application/images/appIcons/Quote_Large.png"],
+        [MessageBoard, "js/application/images/appIcons/Chat_Large.png"],
+        [RSSWindow, "js/application/images/appIcons/RSS_Large.png"],
+        [GalleryWindow, "js/application/images/appIcons/Gallery_Large.png"]
+    ];
 
-    var memory = document.createElement("img");
-    memory.classList.add("appLauncher");
-    memory.src = "js/application/images/appIcons/Memory_Large.png";
-    memory.onclick = function(){
-        self.windows.push(new MemoryGame(self, getPositionX(), getPositionY()));
-    };
-    this.element.appendChild(memory);
+    applications.forEach(function(app){
+        var aTag = document.createElement("a");
+        aTag.href = "#";
+        aTag.classList.add("appLauncher");
+        aTag.onclick = function(e){
+            e.preventDefault();
+            self.windows.push(new app[0](self, getPositionX(), getPositionY()));
+        };
 
-    var minesweeper = document.createElement("img");
-    minesweeper.classList.add("appLauncher");
-    minesweeper.src = "js/application/images/appIcons/Minesweeper_Large.png";
-    minesweeper.onclick = function () {
-        self.windows.push(new Minesweeper(self, getPositionX(), getPositionY()));
-    };
-    this.element.appendChild(minesweeper);
+        var image = document.createElement("img");
 
-    var quiz = document.createElement("img");
-    quiz.classList.add("appLauncher");
-    quiz.src = "js/application/images/appIcons/Quiz_Large.png";
-    quiz.onclick = function () {
-        self.windows.push(new QuizWindow(self, getPositionX(), getPositionY()));
-    };
-    this.element.appendChild(quiz);
+        image.src = app[1];
 
-    var quote = document.createElement("img");
-    quote.classList.add("appLauncher");
-    quote.src = "js/application/images/appIcons/Quote_Large.png";
-    quote.onclick = function () {
-        self.windows.push(new QuoteWindow(self, getPositionX(), getPositionY(), true));
-    };
-    this.element.appendChild(quote);
-
-    var chat = document.createElement("img");
-    chat.classList.add("appLauncher");
-    chat.src = "js/application/images/appIcons/Chat_Large.png";
-    chat.onclick = function(){
-        self.windows.push(new MessageBoard(self, getPositionX(), getPositionY()));
-    };
-    this.element.appendChild(chat);
-
-    var rss = document.createElement("img");
-    rss.classList.add("appLauncher");
-    rss.src = "js/application/images/appIcons/RSS_Large.png";
-    rss.onclick = function () {
-        self.windows.push(new RSSWindow(self, getPositionX(), getPositionY()));
-    };
-    this.element.appendChild(rss);
-
-    var gallery = document.createElement("img");
-    gallery.classList.add("appLauncher");
-    gallery.src = "js/application/images/appIcons/Gallery_Large.png";
-    gallery.onclick = function () {
-        self.windows.push(new GalleryWindow(self, getPositionX(), getPositionY()));
-    };
-    this.element.appendChild(gallery);
+        aTag.appendChild(image);
+        self.element.appendChild(aTag);
+    });
 
     this.hideApp = function(application, url){
         self.navbar.classList.add("showNav");

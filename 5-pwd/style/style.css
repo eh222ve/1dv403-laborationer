@@ -1,6 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:300);
 @import url(http://fonts.googleapis.com/css?family=Oswald);
 
+/*IE fix*/
+header, main, footer, article{
+    display: block;
+}
+
 .desktop{
     font-family: 'Roboto', sans-serif;
     background: url(../js/desktop/background2.jpg) no-repeat center center fixed;
@@ -32,7 +37,7 @@
     left: 0;
     right: 0;
 }
-.desktop img.appLauncher{
+.desktop a.appLauncher{
     background: -moz-linear-gradient(top,  rgba(94,94,94,1) 0%, rgba(14,14,14,0.8) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(94,94,94,1)), color-stop(100%,rgba(14,14,14,0.8))); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* Chrome10+,Safari5.1+ */
@@ -49,7 +54,11 @@
     margin-left: 10px;
     border-radius: 10px;
 }
-.desktop img.appLauncher:hover{
+.desktop a.appLauncher img{
+    height: 60px;
+    width: 60px;
+}
+.desktop a.appLauncher:hover{
     background: rgb(123,123,123); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(123,123,123,1) 0%, rgba(57,57,57,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(123,123,123,1)), color-stop(100%,rgba(57,57,57,1))); /* Chrome,Safari4+ */

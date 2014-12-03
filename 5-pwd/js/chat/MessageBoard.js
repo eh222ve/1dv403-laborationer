@@ -10,9 +10,20 @@ function MessageBoard(self, xPos, yPos) {
     this.messages = [];
     this.imageLocation = "js/chat/images/";
     this.timer = undefined;
-    this.refreshRate = 10000;
-    this.username = "Anonymous";
-    this.history = 20;
+
+    var settings = this.getCookie();
+
+    if(typeof settings === "object"){
+        console.log(settings);
+        this.refreshRate = settings[0];
+        this.username = settings[1];
+        this.history = settings[2];
+    }else{
+        this.refreshRate = 10000;
+        this.username = "Anonymous";
+        this.history = 20;
+    }
+
     this.connection = undefined;
 
     //Run methods on creation
@@ -69,8 +80,7 @@ MessageBoard.prototype.numberOfMessages = function(){
 };
 
 //Render one message and onclick-event for images
-MessageBoard.prototype.renderMessage = function(message, count){
-    var that = this;
+MessageBoard.prototype.renderMessage = function(message){
     var messageMain = document.createElement("section");
 
     var author = document.createElement("p");
@@ -147,7 +157,6 @@ MessageBoard.prototype.renderMessages = function(){
         messageArea.innerHTML = "";
         var count = 0;
 
-        var messageContent = '';
         var that = this;
 
         this.messages.forEach(function (message) {
@@ -190,7 +199,7 @@ MessageBoard.prototype.contextMenu = function(){
     var level = document.createElement("li");
     var aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Nickname";
+    aTag.innerHTML = "<img src='js/application/images/user.png'> Nickname";
     aTag.onclick = function(e){
         e.preventDefault();
         that.getNickSetting();
@@ -201,7 +210,7 @@ MessageBoard.prototype.contextMenu = function(){
     level = document.createElement("li");
     aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Time interval";
+    aTag.innerHTML = "<img src='js/application/images/interval.png'> Time interval";
     aTag.onclick = function(e){
         e.preventDefault();
         that.getIntervalSetting();
@@ -212,7 +221,7 @@ MessageBoard.prototype.contextMenu = function(){
     level = document.createElement("li");
     aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Number of messages";
+    aTag.innerHTML = "<img src='js/application/images/messages.png'> Number of messages";
     aTag.onclick = function(e){
         e.preventDefault();
         that.getHistorySetting();
@@ -223,7 +232,7 @@ MessageBoard.prototype.contextMenu = function(){
     level = document.createElement("li");
     aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Refresh";
+    aTag.innerHTML = "<img src='js/application/images/refresh.png'> Refresh";
     aTag.onclick = function(e){
         e.preventDefault();
         that.ClearTimers();
@@ -267,6 +276,7 @@ MessageBoard.prototype.getIntervalSetting = function(){
     submit.onclick = function(){
         self.ClearTimers();
         self.refreshRate = input.value;
+        self.createCookie();
         self.getMessagesFromServer();
         self.app.parentNode.removeChild(popup);
     };
@@ -306,6 +316,7 @@ MessageBoard.prototype.getHistorySetting = function(){
     submit.onclick = function(){
         self.ClearTimers();
         self.history = input.value;
+        self.createCookie();
         self.getMessagesFromServer();
         self.app.parentNode.removeChild(popup);
     };
@@ -339,9 +350,8 @@ MessageBoard.prototype.getNickSetting = function(){
     var submit = document.createElement("button");
     submit.innerHTML = "Ändra";
     submit.onclick = function(){
-        console.log(self.username);
         self.username = input.value;
-        console.log(self.username);
+        self.createCookie();
         self.app.parentNode.removeChild(popup);
     };
     popup.appendChild(submit);
@@ -349,4 +359,39 @@ MessageBoard.prototype.getNickSetting = function(){
     this.app.parentNode.appendChild(popup);
     input.focus();
     input.select();
+};
+
+MessageBoard.prototype.createCookie = function() {
+    var name = "setting";
+    var value = this.refreshRate + "," + this.username + "," + this.history;
+    var days = 1;
+
+    var expires;
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+};
+
+MessageBoard.prototype.getCookie = function() {
+    var c_name = "setting";
+    if (document.cookie.length > 0) {
+        var c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1;
+            var c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) {
+                c_end = document.cookie.length;
+            }
+
+            return decodeURI(document.cookie.substring(c_start, c_end)).split(',');
+
+        }
+    }
+    return "";
 };

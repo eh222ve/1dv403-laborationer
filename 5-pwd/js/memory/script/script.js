@@ -38,7 +38,7 @@ MemoryGame.prototype.resetGame = function(settings){
 };
 
 MemoryGame.prototype.renderBoard = function(){
-    var div, a, img, tmpImg;
+    var div, a, img;
     var that = this;
 
     this.structuredArray.forEach(function(row){
@@ -160,7 +160,7 @@ MemoryGame.prototype.contextMenu = function(){
     var level = document.createElement("li");
     var aTag = document.createElement("a");
     aTag.href = "#";
-    aTag.innerHTML = "Reset";
+    aTag.innerHTML = "<img src='js/application/images/refresh.png'> Reset";
     aTag.onclick = function(e){
         e.preventDefault();
         that.resetGame([that.getRows(), that.getCols()]);
@@ -177,7 +177,7 @@ MemoryGame.prototype.contextMenu = function(){
         level = document.createElement("li");
         aTag = document.createElement("a");
         aTag.href = "#";
-        aTag.innerHTML = difficulty[0] + "x" + difficulty[1];
+        aTag.innerHTML = "<img src='js/application/images/tiles.png'> " + difficulty[0] + "x" + difficulty[1];
         aTag.onclick = function(e){
             e.preventDefault();
             that.resetGame(difficulty);
