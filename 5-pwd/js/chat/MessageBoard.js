@@ -13,6 +13,7 @@ function MessageBoard(self, xPos, yPos) {
     this.refreshRate = 10000;
     this.username = "Anonymous";
     this.history = 20;
+    this.connection = undefined;
 
     //Run methods on creation
     this.CreateHTMLLayout();
@@ -20,6 +21,9 @@ function MessageBoard(self, xPos, yPos) {
 }
 MessageBoard.prototype.ClearTimers = function(){
     clearInterval(this.timer);
+    if(typeof this.connection !== "undefined") {
+        this.connection.abort();
+    }
 };
 //Create HTML structure and keypress events for application
 MessageBoard.prototype.CreateHTMLLayout = function(){
@@ -86,8 +90,9 @@ MessageBoard.prototype.renderMessage = function(message, count){
 };
 
 MessageBoard.prototype.getMessagesFromServer = function(){
-    var self = this;
+    var self = this, timer;
     var loadMessages = function(response){
+        clearTimeout(timer);
         var parseXml;
         self.messages = [];
         if (typeof window.DOMParser != "undefined") {
@@ -119,11 +124,17 @@ MessageBoard.prototype.getMessagesFromServer = function(){
         self.renderMessages();
     };
     self.setStatus("Retrieving messages");
+    timer = setTimeout(function(){
+        self.setStatus("Laddar meddelanden...<img src='js/application/images/loader_white.gif'>");
+    }, 400);
     var history = (self.history !== undefined) ? "?history=" + self.history : "";
-    new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
+    self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
 
     this.timer = setInterval(function(){
-        new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
+        timer = setTimeout(function(){
+            self.setStatus("Laddar meddelanden...<img src='js/application/images/loader_white.gif'>");
+        }, 400);
+        self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
     }, self.refreshRate)
 };
 
