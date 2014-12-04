@@ -1,4 +1,77 @@
 "use strict";
+function Desktop(id){
+    this.windows = [];
+    this.minimizedApps = 0;
+    this.element = document.getElementById(id);
+    this.navbar = document.createElement("nav");
+    var self = this;
+
+    var getPositionX = function(){
+        var position = 30 * self.windows.length + 30;
+        if(position / (window.innerWidth - 200) > 1){
+            return position - (Math.floor(position / (window.innerWidth - 200)) * (window.innerWidth - 200));
+        }else{
+            return 30 * self.windows.length + 30;
+        }
+    };
+    var getPositionY = function () {
+        var position = 30 * self.windows.length + 30;
+        if(position / (window.innerHeight - 300) > 1){
+            return position - (Math.floor(position / (window.innerHeight - 300)) * (window.innerHeight - 300));
+        }else{
+            return 30 * self.windows.length + 30;
+        }
+    };
+
+    this.element.appendChild(this.navbar);
+
+    var applications = [
+        [MemoryGame, "images/appIcons/Memory_Large.png"],
+        [Minesweeper, "images/appIcons/Minesweeper_Large.png"],
+        [QuizWindow, "images/appIcons/Quiz_Large.png"],
+        [QuoteWindow, "images/appIcons/Quote_Large.png"],
+        [MessageBoard, "images/appIcons/Chat_Large.png"],
+        [RSSWindow, "images/appIcons/RSS_Large.png"],
+        [GalleryWindow, "images/appIcons/Gallery_Large.png"]
+    ];
+
+    applications.forEach(function(app){
+        var aTag = document.createElement("a");
+        aTag.href = "#";
+        aTag.classList.add("appLauncher");
+        aTag.onclick = function(e){
+            e.preventDefault();
+            self.windows.push(new app[0](self, getPositionX(), getPositionY()));
+        };
+
+        var image = document.createElement("img");
+
+        image.src = app[1];
+
+        aTag.appendChild(image);
+        self.element.appendChild(aTag);
+    });
+
+    this.hideApp = function(application, url){
+        self.navbar.classList.add("showNav");
+        application = application.parentNode.parentNode;
+        application.classList.add("hidden");
+
+        self.minimizedApps++;
+        var appImage = document.createElement("img");
+        appImage.src = url;
+        appImage.className = "minimizedWindow";
+        appImage.onclick = function(){
+            application.classList.remove("hidden");
+            self.navbar.removeChild(appImage);
+
+            if(--self.minimizedApps <= 0){
+                self.navbar.classList.remove("showNav");
+            }
+        };
+        self.navbar.appendChild(appImage);
+    };
+}
 
 function Window(){
     this.dragY = 0;
@@ -269,80 +342,6 @@ AjaxCon.prototype.getXHR = function(){
     return xhr;
 };
 
-function Desktop(id){
-    this.windows = [];
-    this.minimizedApps = 0;
-    this.element = document.getElementById(id);
-    this.navbar = document.createElement("nav");
-    var self = this;
-
-    var getPositionX = function(){
-        var position = 30 * self.windows.length + 30;
-        if(position / (window.innerWidth - 200) > 1){
-            return position - (Math.floor(position / (window.innerWidth - 200)) * (window.innerWidth - 200));
-        }else{
-            return 30 * self.windows.length + 30;
-        }
-    };
-    var getPositionY = function () {
-        var position = 30 * self.windows.length + 30;
-        if(position / (window.innerHeight - 300) > 1){
-            return position - (Math.floor(position / (window.innerHeight - 300)) * (window.innerHeight - 300));
-        }else{
-            return 30 * self.windows.length + 30;
-        }
-    };
-
-    this.element.appendChild(this.navbar);
-
-    var applications = [
-        [MemoryGame, "images/appIcons/Memory_Large.png"],
-        [Minesweeper, "images/appIcons/Minesweeper_Large.png"],
-        [QuizWindow, "images/appIcons/Quiz_Large.png"],
-        [QuoteWindow, "images/appIcons/Quote_Large.png"],
-        [MessageBoard, "images/appIcons/Chat_Large.png"],
-        [RSSWindow, "images/appIcons/RSS_Large.png"],
-        [GalleryWindow, "images/appIcons/Gallery_Large.png"]
-    ];
-
-    applications.forEach(function(app){
-        var aTag = document.createElement("a");
-        aTag.href = "#";
-        aTag.classList.add("appLauncher");
-        aTag.onclick = function(e){
-            e.preventDefault();
-            self.windows.push(new app[0](self, getPositionX(), getPositionY()));
-        };
-
-        var image = document.createElement("img");
-
-        image.src = app[1];
-
-        aTag.appendChild(image);
-        self.element.appendChild(aTag);
-    });
-
-    this.hideApp = function(application, url){
-        self.navbar.classList.add("showNav");
-        application = application.parentNode.parentNode;
-        application.classList.add("hidden");
-
-        self.minimizedApps++;
-        var appImage = document.createElement("img");
-        appImage.src = url;
-        appImage.className = "minimizedWindow";
-        appImage.onclick = function(){
-            application.classList.remove("hidden");
-            self.navbar.removeChild(appImage);
-
-            if(--self.minimizedApps <= 0){
-                self.navbar.classList.remove("showNav");
-            }
-        };
-        self.navbar.appendChild(appImage);
-    };
-}
-
 function Message(message, date, author){
     this.getText = function(){
         return message;
@@ -368,11 +367,9 @@ function Message(message, date, author){
         author = _author;
     };
 }
-//Retrieve Message body formatted as HTML
 Message.prototype.getHTMLText = function(){
     return this.getText();//.replace(/[\n\r]/g, "</br>");
 };
-//Retrieve Date as formatted string
 Message.prototype.getDateText = function(){
     var now = new Date();
     var milliseconds = now - this.getDate();
@@ -404,6 +401,7 @@ Message.prototype.getDateText = function(){
         return this.getDate().getUTCDate() + "/" + (this.getDate().getMonth() + 1) + "-" + this.getDate().getFullYear();
     }
 };
+
 MessageBoard.prototype = new Window();
 MessageBoard.prototype.constructor = MessageBoard;
 function MessageBoard(self, xPos, yPos) {
@@ -440,7 +438,6 @@ MessageBoard.prototype.ClearTimers = function(){
         this.connection.abort();
     }
 };
-//Create HTML structure and keypress events for application
 MessageBoard.prototype.CreateHTMLLayout = function(){
     var that = this;
 
@@ -477,11 +474,9 @@ MessageBoard.prototype.CreateHTMLLayout = function(){
         that.app.getElementsByClassName("labbyMezzageContent")[0].focus();
     };
 };
-//Return number of messages in array messages[]
 MessageBoard.prototype.numberOfMessages = function(){
     return this.messages.length + " messages";
 };
-//Render one message and onclick-event for images
 MessageBoard.prototype.renderMessage = function(message){
     var messageMain = document.createElement("section");
 
@@ -548,7 +543,6 @@ MessageBoard.prototype.getMessagesFromServer = function(){
         self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
     }, self.refreshRate)
 };
-//Render all messages
 MessageBoard.prototype.renderMessages = function(){
 
     var messageArea = this.app.getElementsByClassName("labbyMezzageArea")[0];
@@ -566,12 +560,10 @@ MessageBoard.prototype.renderMessages = function(){
     messageCount.innerHTML = this.numberOfMessages();
     this.scrollToBottom();
 };
-//Scroll to bottom of messages
 MessageBoard.prototype.scrollToBottom = function(){
     var messageArea = this.app.getElementsByClassName("labbyMezzageArea")[0];
     messageArea.scrollTop = messageArea.scrollHeight;
 };
-//Add message to array messages[], then scroll to bottom
 MessageBoard.prototype.addMessage = function(){
     var self = this;
     var textArea = this.app.getElementsByClassName("labbyMezzageContent")[0];
