@@ -209,7 +209,7 @@ header, main, footer, article{
 }
 
 .application.dragging{
-    opacity: .7;
+    opacity: .8;
 }
 
 .application.dragging:before {
@@ -242,12 +242,14 @@ header, main, footer, article{
 .application .appHeader h2{
     font-family: 'Oswald', sans-serif;
     font-size: 14px;
+    cursor: default;
     display: inline-block;
     margin: 0;
     color: #f7f7f7;
     margin-top: 4px;
     float: left;
 }
+
 .application .appHeader .appController{
     float: right;
     width: 15px;
@@ -259,8 +261,12 @@ header, main, footer, article{
     padding: 0 2px;
     width: 20px;
 }
-
-
+.application .appHeader .appController:nth-of-type(2) {
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-right-radius: 4px;
+    margin-right: 4px;
+}
 .application .appHeader .appController:nth-of-type(2), .application .popup a:hover{
     background: -moz-linear-gradient(top,  rgba(248,80,50,0.5) 0%, rgba(241,111,92,0.5) 50%, rgba(246,41,12,0.5) 51%, rgba(240,47,23,0.5) 71%, rgba(231,56,39,0.5) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,80,50,0.5)), color-stop(50%,rgba(241,111,92,0.5)), color-stop(51%,rgba(246,41,12,0.5)), color-stop(71%,rgba(240,47,23,0.5)), color-stop(100%,rgba(231,56,39,0.5))); /* Chrome,Safari4+ */
@@ -272,6 +278,7 @@ header, main, footer, article{
 }
 .application .appHeader .appController:nth-of-type(2):hover, .application .popup a{
     cursor: pointer;
+
     background: rgb(248,80,50); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(248,80,50,1) 0%, rgba(241,111,92,1) 50%, rgba(246,41,12,1) 51%, rgba(231,56,39,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,80,50,1)), color-stop(50%,rgba(241,111,92,1)), color-stop(51%,rgba(246,41,12,1)), color-stop(100%,rgba(231,56,39,1))); /* Chrome,Safari4+ */
@@ -305,6 +312,9 @@ header, main, footer, article{
 
 }
 .application .appHeader .appController:nth-of-type(4){
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
     background: -moz-linear-gradient(top,  rgba(124,241,7,0.5) 0%, rgba(142,239,39,0.5) 50%, rgba(114,207,7,0.5) 51%, rgba(117,208,12,0.5) 71%, rgba(124,204,20,0.5) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(124,241,7,0.5)), color-stop(50%,rgba(142,239,39,0.5)), color-stop(51%,rgba(114,207,7,0.5)), color-stop(71%,rgba(117,208,12,0.5)), color-stop(100%,rgba(124,204,20,0.5))); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top,  rgba(124,241,7,0.5) 0%,rgba(142,239,39,0.5) 50%,rgba(114,207,7,0.5) 51%,rgba(117,208,12,0.5) 71%,rgba(124,204,20,0.5) 100%); /* Chrome10+,Safari5.1+ */
