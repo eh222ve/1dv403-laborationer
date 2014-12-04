@@ -238,24 +238,6 @@ header, main, footer, article{
     overflow: auto;
 }
 
-.application footer.statusBar{
-
-    background: -moz-linear-gradient(top,  rgba(94,94,94,1) 0%, rgba(14,14,14,0.8) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(94,94,94,1)), color-stop(100%,rgba(14,14,14,0.8))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', endColorstr='#cc0e0e0e',GradientType=0 ); /* IE6-9 */
-    color: #AAAAAA;
-    font-size: 12px;
-    padding-left: 20px;
-    height: 20px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
 
 .application .appHeader h2{
     font-family: 'Oswald', sans-serif;
@@ -423,6 +405,30 @@ header, main, footer, article{
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.application footer.statusBar{
+
+    background: -moz-linear-gradient(top,  rgba(94,94,94,1) 0%, rgba(14,14,14,0.8) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(94,94,94,1)), color-stop(100%,rgba(14,14,14,0.8))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(94,94,94,1) 0%,rgba(14,14,14,0.8) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5e5e', endColorstr='#cc0e0e0e',GradientType=0 ); /* IE6-9 */
+    color: #AAAAAA;
+    font-size: 12px;
+    padding-left: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+.application footer.statusBar img{
+    max-height: 15px;
 }
 /*************************************************
         Gallery
