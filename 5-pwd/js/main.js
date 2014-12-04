@@ -121,11 +121,16 @@ Window.prototype.createHTML         = function(){
     var disableDragging = function(e){
         if((e.clientY - self.dragY + 200) > window.innerHeight) {
             divApp.style.top = (window.innerHeight - 200) + "px";
+        }else if(e.clientY - self.dragY < 0){
+            divApp.style.top = "20px";
         }
-        if((e.clientX - self.dragX + 200) > window.innerWidth) {
 
+        if((e.clientX - self.dragX + 200) > window.innerWidth) {
             divApp.style.left = (window.innerWidth - 200) + "px";
+        }else if(e.clientX - self.dragX < 0){
+            divApp.style.left = "20px";
         }
+
         self.dragging = false;
         divApp.classList.remove("dragging");
         header.style.removeProperty("cursor");
