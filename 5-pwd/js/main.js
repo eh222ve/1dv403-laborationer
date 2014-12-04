@@ -3,6 +3,7 @@ function Desktop(id){
     this.windows = [];
     this.minimizedApps = 0;
     this.element = document.getElementById(id);
+    this.element.classList.add("desktop");
     this.navbar = document.createElement("nav");
     var self = this;
 
@@ -26,13 +27,13 @@ function Desktop(id){
     this.element.appendChild(this.navbar);
 
     var applications = [
-        [MemoryGame, "images/appIcons/Memory_Large.png"],
-        [Minesweeper, "images/appIcons/Minesweeper_Large.png"],
-        [QuizWindow, "images/appIcons/Quiz_Large.png"],
-        [QuoteWindow, "images/appIcons/Quote_Large.png"],
-        [MessageBoard, "images/appIcons/Chat_Large.png"],
-        [RSSWindow, "images/appIcons/RSS_Large.png"],
-        [GalleryWindow, "images/appIcons/Gallery_Large.png"]
+        [MemoryGame, "images/appIcons/Memory_Large.png", "Memory"],
+        [Minesweeper, "images/appIcons/Minesweeper_Large.png", "Minesweeper"],
+        [QuizWindow, "images/appIcons/Quiz_Large.png","Quiz"],
+        [QuoteWindow, "images/appIcons/Quote_Large.png","Quotes"],
+        [MessageBoard, "images/appIcons/Chat_Large.png","Chat"],
+        [RSSWindow, "images/appIcons/RSS_Large.png", "RSS"],
+        [GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"]
     ];
 
     applications.forEach(function(app){
@@ -45,10 +46,13 @@ function Desktop(id){
         };
 
         var image = document.createElement("img");
-
         image.src = app[1];
-
         aTag.appendChild(image);
+
+        var title = document.createElement("span");
+        title.innerHTML = app[2];
+        aTag.appendChild(title);
+
         self.element.appendChild(aTag);
     });
 
@@ -105,11 +109,12 @@ Window.prototype.createHTML         = function(){
     var header = document.createElement("header");
     header.classList.add("appHeader");
     header.onmousedown = function(e){
-        if(!divApp.classList.contains("fullscreen")) {
+        if(!divApp.classList.contains("fullscreen")){// && e.target == header // && e.target !== closeWindow && e.target !== fullsize && e.target !== minimizewindow) {
             self.dragY = (e.pageY - divApp.offsetTop);
             self.dragX = (e.pageX - divApp.offsetLeft);
             header.style.cursor = "move";
             self.dragging = true;
+            divApp.classList.add("dragging");
             self.DisableSelection(self.desktop.element);
         }
     };
@@ -122,6 +127,7 @@ Window.prototype.createHTML         = function(){
             divApp.style.left = (window.innerWidth - 200) + "px";
         }
         self.dragging = false;
+        divApp.classList.remove("dragging");
         header.style.removeProperty("cursor");
         self.EnableSelection(self.desktop.element);
     };
@@ -175,6 +181,7 @@ Window.prototype.createHTML         = function(){
         }else{
             self.xPos = divApp.offsetLeft;
             self.yPos = divApp.offsetTop;
+            console.log(divApp.offsetTop);
             divApp.style.removeProperty('width');
             divApp.style.removeProperty('height');
             divApp.style.removeProperty('top');
