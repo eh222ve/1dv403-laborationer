@@ -18,9 +18,72 @@ header, main, footer, article{
 /*************************************************
         Desktop
 *************************************************/
+
+
+.AppLoader{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 500;
+    background-color: #000;
+}
+.AppLoader h1{
+    position: absolute;
+    top: 30%;
+    right: 20%;
+    left: 20%;
+    text-align: center;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+.AppLoader .container{
+    position: absolute;
+    top: 40%;
+    right: 40%;
+    left: 40%;
+    height: 5px;
+    padding: 3px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.AppLoader .container .progress{
+    height: 100%;
+    width: 0;
+
+    background: rgb(118,177,1); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(118,177,1,1) 0%, rgba(118,177,1,1) 47%, rgba(102,153,0,1) 48%, rgba(102,153,0,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(118,177,1,1)), color-stop(47%,rgba(118,177,1,1)), color-stop(48%,rgba(102,153,0,1)), color-stop(100%,rgba(102,153,0,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(118,177,1,1) 0%,rgba(118,177,1,1) 47%,rgba(102,153,0,1) 48%,rgba(102,153,0,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(118,177,1,1) 0%,rgba(118,177,1,1) 47%,rgba(102,153,0,1) 48%,rgba(102,153,0,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(118,177,1,1) 0%,rgba(118,177,1,1) 47%,rgba(102,153,0,1) 48%,rgba(102,153,0,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(118,177,1,1) 0%,rgba(118,177,1,1) 47%,rgba(102,153,0,1) 48%,rgba(102,153,0,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#76b101', endColorstr='#669900',GradientType=0 ); /* IE6-9 */
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+
+
+.AppLoader .container .progress.loading{
+    width: 100%;
+}
+
+/*************************************************
+        Desktop
+*************************************************/
 .desktop{
     font-family: 'Roboto', sans-serif;
-    background: url(../images/desktop/background2.jpg) no-repeat center center fixed;
+    background: url(../images/desktop/background.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -808,12 +871,10 @@ header, main, footer, article{
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(242,205,103,0.9);
+    background-color: rgba(242,205,103,0.95);
     color: white;
     font-weight: bold;
     text-align: center;
-    border-radius: 10px;
-
 }
 .GameOn-Memory .overlay button {
     height: 50px;
