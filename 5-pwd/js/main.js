@@ -204,20 +204,25 @@ Window.prototype.createHTML         = function(){
         this.contextMenu().forEach(function(menu){
             var contextMenu = menu;
             contextMenu.classList.add("hide");
-            contextMenu.addEventListener('mouseleave', function(){
-                contextMenu.classList.add("hide");
-            }, false);
+
             var Options = document.createElement("ul");
             Options.classList.add("contextMenu");
             var menuOptions = document.createElement("a");
             menuOptions.href = "#";
             menuOptions.innerHTML = contextMenu.dataset.name;
-            var toggleHide = function(e){
-                e.preventDefault();
-                contextMenu.classList.toggle("hide");
+
+            var hideFunction = function(){
+                contextMenu.classList.add("hide");
+                document.documentElement.removeEventListener('mousedown', hideFunction, false);
             };
-            menuOptions.onclick = toggleHide;
-            contextMenu.onclick = toggleHide;
+
+            var showFunction = function(e){
+                e.preventDefault();
+                contextMenu.classList.remove("hide");
+                document.documentElement.addEventListener('mousedown', hideFunction, false);
+            };
+            menuOptions.onclick = showFunction;
+            contextMenu.onclick = showFunction;
 
             Menu.appendChild(Options);
             Options.appendChild(menuOptions);
