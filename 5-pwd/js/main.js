@@ -836,6 +836,12 @@ GalleryWindow.prototype.render      = function(){
             e.preventDefault();
             self.OpenInNewWindow(currentImage.URL);
         };
+        imageContainer.onmouseover = function(){
+            self.setStatus("Bildstorlek: " + currentImage.width + "px X " + currentImage.height + "px");
+        };
+        imageContainer.onmouseleave = function(){
+            self.setStatus("");
+        };
 
         var image = document.createElement("img");
         image.src = currentImage.thumbURL;
