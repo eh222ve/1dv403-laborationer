@@ -28,7 +28,7 @@ Dessa är:
 - focusWindow
     - Fokuserar fönstret och flyttar det överst
 
-## All HTML-kod du vill ska visas skall appendas till `this.app`!
+All HTML-kod du vill ska visas skall appendas till `this.app`!
 
 ## Vill du ha en context-meny?
 Sätt `this.ContextMenu` att returnera en array med valfritt antal ul-element. Koppla alla event och funktioner som vanligt i ditt objekt.
