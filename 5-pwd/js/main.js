@@ -213,16 +213,15 @@ Window.prototype.createHTML         = function(){
 
             var hideFunction = function(){
                 contextMenu.classList.add("hide");
-                document.documentElement.removeEventListener('mousedown', hideFunction, false);
+                document.documentElement.removeEventListener('mouseup', hideFunction, false);
             };
 
-            var showFunction = function(e){
+            menuOptions.onclick = function(e){
                 e.preventDefault();
                 contextMenu.classList.remove("hide");
-                document.documentElement.addEventListener('mousedown', hideFunction, false);
+                document.documentElement.addEventListener('mouseup', hideFunction, false);
             };
-            menuOptions.onclick = showFunction;
-            contextMenu.onclick = showFunction;
+            contextMenu.onclick = hideFunction;
 
             Menu.appendChild(Options);
             Options.appendChild(menuOptions);
