@@ -1,14 +1,26 @@
+/*************************************************
+        Fonts
+*************************************************/
+
 @import url(http://fonts.googleapis.com/css?family=Roboto:300);
 @import url(http://fonts.googleapis.com/css?family=Oswald);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Condensed);
+@import url(http://fonts.googleapis.com/css?family=Exo+2:800);
 
-/*IE fix*/
+/*************************************************
+        IE-fix
+*************************************************/
 header, main, footer, article{
     display: block;
 }
 
+
+/*************************************************
+        Desktop
+*************************************************/
 .desktop{
     font-family: 'Roboto', sans-serif;
-    background: url(../js/desktop/background2.jpg) no-repeat center center fixed;
+    background: url(../images/desktop/background2.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -90,6 +102,11 @@ header, main, footer, article{
 .desktop nav img:hover{
     cursor: pointer;
 }
+
+/*************************************************
+        Application
+*************************************************/
+
 .top{
     z-index: 10;
 }
@@ -318,7 +335,9 @@ header, main, footer, article{
     top: 0;
     right: 0;
 }
-
+/*************************************************
+        Gallery
+*************************************************/
 
 .Gallery{
     width: 450px;
@@ -341,4 +360,681 @@ header, main, footer, article{
 .Gallery .imageContainer img{
     display: block;
     margin: 0 auto;
+}
+
+
+/*************************************************
+        RSS
+*************************************************/
+.RSSWindow{
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.RSSWindow .rssFeed{
+    width: 90%;
+
+    padding: 10px;
+    margin: 0 5%;
+    overflow: auto;
+}
+
+.RSSWindow .rssFeed h2.rss_title{
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.RSSWindow .rssFeed a{
+    display: block;
+    font-size: 12px;
+    text-align: center;
+}
+
+.RSSWindow .rssFeed p{
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 0;
+}
+
+.RSSWindow .rssFeed img{
+    width: 100%;
+}
+
+/*************************************************
+        Quote
+*************************************************/
+
+.Quote{
+    width: 100%;
+    height: 100%;
+    min-width: 500px;
+    min-height: 400px;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.Quote img{
+    max-width: 100%;
+    max-height: 70%;
+    position: absolute;
+    bottom: 0;
+    right: -300px;
+
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+.Quote img.active{
+    right: 0;
+}
+.Quote blockquote {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+    width: 300px;
+    margin: 20px;
+    padding: 0.25em 40px;
+    line-height: 1.45;
+    position: absolute;
+    z-index: 2;
+    top: -100%;
+    color: #383838;
+
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.Quote blockquote.active {
+    top: 10%;
+}
+
+.Quote blockquote:before {
+    display: block;
+    content: "\201C";
+    font-size: 80px;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    color: #7a7a7a;
+}
+.Quote blockquote cite {
+    color: #999999;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+.Quote blockquote cite:before {
+    content: "\2014 \2009";
+}
+
+/*************************************************
+        Quiz
+*************************************************/
+
+.thequiz{
+    position: relative;
+    overflow: auto;
+    display: inline-block;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+    width: 300px;
+
+}
+
+.thequiz .workArea{
+    height: 400px;
+    position: relative;
+    overflow: auto;
+}
+.thequiz .workArea .questionList{
+    max-height: 320px;
+    overflow: auto;
+}
+
+
+.thequiz .workArea .questionField{
+    font-family: 'Ubuntu Condensed', sans-serif;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20%;
+    font-size: 40px;
+    opacity: 1;
+
+    -webkit-transition: opacity 0.25s ease-in-out;
+    -moz-transition: opacity 0.25s ease-in-out;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.thequiz .workArea .questionField p{
+    font-family: 'Ubuntu Condensed', sans-serif;
+    text-align: center;
+    font-size: 14px;
+    color: red;
+}
+
+.thequiz .workArea .answerBox {
+    width: 175px;
+    padding: 5px;
+    min-height: 10px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+.thequiz .workArea button {
+    width: 100px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+}
+
+.thequiz .workArea button:hover {
+    color: #555;
+}
+
+.thequiz .workArea button.newGame {
+    margin-bottom: 10px;
+    width: 80%;
+    right: 10%;
+}
+
+.thequiz .hidden{
+    display: none;
+}
+
+.thequiz .workArea section a{
+    text-decoration: none;
+}
+
+.thequiz .workArea section header{
+
+    margin-bottom: 0;
+    display: block;
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+
+    opacity: 1;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.thequiz .workArea .opacity-0{
+    opacity: 0;
+}
+.thequiz .workArea section header img {
+    width: 20px;
+    position: absolute;
+    right: 5px;
+    -webkit-transition-duration: 0.4s;
+    -moz-transition-duration: 0.4s;
+    -o-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.thequiz .workArea section header img.up {
+
+
+    -webkit-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -o-transform:rotate(180deg);
+}
+.thequiz .workArea section.result {
+    margin: 10px;
+    border-radius: 4px;
+}
+
+.thequiz .workArea section.correct {
+    border: 1px solid #a4b357;
+}
+
+.thequiz .workArea section.incorrect {
+    border: 1px solid #ff7869;
+}
+
+.thequiz .workArea section.correct header{
+    background: #a4b357; /* Old browsers */
+    background: -moz-linear-gradient(top,  #a4b357 0%, #75890c 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a4b357), color-stop(100%,#75890c)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #a4b357 0%,#75890c 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #a4b357 0%,#75890c 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #a4b357 0%,#75890c 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #a4b357 0%,#75890c 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a4b357', endColorstr='#75890c',GradientType=0 ); /* IE6-9 */
+}
+.thequiz .workArea section.correct header:hover {
+    background: #c4ce92; /* Old browsers */
+    background: -moz-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c4ce92), color-stop(100%, #cbec26)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #c4ce92 0%, #cbec26 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #c4ce92 0%, #cbec26 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4ce92', endColorstr='#cbec26', GradientType=0); /* IE6-9 */
+}
+
+.thequiz .workArea section.incorrect header{
+    background: #ff3019; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ff3019 0%, #cf0404 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ff3019 0%,#cf0404 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', endColorstr='#cf0404',GradientType=0 ); /* IE6-9 */
+}
+
+.thequiz .workArea section.incorrect header:hover {
+    background: #ff7869; /* Old browsers */
+    background: -moz-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff7869), color-stop(100%, #fb4141)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ff7869 0%, #fb4141 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ff7869 0%, #fb4141 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7869', endColorstr='#fb4141', GradientType=0); /* IE6-9 */
+}
+
+.thequiz .workArea section.answer{
+    background-color: #FFF;
+    padding: 8px 8px;
+    text-align: center;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.thequiz .workArea .totalScore{
+    position: absolute;
+    bottom: 50px;
+    width: 80%;
+    left: 10%;
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/*************************************************
+        Minesweeper
+*************************************************/
+
+.GameOn-Minesweeper{
+    padding: 5px;
+}
+.GameOn-Minesweeper header{
+    display: block;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+.GameOn-Minesweeper .row{
+    height: 20px;
+}
+.GameOn-Minesweeper .row img{
+    position: relative;
+    top: 0;
+    width: 20px;
+}
+
+.GameOn-Minesweeper .timer{
+    float: right;
+    overflow: auto;
+    height: 25px;
+    text-align: left;
+}
+
+.GameOn-Minesweeper .bombsLeft{
+    float: left;
+    text-align: right;
+}
+.GameOn-Minesweeper .bombsLeft:before{
+    content: url('../images/minesweeper/bomb-transparent.png');
+    margin-left: 2px;
+    position: absolute;
+    left: 0;
+}
+
+.GameOn-Minesweeper .timer:after{
+    content: url('../images/minesweeper/clock.png');
+    margin-right: 2px;
+    position: absolute;
+    right: 0;
+}
+
+.GameOn-Minesweeper select{
+    display: block;
+    clear: both;
+}
+
+.GameOn-Minesweeper button {
+    height: 50px;
+    display: inline-block;
+    position: relative;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+
+
+}
+
+.GameOn-Minesweeper button:hover {
+    color: #555;
+}
+
+.GameOn-Minesweeper .bombsLeft, .GameOn-Minesweeper .timer, .GameOn-Minesweeper button{
+    width: 30%;
+    margin: 0 1.5%;
+
+    padding: 10px 0;
+}
+
+.GameOn-Minesweeper .bombsLeft, .GameOn-Minesweeper .timer{
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 800;
+    color: darkred;
+    position: relative;
+    top: 0;
+}
+
+/*************************************************
+        Memory
+*************************************************/
+.GameOn-Memory{
+    perspective: 800px;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    min-width: 280px;
+    border-radius: 10px;
+}
+
+.GameOn-Memory .overlay{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(242,205,103,0.9);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+
+}
+.GameOn-Memory .overlay button {
+    height: 50px;
+    margin-left: 5%;
+    display: inline-block;
+    position: relative;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(239, 239, 239, 1) 60%, rgba(225, 223, 226, 1) 100%);
+}
+
+.GameOn-Memory .overlay button:hover {
+    color: #555;
+}
+
+.GameOn-Memory .row img{
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    width: 20%;
+    height: 20%;
+    margin: 2.5%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.12);
+    transform-style: preserve-3d;
+    transition: all 0.25s linear;
+}
+.GameOn-Memory .row img.flipped {
+    transform: rotateY(-180deg) scaleX(-1);
+}
+
+.GameOn-Memory .gameBoard .row .col img{
+    width: 100px;
+    height: 100px;
+}
+
+
+/*************************************************
+        Chat
+*************************************************/
+
+section, date{
+    display: block;
+}
+
+.labbymezzage{
+    width: 250px;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+    position: relative;
+    overflow: auto;
+}
+
+.labbymezzage h1{
+    text-align: center;
+    font-size: 22px;
+}
+
+.labbymezzage .labbyMezzageArea{
+    width: 95%;
+    margin: 0 auto;
+    height: 200px;
+    overflow: auto;
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar
+{
+    width: 5px;  /* for vertical scrollbars */
+    height: 5px; /* for horizontal scrollbars */
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.labbymezzage .labbyMezzageArea::-webkit-scrollbar-thumb
+{
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+.labbymezzage .labbyMezzageArea section p{
+    max-width: 80%;
+}
+
+.labbymezzage .labbyMezzageArea section img{
+    position: relative;
+    top: 0;
+    float: right;
+    max-width: 7%;
+    margin-right: 2px;
+    margin-bottom: 5px;
+}
+
+.labbymezzage .labbyMezzageArea section img:hover, .labbymezzage .submitBtn:hover{
+    cursor: pointer;
+
+}
+.labbymezzage .labbyMezzageArea section p{
+    line-height: 14px;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.labbymezzage .labbyMezzageArea section
+{
+    clear: both;
+    font-size: medium;
+    position: relative;
+    width: 80%;
+    padding: 10px;
+    background: #FFFFFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #bcbcbc;
+    margin-bottom: 10px;
+}
+
+.labbymezzage .labbyMezzageArea section:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent #FFFFFF;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -10px;
+    right: -10px;
+    top: 50%;
+}
+
+.labbymezzage .labbyMezzageArea section:before
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent #bcbcbc;
+    display: block;
+    width: 0;
+    z-index: 0;
+    margin-top: -10px;
+    right: -11px;
+    top: 50%;
+}
+
+
+.labbymezzage .labbyMezzageArea date{
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    font-size: smaller;
+    text-align: right;
+    color: #999999;
+    font-style: italic;
+}
+
+.labbymezzage .labbyMezzageCount{
+    text-align: right;
+    color: #999999;
+    font-style: italic;
+    margin: 0 10px;
+    border-bottom: 1px solid #D6D6D6;
+    margin-bottom: 10px;
+}
+
+.labbymezzage .labbyMezzageContent{
+    float: left;
+    width: 55%;
+    margin-left: 5%;
+    resize: none;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+    font-size: small;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+
+.labbymezzage .submitBtn {
+    float: left;
+    height: 50px;
+    margin-left: 5%;
+    display: inline-block;
+    position: relative;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255,255,255, 0.8);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: helvetica, arial, sans-serif;
+    border-radius: 4px;
+    border: 1px solid #bcbcbc;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+
+    background-image: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+    background-image: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(239,239,239,1) 60%,rgba(225,223,226,1) 100%);
+}
+
+.labbymezzage .submitBtn:hover {
+    color: #555;
 }
