@@ -33,7 +33,8 @@ function Desktop(id){
         [QuoteWindow, "images/appIcons/Quote_Large.png","Quotes"],
         [MessageBoard, "images/appIcons/Chat_Large.png","Chat"],
         [RSSWindow, "images/appIcons/RSS_Large.png", "RSS"],
-        [GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"]
+        [GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"],
+        [NoteWindow, "images/appIcons/Note_Large.png", "Note"]
     ];
 
     applications.forEach(function(app){
