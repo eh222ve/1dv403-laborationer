@@ -23,4 +23,5 @@ NoteWindow.prototype.render = function(){
     self.app.parentNode.style.top = "0";
     self.app.parentNode.style.bottom = "0";
     self.app.appendChild(textarea);
+    textarea.focus();
 };

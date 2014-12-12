@@ -31,7 +31,7 @@ Window.prototype.createHTML         = function(){
     var header = document.createElement("header");
     header.classList.add("appHeader");
     header.onmousedown = function(e){
-        if(!divApp.classList.contains("fullscreen") && e.target == header){
+        if(!divApp.classList.contains("fullscreen") && e.target != closeWindow && e.target != fullsize && e.target != minimizewindow){
             self.dragY = (e.pageY - divApp.offsetTop);
             self.dragX = (e.pageX - divApp.offsetLeft);
             header.style.cursor = "move";
