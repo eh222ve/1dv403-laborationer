@@ -253,7 +253,12 @@ MessageBoard.prototype.getMessagesFromServer    = function(){
         } else {
             throw new Error("No XML parser found");
         }
-        self.setStatus("Messages received");
+
+        var date = new Date();
+        var minute = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var seconds = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+        self.setStatus("Uppdaterad " + date.getHours() + ":" + minute + ":" + seconds);
+
         var xml = parseXml(response);
         var messages = xml.getElementsByTagName("message");
         for(var i = 0; i < messages.length; i++){
@@ -405,7 +410,6 @@ MessageBoard.prototype.getIntervalSetting       = function(){
         var selected = (rate[0] == self.refreshRate) ? " selected" : "";
         input.innerHTML += "<option value='" + rate[0] + "'" + selected + ">" + rate[1] + "</option>";
     });
-    input.innerHTML += "<option value='15000'>15 sekunder</option>";
 
     popup.appendChild(input);
 
