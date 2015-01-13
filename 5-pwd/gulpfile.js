@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 
 
 gulp.task('Concat lib', function() {
-    gulp.src(['js/lib/*.js', 'js/lib/**/*.js', 'js/main.js'])
+    gulp.src(['js/lib/Window.js','js/lib/*.js', 'js/lib/**/*.js', 'js/main.js'])
         .pipe(concat('script.min.js'))
         .pipe(concat.header('\"use strict\";\n'))
         .pipe(uglify())
