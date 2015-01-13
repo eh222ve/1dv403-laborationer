@@ -353,7 +353,7 @@ header, main, footer, article{
 .application main{
     margin-top: 30px;
     margin-bottom: 20px;
-    max-height: 90%;
+    max-height: 92%;
     overflow: auto;
 }
 .application.hidden, .hide{
@@ -1020,7 +1020,7 @@ section, date{
 }
 
 .labbymezzage{
-    width: 250px;
+    width: 300px;
     font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
     position: relative;
     overflow: auto;
@@ -1057,6 +1057,7 @@ section, date{
 
 .labbymezzage .labbyMezzageArea section p{
     max-width: 80%;
+    word-wrap: break-word;
 }
 
 .labbymezzage .labbyMezzageArea section img{

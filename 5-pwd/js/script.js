@@ -629,7 +629,7 @@ GalleryWindow.prototype.constructor = GalleryWindow;
 function GalleryWindow(desktop, xPos, yPos) {
     this.startHeight = 600;
     this.startWidth = 400;
-    this.WindowConstruct("Gallery", true, desktop, xPos, yPos);
+    this.WindowConstruct("Gallery", false, desktop, xPos, yPos);
 
     this.Url = "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
     this.thumbWidth = 0;
