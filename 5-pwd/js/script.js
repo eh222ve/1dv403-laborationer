@@ -1,5 +1,7 @@
 "use strict";
-function AjaxCon(url, callback, posttype, params){
+
+var PWD = PWD || {};
+PWD.AjaxCon = function(url, callback, posttype, params){
     var READY_STATE_UNINITIALIZED = 0;
     var READY_STATE_OPENED      = 1;
     var READY_STATE_SENT        = 2;
@@ -31,8 +33,8 @@ function AjaxCon(url, callback, posttype, params){
     this.abort = function(){
         xhr.abort();
     };
-}
-AjaxCon.prototype.getXHR            = function(){
+};
+PWD.AjaxCon.prototype.getXHR            = function(){
     var xhr = null;
 
     try{
@@ -50,7 +52,8 @@ AjaxCon.prototype.getXHR            = function(){
  * Created by Erik.
  */
 "use strict";
-function AppLoader(header){
+var PWD = PWD || {};
+PWD.AppLoader = function(header){
     var background = document.createElement("div");
     background.classList.add("AppLoader");
 
@@ -75,12 +78,11 @@ function AppLoader(header){
             body.removeChild(background);
         }, 1250);
     }, 200);
-}
-/**
- * Created by Erik.
- */
+};
 "use strict";
-function Message(message, date, author){
+
+var PWD = PWD || {};
+PWD.Message = function(message, date, author){
     this.getText = function(){
         return message;
     };
@@ -104,11 +106,11 @@ function Message(message, date, author){
     this.setAuthor = function(_author){
         author = _author;
     };
-}
-Message.prototype.getHTMLText       = function(){
+};
+PWD.Message.prototype.getHTMLText       = function(){
     return this.getText();//.replace(/[\n\r]/g, "</br>");
 };
-Message.prototype.getDateText       = function(){
+PWD.Message.prototype.getDateText       = function(){
     var now = new Date();
     var milliseconds = now - this.getDate();
     var seconds = Math.round(milliseconds/1000);
@@ -140,9 +142,8 @@ Message.prototype.getDateText       = function(){
     }
 };
 
-MessageBoard.prototype = new Window();
-MessageBoard.prototype.constructor  = MessageBoard;
-function MessageBoard(self, xPos, yPos) {
+
+PWD.MessageBoard = function(self, xPos, yPos) {
     this.WindowConstruct("Chat", false, self, xPos, yPos);
 
     this.title = 'Chat';
@@ -168,14 +169,18 @@ function MessageBoard(self, xPos, yPos) {
     //Run methods on creation
     this.CreateHTMLLayout();
     this.getMessagesFromServer();
-}
-MessageBoard.prototype.ClearTimers              = function(){
+};
+
+PWD.MessageBoard.prototype = new PWD.Window;
+PWD.MessageBoard.prototype.constructor  = PWD.MessageBoard;
+
+PWD.MessageBoard.prototype.ClearTimers              = function(){
     clearInterval(this.timer);
     if(typeof this.connection !== "undefined") {
         this.connection.abort();
     }
 };
-MessageBoard.prototype.CreateHTMLLayout         = function(){
+PWD.MessageBoard.prototype.CreateHTMLLayout         = function(){
     var that = this;
 
     var labbyMain = document.createElement("div");
@@ -211,10 +216,10 @@ MessageBoard.prototype.CreateHTMLLayout         = function(){
         that.app.getElementsByClassName("labbyMezzageContent")[0].focus();
     };
 };
-MessageBoard.prototype.numberOfMessages         = function(){
+PWD.MessageBoard.prototype.numberOfMessages         = function(){
     return this.messages.length + " messages";
 };
-MessageBoard.prototype.renderMessage            = function(message){
+PWD.MessageBoard.prototype.renderMessage            = function(message){
     var messageMain = document.createElement("section");
 
     var author = document.createElement("p");
@@ -232,7 +237,7 @@ MessageBoard.prototype.renderMessage            = function(message){
 
     return messageMain;
 };
-MessageBoard.prototype.getMessagesFromServer    = function(){
+PWD.MessageBoard.prototype.getMessagesFromServer    = function(){
     var self = this, timer;
     var loadMessages = function(response){
         clearTimeout(timer);
@@ -267,7 +272,7 @@ MessageBoard.prototype.getMessagesFromServer    = function(){
             var time = message.querySelector("time").innerHTML;
             var author = message.querySelector("author").innerHTML;
             var id = message.querySelector("id").innerHTML;
-            self.messages.push(new Message(text, new Date(parseInt(time)), author));
+            self.messages.push(new PWD.Message(text, new Date(parseInt(time)), author));
         }
         self.renderMessages();
     };
@@ -276,16 +281,16 @@ MessageBoard.prototype.getMessagesFromServer    = function(){
         self.setStatus("Laddar meddelanden...<img src='images/loader_white.gif'>");
     }, 100);
     var history = (self.history !== undefined) ? "?history=" + self.history : "";
-    self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
+    self.connection = new PWD.AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
 
     this.timer = setInterval(function(){
         timer = setTimeout(function(){
             self.setStatus("Laddar meddelanden...<img src='images/loader_white.gif'>");
         }, 100);
-        self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
+        self.connection = new PWD.AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
     }, self.refreshRate)
 };
-MessageBoard.prototype.renderMessages           = function(){
+PWD.MessageBoard.prototype.renderMessages           = function(){
 
     var messageArea = this.app.getElementsByClassName("labbyMezzageArea")[0];
     var messageCount = this.app.getElementsByClassName("labbyMezzageCount")[0];
@@ -302,11 +307,11 @@ MessageBoard.prototype.renderMessages           = function(){
     messageCount.innerHTML = this.numberOfMessages();
     this.scrollToBottom();
 };
-MessageBoard.prototype.scrollToBottom           = function(){
+PWD.MessageBoard.prototype.scrollToBottom           = function(){
     var messageArea = this.app.getElementsByClassName("labbyMezzageArea")[0];
     messageArea.scrollTop = messageArea.scrollHeight;
 };
-MessageBoard.prototype.addMessage               = function(){
+PWD.MessageBoard.prototype.addMessage               = function(){
     var self = this;
     var textArea = this.app.getElementsByClassName("labbyMezzageContent")[0];
     var handleCallback = function(response){
@@ -328,7 +333,7 @@ MessageBoard.prototype.addMessage               = function(){
         };
     }
 };
-MessageBoard.prototype.contextMenu              = function(){
+PWD.MessageBoard.prototype.contextMenu              = function(){
     var that = this;
 
     var option1 = document.createElement("ul");
@@ -381,7 +386,7 @@ MessageBoard.prototype.contextMenu              = function(){
 
     return [option1];
 };
-MessageBoard.prototype.getIntervalSetting       = function(){
+PWD.MessageBoard.prototype.getIntervalSetting       = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -421,7 +426,7 @@ MessageBoard.prototype.getIntervalSetting       = function(){
 
     this.app.parentNode.appendChild(popup);
 };
-MessageBoard.prototype.getHistorySetting        = function(){
+PWD.MessageBoard.prototype.getHistorySetting        = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -461,7 +466,7 @@ MessageBoard.prototype.getHistorySetting        = function(){
 
     this.app.parentNode.appendChild(popup);
 };
-MessageBoard.prototype.getNickSetting           = function(){
+PWD.MessageBoard.prototype.getNickSetting           = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -497,7 +502,7 @@ MessageBoard.prototype.getNickSetting           = function(){
     input.focus();
     input.select();
 };
-MessageBoard.prototype.createCookie             = function(){
+PWD.MessageBoard.prototype.createCookie             = function(){
     var name = "setting";
     var value = this.refreshRate + "," + this.username + "," + this.history;
     var days = 1;
@@ -513,7 +518,7 @@ MessageBoard.prototype.createCookie             = function(){
     }
     document.cookie = name + "=" + value + expires + "; path=/";
 };
-MessageBoard.prototype.getCookie                = function(){
+PWD.MessageBoard.prototype.getCookie                = function(){
     var c_name = "setting";
     if (document.cookie.length > 0) {
         var c_start = document.cookie.indexOf(c_name + "=");
@@ -531,7 +536,8 @@ MessageBoard.prototype.getCookie                = function(){
     return "";
 };
 "use strict";
-function Desktop(id){
+var PWD = PWD || {};
+PWD.Desktop = function(id){
     this.windows = [];
     this.minimizedApps = 0;
     this.element = document.getElementById(id);
@@ -559,14 +565,14 @@ function Desktop(id){
     this.element.appendChild(this.navbar);
 
     var applications = [
-        [MemoryGame, "images/appIcons/Memory_Large.png", "Memory"],
-        [Minesweeper, "images/appIcons/Minesweeper_Large.png", "Minesweeper"],
-        [QuizWindow, "images/appIcons/Quiz_Large.png","Quiz"],
-        [QuoteWindow, "images/appIcons/Quote_Large.png","Quotes"],
-        [MessageBoard, "images/appIcons/Chat_Large.png","Chat"],
-        [RSSWindow, "images/appIcons/RSS_Large.png", "RSS"],
-        [GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"],
-        [NoteWindow, "images/appIcons/Note_Large.png", "Note"]
+        [PWD.MemoryGame, "images/appIcons/Memory_Large.png", "Memory"],
+        [PWD.Minesweeper, "images/appIcons/Minesweeper_Large.png", "Minesweeper"],
+        [PWD.QuizWindow, "images/appIcons/Quiz_Large.png","Quiz"],
+        [PWD.QuoteWindow, "images/appIcons/Quote_Large.png","Quotes"],
+        [PWD.MessageBoard, "images/appIcons/Chat_Large.png","Chat"],
+        [PWD.RSSWindow, "images/appIcons/RSS_Large.png", "RSS"],
+        [PWD.GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"],
+        [PWD.NoteWindow, "images/appIcons/Note_Large.png", "Note"]
     ];
 
     applications.forEach(function(app){
@@ -608,25 +614,24 @@ function Desktop(id){
         };
         self.navbar.appendChild(appImage);
     };
-}
+};
 /**
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 
-ImageWindow.prototype = new Window();
-ImageWindow.prototype.constructor = ImageWindow;
-function ImageWindow(url, desktop, xPos, yPos) {
+PWD.ImageWindow = function (url, desktop, xPos, yPos) {
     var image = document.createElement("img");
     image.src = url;
 
     this.WindowConstruct("Gallery", false, desktop, xPos, yPos);
     this.app.appendChild(image);
-}
+};
+PWD.ImageWindow.prototype = new PWD.Window();
+PWD.ImageWindow.prototype.constructor = PWD.ImageWindow;
 
-GalleryWindow.prototype = new Window();
-GalleryWindow.prototype.constructor = GalleryWindow;
-function GalleryWindow(desktop, xPos, yPos) {
+PWD.GalleryWindow = function(desktop, xPos, yPos) {
     this.startHeight = 600;
     this.startWidth = 400;
     this.WindowConstruct("Gallery", false, desktop, xPos, yPos);
@@ -641,8 +646,12 @@ function GalleryWindow(desktop, xPos, yPos) {
         new ImageWindow(url, desktop, xPos+5, yPos+5);
     };
     this.loadImages();
-}
-GalleryWindow.prototype.render      = function(){
+};
+
+PWD.GalleryWindow.prototype = new PWD.Window();
+PWD.GalleryWindow.prototype.constructor = PWD.GalleryWindow;
+
+PWD.GalleryWindow.prototype.render      = function(){
     var self = this;
     this.imageArr.forEach(function(currentImage){
         var imageContainer = document.createElement("a");
@@ -669,7 +678,7 @@ GalleryWindow.prototype.render      = function(){
         self.app.appendChild(imageContainer);
     });
 };
-GalleryWindow.prototype.loadImages  = function(){
+PWD.GalleryWindow.prototype.loadImages  = function(){
     var timer, self = this;
 
     var handler = function(response){
@@ -691,16 +700,14 @@ GalleryWindow.prototype.loadImages  = function(){
     timer = setTimeout(function(){
         self.setStatus("Laddar bilder...<img src='images/loader_white.gif'>");
     }, 1500);
-    new AjaxCon(this.Url, handler, "GET");
+    new PWD.AjaxCon(this.Url, handler, "GET");
 };
 /**
  * Created by Erik.
  */
 "use strict";
 
-MemoryGame.prototype = new Window();
-MemoryGame.prototype.constructor = MemoryGame;
-function MemoryGame(self, xPos, yPos) {
+PWD.MemoryGame = function(self, xPos, yPos) {
     var rows = 2, cols = 4;
 
     this.WindowConstruct("Memory", false, self, xPos, yPos);
@@ -718,22 +725,13 @@ function MemoryGame(self, xPos, yPos) {
 
     this.flippedImage, this.pictureArray, this.structuredArray, this.flippedCards, this.turnCounter;
     this.resetGame([this.getRows(), this.getCols()]);
-}
-MemoryGame.prototype.resetGame              = function(settings){
+};
+
+PWD.MemoryGame.prototype = new PWD.Window();
+PWD.MemoryGame.prototype.constructor = PWD.MemoryGame;
+
+PWD.MemoryGame.prototype.resetGame              = function(settings){
     var RandomGenerator = {
-
-        /*
-         Denna metod tar antalet rader och columner som inparameter.
-
-         Metoden returnerar en array inneh�llandes utslumpade tal mellan 1 och (rows*cols)/2. Varje tal representeras tv�
-         g�nger och motsvarar s�ledes en spelbricka.
-
-         I en 4*4 matris kan Arrayen t.ex. se ut s� h�r:
-         [1,2,6,8,6,2,5,3,1,3,7,5,8,4,4,7]
-
-         I en 2*4 matris kan Arrayen t.ex. se ut s� h�r:
-         [3,4,4,1,2,1,2,3]
-         */
 
         getPictureArray: function(rows, cols)
         {
@@ -795,7 +793,7 @@ MemoryGame.prototype.resetGame              = function(settings){
     this.turnCounter = 0;
     this.renderBoard();
 };
-MemoryGame.prototype.renderBoard            = function(){
+PWD.MemoryGame.prototype.renderBoard            = function(){
     var div, a, img;
     var that = this;
 
@@ -820,7 +818,7 @@ MemoryGame.prototype.renderBoard            = function(){
         that.app.appendChild(div);
     });
 };
-MemoryGame.prototype.getStructuredArray     = function(){
+PWD.MemoryGame.prototype.getStructuredArray     = function(){
     var rows, cols;
     var output = [];
     for(rows = 0; rows < this.getRows(); rows++){
@@ -833,7 +831,7 @@ MemoryGame.prototype.getStructuredArray     = function(){
     }
     return output;
 };
-MemoryGame.prototype.getSettings            = function(header, body) {
+PWD.MemoryGame.prototype.getSettings            = function(header, body) {
     var div = document.createElement("div");
     div.className = "overlay";
 
@@ -855,7 +853,7 @@ MemoryGame.prototype.getSettings            = function(header, body) {
 
     this.app.appendChild(div);
 };
-MemoryGame.prototype.flipCards              = function(aTag, col){
+PWD.MemoryGame.prototype.flipCards              = function(aTag, col){
     var img;
 
     img = aTag.firstChild;
@@ -905,7 +903,7 @@ MemoryGame.prototype.flipCards              = function(aTag, col){
     }, 125);
 
 };
-MemoryGame.prototype.contextMenu            = function(){
+PWD.MemoryGame.prototype.contextMenu            = function(){
     var that = this;
 
     var option1 = document.createElement("ul");
@@ -947,9 +945,7 @@ MemoryGame.prototype.contextMenu            = function(){
  */
 "use strict";
 
-Minesweeper.prototype = new Window();
-Minesweeper.prototype.constructor = Minesweeper;
-function Minesweeper(self, xPos, yPos) {
+PWD.Minesweeper = function(self, xPos, yPos) {
     this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20]];
 
     this.WindowConstruct("Minesweeper", false, self, xPos, yPos);
@@ -961,30 +957,34 @@ function Minesweeper(self, xPos, yPos) {
 
     this.gameOver, this.board = [], this.numberOfMines, this.mines, this.turnedImages, this.markedImages, this.timer, this.clock, this.bombsCounter;
     this.startGame();
-}
-Minesweeper.prototype.ClearTimers       = function(){
+};
+
+PWD.Minesweeper.prototype = new PWD.Window();
+PWD.Minesweeper.prototype.constructor = PWD.Minesweeper;
+
+PWD.Minesweeper.prototype.ClearTimers       = function(){
     clearInterval(this.timer);
 };
-Minesweeper.prototype.startGame         = function(){
+PWD.Minesweeper.prototype.startGame         = function(){
     this.setDefaultValues();
     this.drawGame();
     this.calculateMines();
 };
-Minesweeper.prototype.resetGame         = function(){
+PWD.Minesweeper.prototype.resetGame         = function(){
     this.resetAllTiles();
     this.setDefaultValues();
     this.bombsCounter.innerHTML = this.numberOfMines;
     this.calculateMines();
     this.startTimer();
 };
-Minesweeper.prototype.setDefaultValues  = function(){
+PWD.Minesweeper.prototype.setDefaultValues  = function(){
     this.gameOver = false;
     this.numberOfMines = Math.floor(this.GameWidth*this.GameWidth *0.25);
     this.mines = [];
     this.turnedImages = 0;
     this.markedImages = 0;
 };
-Minesweeper.prototype.drawGame          = function(){
+PWD.Minesweeper.prototype.drawGame          = function(){
     var that = this;
     var i;
     that.app.innerHTML = '';
@@ -1081,7 +1081,7 @@ Minesweeper.prototype.drawGame          = function(){
     }
 
 };
-Minesweeper.prototype.resetAllTiles     = function(){
+PWD.Minesweeper.prototype.resetAllTiles     = function(){
     var that = this,i,j;
 
     for(i = 0; i < this.GameWidth; i++) {
@@ -1097,7 +1097,7 @@ Minesweeper.prototype.resetAllTiles     = function(){
         }
     }
 };
-Minesweeper.prototype.calculateMines    = function(){                              //Calculate position of mines
+PWD.Minesweeper.prototype.calculateMines    = function(){                              //Calculate position of mines
     for(var i = 0; i < this.numberOfMines; i++){
         var mineRow = Math.floor((Math.random() * this.GameWidth));
         var mineCol = Math.floor((Math.random() * this.GameWidth));
@@ -1110,7 +1110,7 @@ Minesweeper.prototype.calculateMines    = function(){                           
         }
     }
 };
-Minesweeper.prototype.startTimer        = function(){
+PWD.Minesweeper.prototype.startTimer        = function(){
     clearTimeout(this.timer);
     var that = this;
     this.clock.innerHTML = 0;
@@ -1120,7 +1120,7 @@ Minesweeper.prototype.startTimer        = function(){
         time++;
     }, 1000);
 };
-Minesweeper.prototype.contextMenu       = function(){
+PWD.Minesweeper.prototype.contextMenu       = function(){
     var that = this;
     var ul = document.createElement("ul");
     ul.dataset.name = "Difficulties";
@@ -1138,7 +1138,7 @@ Minesweeper.prototype.contextMenu       = function(){
     });
     return [ul];
 };
-Minesweeper.prototype.showEmptyTiles    = function(row, col){                 //Recursive function to show empty tiles
+PWD.Minesweeper.prototype.showEmptyTiles    = function(row, col){                 //Recursive function to show empty tiles
     if(row >= this.GameWidth || row < 0 || col >= this.GameWidth || col < 0 || this.isTurned(row, col) === true || this.hasMine(row,col)) {
         return;
     }
@@ -1159,42 +1159,42 @@ Minesweeper.prototype.showEmptyTiles    = function(row, col){                 //
     this.showEmptyTiles(row, col+1);
 
 };
-Minesweeper.prototype.isMarked          = function(row, col){
+PWD.Minesweeper.prototype.isMarked          = function(row, col){
     return this.board[row].rowArray[col].marked;
 };
-Minesweeper.prototype.setMarker         = function(row, col){
+PWD.Minesweeper.prototype.setMarker         = function(row, col){
     this.board[row].rowArray[col].marked = true;
     if(this.markedImages < this.numberOfMines) {
         this.markedImages++;
         this.setImage(row, col, this.imagePrefix + "marked.png");
     }
 };
-Minesweeper.prototype.removeMarker      = function(row, col){
+PWD.Minesweeper.prototype.removeMarker      = function(row, col){
     this.board[row].rowArray[col].marked = false;
     if(this.markedImages > 0) {
         this.markedImages--;
         this.setImage(row, col, this.imagePrefix + "standard.png");
     }
 };
-Minesweeper.prototype.hasMine           = function(row, col){
+PWD.Minesweeper.prototype.hasMine           = function(row, col){
     return this.board[row].rowArray[col].mine;
 };
-Minesweeper.prototype.isTurned          = function(row, col){
+PWD.Minesweeper.prototype.isTurned          = function(row, col){
     return this.board[row].rowArray[col].turned;
 };
-Minesweeper.prototype.turnImage         = function(row, col){
+PWD.Minesweeper.prototype.turnImage         = function(row, col){
     if(this.isMarked(row,col)){
         this.removeMarker(row,col);
     }
     this.board[row].rowArray[col].turned = true;
 };
-Minesweeper.prototype.setImage          = function(row, col, imagePath){
+PWD.Minesweeper.prototype.setImage          = function(row, col, imagePath){
     this.board[row].rowArray[col].image.src = imagePath;
 };
-Minesweeper.prototype.setMine           = function(row, col){
+PWD.Minesweeper.prototype.setMine           = function(row, col){
     this.board[row].rowArray[col].mine = true;
 };
-Minesweeper.prototype.hasNeighborMines  = function(row, col){
+PWD.Minesweeper.prototype.hasNeighborMines  = function(row, col){
     var count = 0, i, j;
     for(i = row-1; i <= row+1; i++){
         for(j = col-1; j <= col+1; j++){
@@ -1207,20 +1207,21 @@ Minesweeper.prototype.hasNeighborMines  = function(row, col){
     }
     return count;
 };
-/**
- * Created by Erik.
- */
-"use strict";
 
-NoteWindow.prototype = new Window();
-NoteWindow.prototype.constructor = NoteWindow;
-function NoteWindow(self, xPos, yPos) {
+"use strict";
+var PWD = PWD ||{};
+
+PWD.NoteWindow = function(self, xPos, yPos) {
     this.startHeight = 300;
     this.startWidth = 300;
     this.WindowConstruct("Note", true, self, xPos, yPos);
     this.render();
-}
-NoteWindow.prototype.render = function(){
+};
+
+PWD.NoteWindow.prototype = new PWD.Window();
+PWD.NoteWindow.prototype.constructor = PWD.NoteWindow;
+
+PWD.NoteWindow.prototype.render = function(){
     var self = this;
     self.app.classList.add("Note");
 
@@ -1239,10 +1240,9 @@ NoteWindow.prototype.render = function(){
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD || {};
 
-QuizWindow.prototype = new Window();
-QuizWindow.prototype.constructor = QuizWindow;
-function QuizWindow(self, xPos, yPos) {
+PWD.QuizWindow = function(self, xPos, yPos) {
     this.WindowConstruct("Quiz", false, self, xPos, yPos);
     this.app = this.app;
     this.nextURL;
@@ -1250,8 +1250,12 @@ function QuizWindow(self, xPos, yPos) {
     this.questionsArr;
 
     this.init();
-}
-QuizWindow.prototype.getScore       = function(){
+};
+
+PWD.QuizWindow.prototype = new PWD.Window();
+PWD.QuizWindow.prototype.constructor = PWD.QuizWindow;
+
+PWD.QuizWindow.prototype.getScore       = function(){
     var that = this;
 
     var game = this.app.querySelector(".workArea");
@@ -1324,21 +1328,21 @@ QuizWindow.prototype.getScore       = function(){
     game.appendChild(newGame);
 
 };
-QuizWindow.prototype.disableInput   = function(){
+PWD.QuizWindow.prototype.disableInput   = function(){
     var button = this.app.querySelector(".sendAnswer");
     var text = this.app.querySelector(".answerBox");
 
     text.readOnly = true;
     button.disabled = true;
 };
-QuizWindow.prototype.enableInput    = function(){
+PWD.QuizWindow.prototype.enableInput    = function(){
     var button = this.app.querySelector(".sendAnswer");
     var text = this.app.querySelector(".answerBox");
 
     text.readOnly = false;
     button.disabled = false;
 };
-QuizWindow.prototype.getQuestion    = function(url){
+PWD.QuizWindow.prototype.getQuestion    = function(url){
     var that = this;
 
     var handleMessage = function(jsonObj){
@@ -1357,9 +1361,9 @@ QuizWindow.prototype.getQuestion    = function(url){
         that.setStatus("Waiting on input...");
     };
     that.setStatus("Waiting on question from server");
-    new AjaxCon(url, handleMessage, "GET");
+    new PWD.AjaxCon(url, handleMessage, "GET");
 };
-QuizWindow.prototype.sendAnswer     = function(answerInput){
+PWD.QuizWindow.prototype.sendAnswer     = function(answerInput){
     var that = this;
 
     that.addAnswer(answerInput);
@@ -1384,18 +1388,18 @@ QuizWindow.prototype.sendAnswer     = function(answerInput){
     var url = this.nextURL;
 
     this.setStatus("Sending answer to server");
-    new AjaxCon(url, handleMessage, "POST", JSON.stringify({answer: answerInput}));
+    new PWD.AjaxCon(url, handleMessage, "POST", JSON.stringify({answer: answerInput}));
 
 };
-QuizWindow.prototype.init           = function(){
+PWD.QuizWindow.prototype.init           = function(){
     this.questionsArr = [];
     this.render();
     this.getQuestion("http://vhost3.lnu.se:20080/question/1");
 };
-QuizWindow.prototype.gameOver       = function(){
+PWD.QuizWindow.prototype.gameOver       = function(){
     this.getScore();
 };
-QuizWindow.prototype.render         = function(){
+PWD.QuizWindow.prototype.render         = function(){
     var that = this;
     this.app.innerHTML = '';
     this.app.classList.add("thequiz");
@@ -1431,13 +1435,13 @@ QuizWindow.prototype.render         = function(){
 
     this.app.appendChild(questionDiv);
 };
-QuizWindow.prototype.addAnswer      = function(message){
+PWD.QuizWindow.prototype.addAnswer      = function(message){
     this.questionsArr[this.questionsArr.length - 1].answer = message;
 };
-QuizWindow.prototype.addResponse    = function(message){
+PWD.QuizWindow.prototype.addResponse    = function(message){
     this.questionsArr[this.questionsArr.length - 1].response = message;
 };
-QuizWindow.prototype.addQuestion    = function(message){
+PWD.QuizWindow.prototype.addQuestion    = function(message){
 
     this.questionsArr.push({
         question: message,
@@ -1446,10 +1450,10 @@ QuizWindow.prototype.addQuestion    = function(message){
         tries: 1
     });
 };
-QuizWindow.prototype.error          = function(message){
+PWD.QuizWindow.prototype.error          = function(message){
     this.app.innerHTML = "<p>Någonting gick fel!</p><p>Testa att starta om applikationen</p>";
 };
-QuizWindow.prototype.addFailure     = function(){
+PWD.QuizWindow.prototype.addFailure     = function(){
     this.questionsArr[this.questionsArr.length - 1].tries++;
     var pTag = document.createElement("p");
     pTag.innerHTML = "Fel svar, försök igen!";
@@ -1459,10 +1463,9 @@ QuizWindow.prototype.addFailure     = function(){
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 
-QuoteWindow.prototype = new Window();
-QuoteWindow.prototype.constructor = QuoteWindow;
-function QuoteWindow(self, xPos, yPos) {
+PWD.QuoteWindow = function(self, xPos, yPos) {
     this.WindowConstruct("Quote", false, self, xPos, yPos);
 
     this.timer;
@@ -1470,8 +1473,12 @@ function QuoteWindow(self, xPos, yPos) {
     this.refreshRate = 10000;
 
     this.render();
-}
-QuoteWindow.prototype.render        = function(){
+};
+
+PWD.QuoteWindow.prototype = new PWD.Window();
+PWD.QuoteWindow.prototype.constructor = PWD.QuoteWindow;
+
+PWD.QuoteWindow.prototype.render        = function(){
     var self = this;
     self.app.classList.add("Quote");
     var timer;
@@ -1519,14 +1526,14 @@ QuoteWindow.prototype.render        = function(){
 
         self.setStatus("Loading quote from server...");
         timer = setTimeout(function(){self.setStatus("Laddar... <img src='images/loader_white.gif'/>");}, 300);
-        self.connection = new AjaxCon("http://erikhamrin.se/projects/quotes.php", handler, "GET");
+        self.connection = new PWD.AjaxCon("http://erikhamrin.se/projects/quotes.php", handler, "GET");
     };
     var getQuote = function (){
         self.timer = setTimeout(refresh, self.refreshRate);
     };
     refresh();
 };
-QuoteWindow.prototype.ClearTimers   = function(){
+PWD.QuoteWindow.prototype.ClearTimers   = function(){
     console.log("QUOTE: Removing all timers");
     clearTimeout(this.timer);
 
@@ -1537,10 +1544,9 @@ QuoteWindow.prototype.ClearTimers   = function(){
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 
-RSSWindow.prototype = new Window();
-RSSWindow.prototype.constructor = RSSWindow;
-function RSSWindow(self, xPos, yPos) {
+PWD.RSSWindow = function(self, xPos, yPos) {
     this.startHeight = 600;
     this.startWidth = 300;
     this.WindowConstruct("RSS", true, self, xPos, yPos);
@@ -1552,8 +1558,12 @@ function RSSWindow(self, xPos, yPos) {
     this.refreshRate = 600000;
     this.reloadFeed();
     this.render();
-}
-RSSWindow.prototype.reloadFeed          = function(){
+};
+
+PWD.RSSWindow.prototype = new PWD.Window();
+PWD.RSSWindow.prototype.constructor = PWD.RSSWindow;
+
+PWD.RSSWindow.prototype.reloadFeed          = function(){
     var self = this;
 
     var ajaxCall = function(){
@@ -1565,25 +1575,25 @@ RSSWindow.prototype.reloadFeed          = function(){
             self.feed.innerHTML = response;
         };
         self.setStatus("Laddar RSS-flöde");
-        self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url=" + encodeURI(self.feedUrl), handler, "GET");
+        self.connection = new PWD.AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url=" + encodeURI(self.feedUrl), handler, "GET");
 
     };
 
     ajaxCall();
     this.timer = setInterval(ajaxCall, self.refreshRate);
 };
-RSSWindow.prototype.render              = function(){
+PWD.RSSWindow.prototype.render              = function(){
     var self = this;
     self.app.className = "RSSWindow";
 
     self.feed = document.createElement("article");
     self.app.appendChild(self.feed);
 };
-RSSWindow.prototype.ClearTimers         = function(){
+PWD.RSSWindow.prototype.ClearTimers         = function(){
     console.log("RSS: Removing all timers");
     clearInterval(this.timer);
 };
-RSSWindow.prototype.contextMenu         = function(){
+PWD.RSSWindow.prototype.contextMenu         = function(){
     var that = this;
 
     var option1 = document.createElement("ul");
@@ -1625,7 +1635,7 @@ RSSWindow.prototype.contextMenu         = function(){
 
     return [option1];
 };
-RSSWindow.prototype.getIntervalSetting  = function(){
+PWD.RSSWindow.prototype.getIntervalSetting  = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -1664,7 +1674,7 @@ RSSWindow.prototype.getIntervalSetting  = function(){
 
     this.app.appendChild(popup);
 };
-RSSWindow.prototype.getRSSFeed          = function(){
+PWD.RSSWindow.prototype.getRSSFeed          = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -1758,20 +1768,21 @@ RSSWindow.prototype.getRSSFeed          = function(){
 };
 
 "use strict";
-function Window(){
+var PWD = PWD || {};
+PWD.Window = function(){
     this.dragY = 0;
     this.dragX = 0;
     this.dragging = false;
     this.imageFolder = "images/";
-}
-Window.prototype.focusWindow        = function(){
+};
+PWD.Window.prototype.focusWindow        = function(){
     var allApps = document.querySelectorAll(".application");
     for(var i = 0; i < allApps.length; i++){
         allApps[i].style.zIndex = "1";
     }
     this.style.zIndex = "5";
 };
-Window.prototype.createHTML         = function(){
+PWD.Window.prototype.createHTML         = function(){
     var self = this;
     var divApp = document.createElement("div");
     divApp.classList.add("application");
@@ -1966,10 +1977,10 @@ Window.prototype.createHTML         = function(){
     document.querySelector("#desktopApplication").appendChild(divApp);
 
 };
-Window.prototype.setStatus          = function(message){
+PWD.Window.prototype.setStatus          = function(message){
     this.statusBar.innerHTML = message;
 };
-Window.prototype.WindowConstruct    = function(type, resizable, self, xPos, yPos){
+PWD.Window.prototype.WindowConstruct    = function(type, resizable, self, xPos, yPos){
     this.resizable = resizable;
     this.desktop = self;
     this.xPos = xPos;
@@ -1977,13 +1988,13 @@ Window.prototype.WindowConstruct    = function(type, resizable, self, xPos, yPos
     this.type = type;
     this.createHTML();
 };
-Window.prototype.DisableSelection   = function(element){
+PWD.Window.prototype.DisableSelection   = function(element){
     element.onselectstart = function() {return false;};
     element.unselectable = "on";
     element.style.MozUserSelect = "none";
     element.style.cursor = "default";
 };
-Window.prototype.EnableSelection    = function(element){
+PWD.Window.prototype.EnableSelection    = function(element){
     element.onselectstart = function() {return true;};
     element.unselectable = "off";
     element.style.MozUserSelect = "text";
@@ -1993,7 +2004,8 @@ Window.prototype.EnableSelection    = function(element){
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 window.onload = function(){
-    new AppLoader("Loading your desktop...");
-    new Desktop("desktopApplication");
+    new PWD.AppLoader("Loading your desktop...");
+    new PWD.Desktop("desktopApplication");
 };

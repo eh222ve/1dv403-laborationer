@@ -1,18 +1,19 @@
 "use strict";
-function Window(){
+var PWD = PWD || {};
+PWD.Window = function(){
     this.dragY = 0;
     this.dragX = 0;
     this.dragging = false;
     this.imageFolder = "images/";
-}
-Window.prototype.focusWindow        = function(){
+};
+PWD.Window.prototype.focusWindow        = function(){
     var allApps = document.querySelectorAll(".application");
     for(var i = 0; i < allApps.length; i++){
         allApps[i].style.zIndex = "1";
     }
     this.style.zIndex = "5";
 };
-Window.prototype.createHTML         = function(){
+PWD.Window.prototype.createHTML         = function(){
     var self = this;
     var divApp = document.createElement("div");
     divApp.classList.add("application");
@@ -207,10 +208,10 @@ Window.prototype.createHTML         = function(){
     document.querySelector("#desktopApplication").appendChild(divApp);
 
 };
-Window.prototype.setStatus          = function(message){
+PWD.Window.prototype.setStatus          = function(message){
     this.statusBar.innerHTML = message;
 };
-Window.prototype.WindowConstruct    = function(type, resizable, self, xPos, yPos){
+PWD.Window.prototype.WindowConstruct    = function(type, resizable, self, xPos, yPos){
     this.resizable = resizable;
     this.desktop = self;
     this.xPos = xPos;
@@ -218,13 +219,13 @@ Window.prototype.WindowConstruct    = function(type, resizable, self, xPos, yPos
     this.type = type;
     this.createHTML();
 };
-Window.prototype.DisableSelection   = function(element){
+PWD.Window.prototype.DisableSelection   = function(element){
     element.onselectstart = function() {return false;};
     element.unselectable = "on";
     element.style.MozUserSelect = "none";
     element.style.cursor = "default";
 };
-Window.prototype.EnableSelection    = function(element){
+PWD.Window.prototype.EnableSelection    = function(element){
     element.onselectstart = function() {return true;};
     element.unselectable = "off";
     element.style.MozUserSelect = "text";

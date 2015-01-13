@@ -3,9 +3,7 @@
  */
 "use strict";
 
-Minesweeper.prototype = new Window();
-Minesweeper.prototype.constructor = Minesweeper;
-function Minesweeper(self, xPos, yPos) {
+PWD.Minesweeper = function(self, xPos, yPos) {
     this.difficulties = [["Beginner", 9], ["Intermidiate", 15], ["Expert", 20]];
 
     this.WindowConstruct("Minesweeper", false, self, xPos, yPos);
@@ -17,30 +15,34 @@ function Minesweeper(self, xPos, yPos) {
 
     this.gameOver, this.board = [], this.numberOfMines, this.mines, this.turnedImages, this.markedImages, this.timer, this.clock, this.bombsCounter;
     this.startGame();
-}
-Minesweeper.prototype.ClearTimers       = function(){
+};
+
+PWD.Minesweeper.prototype = new PWD.Window();
+PWD.Minesweeper.prototype.constructor = PWD.Minesweeper;
+
+PWD.Minesweeper.prototype.ClearTimers       = function(){
     clearInterval(this.timer);
 };
-Minesweeper.prototype.startGame         = function(){
+PWD.Minesweeper.prototype.startGame         = function(){
     this.setDefaultValues();
     this.drawGame();
     this.calculateMines();
 };
-Minesweeper.prototype.resetGame         = function(){
+PWD.Minesweeper.prototype.resetGame         = function(){
     this.resetAllTiles();
     this.setDefaultValues();
     this.bombsCounter.innerHTML = this.numberOfMines;
     this.calculateMines();
     this.startTimer();
 };
-Minesweeper.prototype.setDefaultValues  = function(){
+PWD.Minesweeper.prototype.setDefaultValues  = function(){
     this.gameOver = false;
     this.numberOfMines = Math.floor(this.GameWidth*this.GameWidth *0.25);
     this.mines = [];
     this.turnedImages = 0;
     this.markedImages = 0;
 };
-Minesweeper.prototype.drawGame          = function(){
+PWD.Minesweeper.prototype.drawGame          = function(){
     var that = this;
     var i;
     that.app.innerHTML = '';
@@ -137,7 +139,7 @@ Minesweeper.prototype.drawGame          = function(){
     }
 
 };
-Minesweeper.prototype.resetAllTiles     = function(){
+PWD.Minesweeper.prototype.resetAllTiles     = function(){
     var that = this,i,j;
 
     for(i = 0; i < this.GameWidth; i++) {
@@ -153,7 +155,7 @@ Minesweeper.prototype.resetAllTiles     = function(){
         }
     }
 };
-Minesweeper.prototype.calculateMines    = function(){                              //Calculate position of mines
+PWD.Minesweeper.prototype.calculateMines    = function(){                              //Calculate position of mines
     for(var i = 0; i < this.numberOfMines; i++){
         var mineRow = Math.floor((Math.random() * this.GameWidth));
         var mineCol = Math.floor((Math.random() * this.GameWidth));
@@ -166,7 +168,7 @@ Minesweeper.prototype.calculateMines    = function(){                           
         }
     }
 };
-Minesweeper.prototype.startTimer        = function(){
+PWD.Minesweeper.prototype.startTimer        = function(){
     clearTimeout(this.timer);
     var that = this;
     this.clock.innerHTML = 0;
@@ -176,7 +178,7 @@ Minesweeper.prototype.startTimer        = function(){
         time++;
     }, 1000);
 };
-Minesweeper.prototype.contextMenu       = function(){
+PWD.Minesweeper.prototype.contextMenu       = function(){
     var that = this;
     var ul = document.createElement("ul");
     ul.dataset.name = "Difficulties";
@@ -194,7 +196,7 @@ Minesweeper.prototype.contextMenu       = function(){
     });
     return [ul];
 };
-Minesweeper.prototype.showEmptyTiles    = function(row, col){                 //Recursive function to show empty tiles
+PWD.Minesweeper.prototype.showEmptyTiles    = function(row, col){                 //Recursive function to show empty tiles
     if(row >= this.GameWidth || row < 0 || col >= this.GameWidth || col < 0 || this.isTurned(row, col) === true || this.hasMine(row,col)) {
         return;
     }
@@ -215,42 +217,42 @@ Minesweeper.prototype.showEmptyTiles    = function(row, col){                 //
     this.showEmptyTiles(row, col+1);
 
 };
-Minesweeper.prototype.isMarked          = function(row, col){
+PWD.Minesweeper.prototype.isMarked          = function(row, col){
     return this.board[row].rowArray[col].marked;
 };
-Minesweeper.prototype.setMarker         = function(row, col){
+PWD.Minesweeper.prototype.setMarker         = function(row, col){
     this.board[row].rowArray[col].marked = true;
     if(this.markedImages < this.numberOfMines) {
         this.markedImages++;
         this.setImage(row, col, this.imagePrefix + "marked.png");
     }
 };
-Minesweeper.prototype.removeMarker      = function(row, col){
+PWD.Minesweeper.prototype.removeMarker      = function(row, col){
     this.board[row].rowArray[col].marked = false;
     if(this.markedImages > 0) {
         this.markedImages--;
         this.setImage(row, col, this.imagePrefix + "standard.png");
     }
 };
-Minesweeper.prototype.hasMine           = function(row, col){
+PWD.Minesweeper.prototype.hasMine           = function(row, col){
     return this.board[row].rowArray[col].mine;
 };
-Minesweeper.prototype.isTurned          = function(row, col){
+PWD.Minesweeper.prototype.isTurned          = function(row, col){
     return this.board[row].rowArray[col].turned;
 };
-Minesweeper.prototype.turnImage         = function(row, col){
+PWD.Minesweeper.prototype.turnImage         = function(row, col){
     if(this.isMarked(row,col)){
         this.removeMarker(row,col);
     }
     this.board[row].rowArray[col].turned = true;
 };
-Minesweeper.prototype.setImage          = function(row, col, imagePath){
+PWD.Minesweeper.prototype.setImage          = function(row, col, imagePath){
     this.board[row].rowArray[col].image.src = imagePath;
 };
-Minesweeper.prototype.setMine           = function(row, col){
+PWD.Minesweeper.prototype.setMine           = function(row, col){
     this.board[row].rowArray[col].mine = true;
 };
-Minesweeper.prototype.hasNeighborMines  = function(row, col){
+PWD.Minesweeper.prototype.hasNeighborMines  = function(row, col){
     var count = 0, i, j;
     for(i = row-1; i <= row+1; i++){
         for(j = col-1; j <= col+1; j++){

@@ -2,10 +2,9 @@
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 
-RSSWindow.prototype = new Window();
-RSSWindow.prototype.constructor = RSSWindow;
-function RSSWindow(self, xPos, yPos) {
+PWD.RSSWindow = function(self, xPos, yPos) {
     this.startHeight = 600;
     this.startWidth = 300;
     this.WindowConstruct("RSS", true, self, xPos, yPos);
@@ -17,8 +16,12 @@ function RSSWindow(self, xPos, yPos) {
     this.refreshRate = 600000;
     this.reloadFeed();
     this.render();
-}
-RSSWindow.prototype.reloadFeed          = function(){
+};
+
+PWD.RSSWindow.prototype = new PWD.Window();
+PWD.RSSWindow.prototype.constructor = PWD.RSSWindow;
+
+PWD.RSSWindow.prototype.reloadFeed          = function(){
     var self = this;
 
     var ajaxCall = function(){
@@ -30,25 +33,25 @@ RSSWindow.prototype.reloadFeed          = function(){
             self.feed.innerHTML = response;
         };
         self.setStatus("Laddar RSS-flöde");
-        self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url=" + encodeURI(self.feedUrl), handler, "GET");
+        self.connection = new PWD.AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyServer/rssproxy/?url=" + encodeURI(self.feedUrl), handler, "GET");
 
     };
 
     ajaxCall();
     this.timer = setInterval(ajaxCall, self.refreshRate);
 };
-RSSWindow.prototype.render              = function(){
+PWD.RSSWindow.prototype.render              = function(){
     var self = this;
     self.app.className = "RSSWindow";
 
     self.feed = document.createElement("article");
     self.app.appendChild(self.feed);
 };
-RSSWindow.prototype.ClearTimers         = function(){
+PWD.RSSWindow.prototype.ClearTimers         = function(){
     console.log("RSS: Removing all timers");
     clearInterval(this.timer);
 };
-RSSWindow.prototype.contextMenu         = function(){
+PWD.RSSWindow.prototype.contextMenu         = function(){
     var that = this;
 
     var option1 = document.createElement("ul");
@@ -90,7 +93,7 @@ RSSWindow.prototype.contextMenu         = function(){
 
     return [option1];
 };
-RSSWindow.prototype.getIntervalSetting  = function(){
+PWD.RSSWindow.prototype.getIntervalSetting  = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -129,7 +132,7 @@ RSSWindow.prototype.getIntervalSetting  = function(){
 
     this.app.appendChild(popup);
 };
-RSSWindow.prototype.getRSSFeed          = function(){
+PWD.RSSWindow.prototype.getRSSFeed          = function(){
     var self = this;
 
     var popup = document.createElement("div");

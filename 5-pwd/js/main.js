@@ -2,7 +2,8 @@
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 window.onload = function(){
-    new AppLoader("Loading your desktop...");
-    new Desktop("desktopApplication");
+    new PWD.AppLoader("Loading your desktop...");
+    new PWD.Desktop("desktopApplication");
 };

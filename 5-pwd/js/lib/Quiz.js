@@ -2,10 +2,9 @@
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD || {};
 
-QuizWindow.prototype = new Window();
-QuizWindow.prototype.constructor = QuizWindow;
-function QuizWindow(self, xPos, yPos) {
+PWD.QuizWindow = function(self, xPos, yPos) {
     this.WindowConstruct("Quiz", false, self, xPos, yPos);
     this.app = this.app;
     this.nextURL;
@@ -13,8 +12,12 @@ function QuizWindow(self, xPos, yPos) {
     this.questionsArr;
 
     this.init();
-}
-QuizWindow.prototype.getScore       = function(){
+};
+
+PWD.QuizWindow.prototype = new PWD.Window();
+PWD.QuizWindow.prototype.constructor = PWD.QuizWindow;
+
+PWD.QuizWindow.prototype.getScore       = function(){
     var that = this;
 
     var game = this.app.querySelector(".workArea");
@@ -87,21 +90,21 @@ QuizWindow.prototype.getScore       = function(){
     game.appendChild(newGame);
 
 };
-QuizWindow.prototype.disableInput   = function(){
+PWD.QuizWindow.prototype.disableInput   = function(){
     var button = this.app.querySelector(".sendAnswer");
     var text = this.app.querySelector(".answerBox");
 
     text.readOnly = true;
     button.disabled = true;
 };
-QuizWindow.prototype.enableInput    = function(){
+PWD.QuizWindow.prototype.enableInput    = function(){
     var button = this.app.querySelector(".sendAnswer");
     var text = this.app.querySelector(".answerBox");
 
     text.readOnly = false;
     button.disabled = false;
 };
-QuizWindow.prototype.getQuestion    = function(url){
+PWD.QuizWindow.prototype.getQuestion    = function(url){
     var that = this;
 
     var handleMessage = function(jsonObj){
@@ -120,9 +123,9 @@ QuizWindow.prototype.getQuestion    = function(url){
         that.setStatus("Waiting on input...");
     };
     that.setStatus("Waiting on question from server");
-    new AjaxCon(url, handleMessage, "GET");
+    new PWD.AjaxCon(url, handleMessage, "GET");
 };
-QuizWindow.prototype.sendAnswer     = function(answerInput){
+PWD.QuizWindow.prototype.sendAnswer     = function(answerInput){
     var that = this;
 
     that.addAnswer(answerInput);
@@ -147,18 +150,18 @@ QuizWindow.prototype.sendAnswer     = function(answerInput){
     var url = this.nextURL;
 
     this.setStatus("Sending answer to server");
-    new AjaxCon(url, handleMessage, "POST", JSON.stringify({answer: answerInput}));
+    new PWD.AjaxCon(url, handleMessage, "POST", JSON.stringify({answer: answerInput}));
 
 };
-QuizWindow.prototype.init           = function(){
+PWD.QuizWindow.prototype.init           = function(){
     this.questionsArr = [];
     this.render();
     this.getQuestion("http://vhost3.lnu.se:20080/question/1");
 };
-QuizWindow.prototype.gameOver       = function(){
+PWD.QuizWindow.prototype.gameOver       = function(){
     this.getScore();
 };
-QuizWindow.prototype.render         = function(){
+PWD.QuizWindow.prototype.render         = function(){
     var that = this;
     this.app.innerHTML = '';
     this.app.classList.add("thequiz");
@@ -194,13 +197,13 @@ QuizWindow.prototype.render         = function(){
 
     this.app.appendChild(questionDiv);
 };
-QuizWindow.prototype.addAnswer      = function(message){
+PWD.QuizWindow.prototype.addAnswer      = function(message){
     this.questionsArr[this.questionsArr.length - 1].answer = message;
 };
-QuizWindow.prototype.addResponse    = function(message){
+PWD.QuizWindow.prototype.addResponse    = function(message){
     this.questionsArr[this.questionsArr.length - 1].response = message;
 };
-QuizWindow.prototype.addQuestion    = function(message){
+PWD.QuizWindow.prototype.addQuestion    = function(message){
 
     this.questionsArr.push({
         question: message,
@@ -209,10 +212,10 @@ QuizWindow.prototype.addQuestion    = function(message){
         tries: 1
     });
 };
-QuizWindow.prototype.error          = function(message){
+PWD.QuizWindow.prototype.error          = function(message){
     this.app.innerHTML = "<p>Någonting gick fel!</p><p>Testa att starta om applikationen</p>";
 };
-QuizWindow.prototype.addFailure     = function(){
+PWD.QuizWindow.prototype.addFailure     = function(){
     this.questionsArr[this.questionsArr.length - 1].tries++;
     var pTag = document.createElement("p");
     pTag.innerHTML = "Fel svar, försök igen!";

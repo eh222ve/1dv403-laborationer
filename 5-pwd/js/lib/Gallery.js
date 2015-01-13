@@ -2,20 +2,19 @@
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 
-ImageWindow.prototype = new Window();
-ImageWindow.prototype.constructor = ImageWindow;
-function ImageWindow(url, desktop, xPos, yPos) {
+PWD.ImageWindow = function (url, desktop, xPos, yPos) {
     var image = document.createElement("img");
     image.src = url;
 
     this.WindowConstruct("Gallery", false, desktop, xPos, yPos);
     this.app.appendChild(image);
-}
+};
+PWD.ImageWindow.prototype = new PWD.Window();
+PWD.ImageWindow.prototype.constructor = PWD.ImageWindow;
 
-GalleryWindow.prototype = new Window();
-GalleryWindow.prototype.constructor = GalleryWindow;
-function GalleryWindow(desktop, xPos, yPos) {
+PWD.GalleryWindow = function(desktop, xPos, yPos) {
     this.startHeight = 600;
     this.startWidth = 400;
     this.WindowConstruct("Gallery", false, desktop, xPos, yPos);
@@ -30,8 +29,12 @@ function GalleryWindow(desktop, xPos, yPos) {
         new ImageWindow(url, desktop, xPos+5, yPos+5);
     };
     this.loadImages();
-}
-GalleryWindow.prototype.render      = function(){
+};
+
+PWD.GalleryWindow.prototype = new PWD.Window();
+PWD.GalleryWindow.prototype.constructor = PWD.GalleryWindow;
+
+PWD.GalleryWindow.prototype.render      = function(){
     var self = this;
     this.imageArr.forEach(function(currentImage){
         var imageContainer = document.createElement("a");
@@ -58,7 +61,7 @@ GalleryWindow.prototype.render      = function(){
         self.app.appendChild(imageContainer);
     });
 };
-GalleryWindow.prototype.loadImages  = function(){
+PWD.GalleryWindow.prototype.loadImages  = function(){
     var timer, self = this;
 
     var handler = function(response){
@@ -80,5 +83,5 @@ GalleryWindow.prototype.loadImages  = function(){
     timer = setTimeout(function(){
         self.setStatus("Laddar bilder...<img src='images/loader_white.gif'>");
     }, 1500);
-    new AjaxCon(this.Url, handler, "GET");
+    new PWD.AjaxCon(this.Url, handler, "GET");
 };

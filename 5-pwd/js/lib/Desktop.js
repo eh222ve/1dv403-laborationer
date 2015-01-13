@@ -1,5 +1,6 @@
 "use strict";
-function Desktop(id){
+var PWD = PWD || {};
+PWD.Desktop = function(id){
     this.windows = [];
     this.minimizedApps = 0;
     this.element = document.getElementById(id);
@@ -27,14 +28,14 @@ function Desktop(id){
     this.element.appendChild(this.navbar);
 
     var applications = [
-        [MemoryGame, "images/appIcons/Memory_Large.png", "Memory"],
-        [Minesweeper, "images/appIcons/Minesweeper_Large.png", "Minesweeper"],
-        [QuizWindow, "images/appIcons/Quiz_Large.png","Quiz"],
-        [QuoteWindow, "images/appIcons/Quote_Large.png","Quotes"],
-        [MessageBoard, "images/appIcons/Chat_Large.png","Chat"],
-        [RSSWindow, "images/appIcons/RSS_Large.png", "RSS"],
-        [GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"],
-        [NoteWindow, "images/appIcons/Note_Large.png", "Note"]
+        [PWD.MemoryGame, "images/appIcons/Memory_Large.png", "Memory"],
+        [PWD.Minesweeper, "images/appIcons/Minesweeper_Large.png", "Minesweeper"],
+        [PWD.QuizWindow, "images/appIcons/Quiz_Large.png","Quiz"],
+        [PWD.QuoteWindow, "images/appIcons/Quote_Large.png","Quotes"],
+        [PWD.MessageBoard, "images/appIcons/Chat_Large.png","Chat"],
+        [PWD.RSSWindow, "images/appIcons/RSS_Large.png", "RSS"],
+        [PWD.GalleryWindow, "images/appIcons/Gallery_Large.png", "Gallery"],
+        [PWD.NoteWindow, "images/appIcons/Note_Large.png", "Note"]
     ];
 
     applications.forEach(function(app){
@@ -76,4 +77,4 @@ function Desktop(id){
         };
         self.navbar.appendChild(appImage);
     };
-}
+};

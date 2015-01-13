@@ -2,7 +2,8 @@
  * Created by Erik.
  */
 "use strict";
-function AppLoader(header){
+var PWD = PWD || {};
+PWD.AppLoader = function(header){
     var background = document.createElement("div");
     background.classList.add("AppLoader");
 
@@ -27,4 +28,4 @@ function AppLoader(header){
             body.removeChild(background);
         }, 1250);
     }, 200);
-}
+};

@@ -3,9 +3,7 @@
  */
 "use strict";
 
-MemoryGame.prototype = new Window();
-MemoryGame.prototype.constructor = MemoryGame;
-function MemoryGame(self, xPos, yPos) {
+PWD.MemoryGame = function(self, xPos, yPos) {
     var rows = 2, cols = 4;
 
     this.WindowConstruct("Memory", false, self, xPos, yPos);
@@ -23,22 +21,13 @@ function MemoryGame(self, xPos, yPos) {
 
     this.flippedImage, this.pictureArray, this.structuredArray, this.flippedCards, this.turnCounter;
     this.resetGame([this.getRows(), this.getCols()]);
-}
-MemoryGame.prototype.resetGame              = function(settings){
+};
+
+PWD.MemoryGame.prototype = new PWD.Window();
+PWD.MemoryGame.prototype.constructor = PWD.MemoryGame;
+
+PWD.MemoryGame.prototype.resetGame              = function(settings){
     var RandomGenerator = {
-
-        /*
-         Denna metod tar antalet rader och columner som inparameter.
-
-         Metoden returnerar en array inneh�llandes utslumpade tal mellan 1 och (rows*cols)/2. Varje tal representeras tv�
-         g�nger och motsvarar s�ledes en spelbricka.
-
-         I en 4*4 matris kan Arrayen t.ex. se ut s� h�r:
-         [1,2,6,8,6,2,5,3,1,3,7,5,8,4,4,7]
-
-         I en 2*4 matris kan Arrayen t.ex. se ut s� h�r:
-         [3,4,4,1,2,1,2,3]
-         */
 
         getPictureArray: function(rows, cols)
         {
@@ -100,7 +89,7 @@ MemoryGame.prototype.resetGame              = function(settings){
     this.turnCounter = 0;
     this.renderBoard();
 };
-MemoryGame.prototype.renderBoard            = function(){
+PWD.MemoryGame.prototype.renderBoard            = function(){
     var div, a, img;
     var that = this;
 
@@ -125,7 +114,7 @@ MemoryGame.prototype.renderBoard            = function(){
         that.app.appendChild(div);
     });
 };
-MemoryGame.prototype.getStructuredArray     = function(){
+PWD.MemoryGame.prototype.getStructuredArray     = function(){
     var rows, cols;
     var output = [];
     for(rows = 0; rows < this.getRows(); rows++){
@@ -138,7 +127,7 @@ MemoryGame.prototype.getStructuredArray     = function(){
     }
     return output;
 };
-MemoryGame.prototype.getSettings            = function(header, body) {
+PWD.MemoryGame.prototype.getSettings            = function(header, body) {
     var div = document.createElement("div");
     div.className = "overlay";
 
@@ -160,7 +149,7 @@ MemoryGame.prototype.getSettings            = function(header, body) {
 
     this.app.appendChild(div);
 };
-MemoryGame.prototype.flipCards              = function(aTag, col){
+PWD.MemoryGame.prototype.flipCards              = function(aTag, col){
     var img;
 
     img = aTag.firstChild;
@@ -210,7 +199,7 @@ MemoryGame.prototype.flipCards              = function(aTag, col){
     }, 125);
 
 };
-MemoryGame.prototype.contextMenu            = function(){
+PWD.MemoryGame.prototype.contextMenu            = function(){
     var that = this;
 
     var option1 = document.createElement("ul");

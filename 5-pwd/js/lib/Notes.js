@@ -1,17 +1,18 @@
-/**
- * Created by Erik.
- */
-"use strict";
 
-NoteWindow.prototype = new Window();
-NoteWindow.prototype.constructor = NoteWindow;
-function NoteWindow(self, xPos, yPos) {
+"use strict";
+var PWD = PWD ||{};
+
+PWD.NoteWindow = function(self, xPos, yPos) {
     this.startHeight = 300;
     this.startWidth = 300;
     this.WindowConstruct("Note", true, self, xPos, yPos);
     this.render();
-}
-NoteWindow.prototype.render = function(){
+};
+
+PWD.NoteWindow.prototype = new PWD.Window();
+PWD.NoteWindow.prototype.constructor = PWD.NoteWindow;
+
+PWD.NoteWindow.prototype.render = function(){
     var self = this;
     self.app.classList.add("Note");
 

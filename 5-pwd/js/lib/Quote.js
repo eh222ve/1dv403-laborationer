@@ -2,10 +2,9 @@
  * Created by Erik.
  */
 "use strict";
+var PWD = PWD ||{};
 
-QuoteWindow.prototype = new Window();
-QuoteWindow.prototype.constructor = QuoteWindow;
-function QuoteWindow(self, xPos, yPos) {
+PWD.QuoteWindow = function(self, xPos, yPos) {
     this.WindowConstruct("Quote", false, self, xPos, yPos);
 
     this.timer;
@@ -13,8 +12,12 @@ function QuoteWindow(self, xPos, yPos) {
     this.refreshRate = 10000;
 
     this.render();
-}
-QuoteWindow.prototype.render        = function(){
+};
+
+PWD.QuoteWindow.prototype = new PWD.Window();
+PWD.QuoteWindow.prototype.constructor = PWD.QuoteWindow;
+
+PWD.QuoteWindow.prototype.render        = function(){
     var self = this;
     self.app.classList.add("Quote");
     var timer;
@@ -62,14 +65,14 @@ QuoteWindow.prototype.render        = function(){
 
         self.setStatus("Loading quote from server...");
         timer = setTimeout(function(){self.setStatus("Laddar... <img src='images/loader_white.gif'/>");}, 300);
-        self.connection = new AjaxCon("http://erikhamrin.se/projects/quotes.php", handler, "GET");
+        self.connection = new PWD.AjaxCon("http://erikhamrin.se/projects/quotes.php", handler, "GET");
     };
     var getQuote = function (){
         self.timer = setTimeout(refresh, self.refreshRate);
     };
     refresh();
 };
-QuoteWindow.prototype.ClearTimers   = function(){
+PWD.QuoteWindow.prototype.ClearTimers   = function(){
     console.log("QUOTE: Removing all timers");
     clearTimeout(this.timer);
 

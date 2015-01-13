@@ -1,8 +1,7 @@
-/**
- * Created by Erik.
- */
 "use strict";
-function Message(message, date, author){
+
+var PWD = PWD || {};
+PWD.Message = function(message, date, author){
     this.getText = function(){
         return message;
     };
@@ -26,11 +25,11 @@ function Message(message, date, author){
     this.setAuthor = function(_author){
         author = _author;
     };
-}
-Message.prototype.getHTMLText       = function(){
+};
+PWD.Message.prototype.getHTMLText       = function(){
     return this.getText();//.replace(/[\n\r]/g, "</br>");
 };
-Message.prototype.getDateText       = function(){
+PWD.Message.prototype.getDateText       = function(){
     var now = new Date();
     var milliseconds = now - this.getDate();
     var seconds = Math.round(milliseconds/1000);
@@ -62,9 +61,8 @@ Message.prototype.getDateText       = function(){
     }
 };
 
-MessageBoard.prototype = new Window();
-MessageBoard.prototype.constructor  = MessageBoard;
-function MessageBoard(self, xPos, yPos) {
+
+PWD.MessageBoard = function(self, xPos, yPos) {
     this.WindowConstruct("Chat", false, self, xPos, yPos);
 
     this.title = 'Chat';
@@ -90,14 +88,18 @@ function MessageBoard(self, xPos, yPos) {
     //Run methods on creation
     this.CreateHTMLLayout();
     this.getMessagesFromServer();
-}
-MessageBoard.prototype.ClearTimers              = function(){
+};
+
+PWD.MessageBoard.prototype = new PWD.Window;
+PWD.MessageBoard.prototype.constructor  = PWD.MessageBoard;
+
+PWD.MessageBoard.prototype.ClearTimers              = function(){
     clearInterval(this.timer);
     if(typeof this.connection !== "undefined") {
         this.connection.abort();
     }
 };
-MessageBoard.prototype.CreateHTMLLayout         = function(){
+PWD.MessageBoard.prototype.CreateHTMLLayout         = function(){
     var that = this;
 
     var labbyMain = document.createElement("div");
@@ -133,10 +135,10 @@ MessageBoard.prototype.CreateHTMLLayout         = function(){
         that.app.getElementsByClassName("labbyMezzageContent")[0].focus();
     };
 };
-MessageBoard.prototype.numberOfMessages         = function(){
+PWD.MessageBoard.prototype.numberOfMessages         = function(){
     return this.messages.length + " messages";
 };
-MessageBoard.prototype.renderMessage            = function(message){
+PWD.MessageBoard.prototype.renderMessage            = function(message){
     var messageMain = document.createElement("section");
 
     var author = document.createElement("p");
@@ -154,7 +156,7 @@ MessageBoard.prototype.renderMessage            = function(message){
 
     return messageMain;
 };
-MessageBoard.prototype.getMessagesFromServer    = function(){
+PWD.MessageBoard.prototype.getMessagesFromServer    = function(){
     var self = this, timer;
     var loadMessages = function(response){
         clearTimeout(timer);
@@ -189,7 +191,7 @@ MessageBoard.prototype.getMessagesFromServer    = function(){
             var time = message.querySelector("time").innerHTML;
             var author = message.querySelector("author").innerHTML;
             var id = message.querySelector("id").innerHTML;
-            self.messages.push(new Message(text, new Date(parseInt(time)), author));
+            self.messages.push(new PWD.Message(text, new Date(parseInt(time)), author));
         }
         self.renderMessages();
     };
@@ -198,16 +200,16 @@ MessageBoard.prototype.getMessagesFromServer    = function(){
         self.setStatus("Laddar meddelanden...<img src='images/loader_white.gif'>");
     }, 100);
     var history = (self.history !== undefined) ? "?history=" + self.history : "";
-    self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
+    self.connection = new PWD.AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
 
     this.timer = setInterval(function(){
         timer = setTimeout(function(){
             self.setStatus("Laddar meddelanden...<img src='images/loader_white.gif'>");
         }, 100);
-        self.connection = new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
+        self.connection = new PWD.AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/getMessage.php" + history, loadMessages, "GET");
     }, self.refreshRate)
 };
-MessageBoard.prototype.renderMessages           = function(){
+PWD.MessageBoard.prototype.renderMessages           = function(){
 
     var messageArea = this.app.getElementsByClassName("labbyMezzageArea")[0];
     var messageCount = this.app.getElementsByClassName("labbyMezzageCount")[0];
@@ -224,11 +226,11 @@ MessageBoard.prototype.renderMessages           = function(){
     messageCount.innerHTML = this.numberOfMessages();
     this.scrollToBottom();
 };
-MessageBoard.prototype.scrollToBottom           = function(){
+PWD.MessageBoard.prototype.scrollToBottom           = function(){
     var messageArea = this.app.getElementsByClassName("labbyMezzageArea")[0];
     messageArea.scrollTop = messageArea.scrollHeight;
 };
-MessageBoard.prototype.addMessage               = function(){
+PWD.MessageBoard.prototype.addMessage               = function(){
     var self = this;
     var textArea = this.app.getElementsByClassName("labbyMezzageContent")[0];
     var handleCallback = function(response){
@@ -250,7 +252,7 @@ MessageBoard.prototype.addMessage               = function(){
         };
     }
 };
-MessageBoard.prototype.contextMenu              = function(){
+PWD.MessageBoard.prototype.contextMenu              = function(){
     var that = this;
 
     var option1 = document.createElement("ul");
@@ -303,7 +305,7 @@ MessageBoard.prototype.contextMenu              = function(){
 
     return [option1];
 };
-MessageBoard.prototype.getIntervalSetting       = function(){
+PWD.MessageBoard.prototype.getIntervalSetting       = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -343,7 +345,7 @@ MessageBoard.prototype.getIntervalSetting       = function(){
 
     this.app.parentNode.appendChild(popup);
 };
-MessageBoard.prototype.getHistorySetting        = function(){
+PWD.MessageBoard.prototype.getHistorySetting        = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -383,7 +385,7 @@ MessageBoard.prototype.getHistorySetting        = function(){
 
     this.app.parentNode.appendChild(popup);
 };
-MessageBoard.prototype.getNickSetting           = function(){
+PWD.MessageBoard.prototype.getNickSetting           = function(){
     var self = this;
 
     var popup = document.createElement("div");
@@ -419,7 +421,7 @@ MessageBoard.prototype.getNickSetting           = function(){
     input.focus();
     input.select();
 };
-MessageBoard.prototype.createCookie             = function(){
+PWD.MessageBoard.prototype.createCookie             = function(){
     var name = "setting";
     var value = this.refreshRate + "," + this.username + "," + this.history;
     var days = 1;
@@ -435,7 +437,7 @@ MessageBoard.prototype.createCookie             = function(){
     }
     document.cookie = name + "=" + value + expires + "; path=/";
 };
-MessageBoard.prototype.getCookie                = function(){
+PWD.MessageBoard.prototype.getCookie                = function(){
     var c_name = "setting";
     if (document.cookie.length > 0) {
         var c_start = document.cookie.indexOf(c_name + "=");

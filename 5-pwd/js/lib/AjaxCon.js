@@ -1,5 +1,7 @@
 "use strict";
-function AjaxCon(url, callback, posttype, params){
+
+var PWD = PWD || {};
+PWD.AjaxCon = function(url, callback, posttype, params){
     var READY_STATE_UNINITIALIZED = 0;
     var READY_STATE_OPENED      = 1;
     var READY_STATE_SENT        = 2;
@@ -31,8 +33,8 @@ function AjaxCon(url, callback, posttype, params){
     this.abort = function(){
         xhr.abort();
     };
-}
-AjaxCon.prototype.getXHR            = function(){
+};
+PWD.AjaxCon.prototype.getXHR            = function(){
     var xhr = null;
 
     try{
