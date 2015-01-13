@@ -239,20 +239,15 @@ MessageBoard.prototype.addMessage               = function(){
         self.scrollToBottom();
     };
     if(textArea.value != "") {
-        /*var string = ({
-         username: self.username,
-         text: textArea.value
-         });*/
-        // new AjaxCon("http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php", handleCallback, "POST", string);
-        $.ajax({
-            type: "POST",
-            url: "http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php",
-            data: ({
-                username: self.username,
-                text: textArea.value
-            }),
-            success: handleCallback
-        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "http://homepage.lnu.se/staff/tstjo/labbyserver/setMessage.php");
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("username=" + self.username + "&text=" + textArea.value);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                handleCallback(xhr.responseText);
+            }
+        };
     }
 };
 MessageBoard.prototype.contextMenu              = function(){
