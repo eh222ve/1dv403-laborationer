@@ -632,7 +632,9 @@ function ImageWindow(url, desktop, xPos, yPos) {
 GalleryWindow.prototype = new Window();
 GalleryWindow.prototype.constructor = GalleryWindow;
 function GalleryWindow(desktop, xPos, yPos) {
-    this.WindowConstruct("Gallery", false, desktop, xPos, yPos);
+    this.startHeight = 600;
+    this.startWidth = 400;
+    this.WindowConstruct("Gallery", true, desktop, xPos, yPos);
 
     this.Url = "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/";
     this.thumbWidth = 0;
@@ -666,6 +668,7 @@ GalleryWindow.prototype.render      = function(){
 
         var image = document.createElement("img");
         image.src = currentImage.thumbURL;
+        image.style.marginTop = ((self.thumbHeight-currentImage.thumbHeight)/2) + "px";
 
         imageContainer.appendChild(image);
         self.app.appendChild(imageContainer);

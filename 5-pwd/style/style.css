@@ -490,10 +490,6 @@ header, main, footer, article{
         Gallery
 *************************************************/
 
-.Gallery{
-    width: 450px;
-
-}
 .Gallery .imageContainer{
     margin: 5px;
     float: left;
